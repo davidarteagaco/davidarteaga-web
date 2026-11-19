@@ -680,6 +680,24 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
 .cred-vid{margin:4px 0 0;max-width:260px;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
 .cred-vid video{display:block;width:100%;aspect-ratio:9/16;background:#000}
 
+/* Movimiento con profundidad */
+@media (prefers-reduced-motion:no-preference){
+  [data-r]{transform:translate3d(0,40px,0) scale(.965);filter:blur(5px);transition:opacity 1s var(--ease),transform 1.15s var(--ease),filter 1s var(--ease);transition-delay:calc(var(--d,0) * 90ms)}
+  [data-r="left"]{transform:translate3d(-48px,0,0)}
+  [data-r="scale"]{transform:perspective(900px) translate3d(0,30px,-120px) rotateX(8deg)}
+  [data-r].in{transform:none;filter:none}
+  .px-img{transform:translate3d(0,var(--py,0px),0) scale(1.14);will-change:transform;transition:transform .12s linear}
+  .px-box{translate:0 var(--py,0px);transition:translate .12s linear}
+  .orb{animation:bob 6s ease-in-out infinite}
+  .orb-btn:nth-child(2) .orb{animation-delay:-2s}.orb-btn:nth-child(3) .orb{animation-delay:-4s}
+  @keyframes bob{50%{translate:0 -10px}}
+  .portrait.has-photo .chip{animation:chipIn 1s var(--ease) .6s both}
+  @keyframes chipIn{from{opacity:0;translate:0 -10px}}
+}
+#face-progress{position:fixed;left:0;right:0;top:0;height:2px;z-index:80;pointer-events:none}
+#face-progress i{display:block;height:100%;background:linear-gradient(90deg,#1546d6,#5b8cff);transform-origin:0 50%;transform:scaleX(0)}
+body.in-intro #face-progress{display:none}
+
 </style>
 <script type="importmap">{"imports":{"three":"/vendor/three-0.160.0.module.min.js"}}</script>
 </head>
@@ -1678,6 +1696,29 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
       orbs.querySelectorAll('.orb').forEach((o,k)=>o.animate([{transform:'translateY(60vh) scale(.4)',opacity:0},{transform:'none',opacity:1}],{duration:700,delay:k*90,easing:'cubic-bezier(.2,.9,.25,1.15)',fill:'backwards'}));
       orbs.querySelector('.orb-btn').focus({preventScroll:true});
     });
+  })();
+
+  /* Movimiento: parallax de fotos, barra de progreso, videos vivos */
+  (function(){
+    const bar=document.createElement('div');bar.id='face-progress';bar.innerHTML='<i></i>';document.body.appendChild(bar);const fill=bar.firstChild;
+    const PX=[['.portrait.has-photo img',60],['.ph-card img',46],['.case-kpi',-24],['.kpis .card',-14],['.program-card',-18]];
+    PX.forEach(([sel,k])=>document.querySelectorAll(sel).forEach(el=>{el.dataset.px=k;if(el.tagName==='IMG')el.classList.add('px-img');else el.classList.add('px-box')}));
+    const facesAll=[...document.querySelectorAll('.face')];let ticking=false;
+    function frame(){ticking=false;const f=facesAll.find(x=>!x.hidden);if(!f)return;
+      const max=f.scrollHeight-f.clientHeight;fill.style.transform=`scaleX(${max>0?f.scrollTop/max:0})`;
+      if(reduce)return;const vh=innerHeight;
+      f.querySelectorAll('[data-px]').forEach(el=>{const host=el.classList.contains('px-img')?el.closest('picture,figure,.portrait')||el:el;const r=host.getBoundingClientRect();
+        if(r.bottom<-200||r.top>vh+200)return;const p=((r.top+r.height/2)-vh/2)/vh;el.style.setProperty('--py',(p*-+el.dataset.px).toFixed(1)+'px')})}
+    const req=()=>{if(!ticking){ticking=true;requestAnimationFrame(frame)}};
+    facesAll.forEach(f=>f.addEventListener('scroll',req,{passive:true}));addEventListener('resize',req);
+    new MutationObserver(req).observe(document.body,{subtree:true,attributes:true,attributeFilter:['hidden']});req();
+    // videos: se reproducen en silencio cuando están a la vista
+    if(!reduce&&'IntersectionObserver' in window){
+      const vio=new IntersectionObserver(es=>es.forEach(e=>{const v=e.target;
+        if(e.isIntersecting&&e.intersectionRatio>.5){if(v.dataset.user)return;v.muted=true;v.loop=true;v.preload='auto';v.play().catch(()=>{})}
+        else if(!v.paused)v.pause()}),{threshold:[0,.5,1]});
+      document.querySelectorAll('.ph-vid video,.cred-vid video').forEach(v=>{v.addEventListener('volumechange',()=>{if(!v.muted)v.dataset.user=1});vio.observe(v)});
+    }
   })();
 })();
 
