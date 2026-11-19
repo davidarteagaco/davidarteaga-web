@@ -12,3 +12,7 @@ Sitio estático de David Arteaga®: una casa de nueve habitaciones (inicio, qui�
 - Revisar la política de datos (`politica-de-datos.html`) y completar documento y fecha.
 - Verificar que `/finanzas` responde bien a través del rewrite hacia app-financiera-david.vercel.app.
 - Agregar la fotografía profesional en el recibidor.
+
+## Despliegue
+- Proyecto en Vercel: `davidarteaga-web` (cuenta davidarteagaco). Cada push o merge a `main` publica en producción; cada pull request genera una vista previa.
+- URL de revisión antes del cambio de DNS: `https://davidarteaga-web.vercel.app`.
