@@ -659,6 +659,9 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
 .cred .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
 @media (max-width:640px){.orbs{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.orb{--d:26vw}.orb-l{font-size:13px}}
 @media (prefers-reduced-motion:reduce){.orb .tex{animation:none}}
+.cred .subj{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.cred .subj li{border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px;background:var(--bg2)}
+.cred .subj small{color:var(--muted)}
 
 </style>
 <script type="importmap">{"imports":{"three":"/vendor/three-0.160.0.module.min.js"}}</script>
@@ -797,7 +800,8 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
      <article class="cred" data-cred="2" hidden>
       <span class="tag">Instituto Tecnológico Metropolitano · ITM</span>
       <h3>Docente de la Facultad de Ciencias Económicas y Administrativas</h3>
-      <p>Desde 2023 soy docente de cátedra en el ITM, en la Facultad de Ciencias Económicas y Administrativas. En 2026 oriento Gerencia de Proyectos, Matemáticas Financieras y Costos y Presupuestos, y en semestres anteriores he acompañado otros cursos del área de gestión y finanzas.</p>
+      <p>Desde 2023 soy docente de cátedra en el ITM, en la Facultad de Ciencias Económicas y Administrativas. Entre 2023 y 2025 el ITM me certifica 1.564 horas de clase en estas asignaturas:</p>
+      <ul class="subj"><li>Matemáticas Financieras</li><li>Gerencia de Proyectos</li><li>Riesgo de Crédito y Operacional</li><li>Valoración de Empresas</li><li>Administración Financiera</li><li>Costos y Presupuestos <small>(2026)</small></li></ul>
       <p class="muted">Enseñar me obliga a explicar simple lo que en una empresa suele ser complejo. Por eso mis indicadores se entienden, y tu equipo los puede usar sin depender de mí.</p>
       <div class="row"><button class="btn orb-back">Ver las otras credenciales</button></div>
      </article>
@@ -1622,7 +1626,7 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
     function show(i){panel.hidden=false;panel.querySelectorAll('.cred').forEach(c=>c.hidden=c.dataset.cred!=i);
       const c=panel.querySelector(`[data-cred="${i}"]`);c.animate([{opacity:0,transform:'translateY(40px) scale(.96)'},{opacity:1,transform:'none'}],{duration:620,easing:'cubic-bezier(.2,.8,.2,1)'});
       orbs.hidden=true;c.querySelector('.btn').focus({preventScroll:true});
-      const f=panel.closest('.face');if(f){f.scrollTo({top:f.scrollTop+panel.getBoundingClientRect().top-140,behavior:rm?'auto':'smooth'})}}
+      const f=panel.closest('.face');if(f){f.scrollLeft=0;f.scrollTo({top:f.scrollTop+panel.getBoundingClientRect().top-140,behavior:rm?'auto':'smooth'})}}
     orbs.addEventListener('click',e=>{const btn=e.target.closest('.orb-btn');if(!btn||orbs.classList.contains('busy'))return;
       const i=btn.dataset.orb,orb=btn.querySelector('.orb'),tex=orb.querySelector('.tex');
       if(rm){show(i);return}
@@ -1636,7 +1640,7 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
         if(k<SLOW+FAST)requestAnimationFrame(ramp)})(t0);
       orb.animate([{transform:'none'},{transform:'scale(1.06)',offset:.45},{transform:'scale(.97) rotate(-4deg)',offset:.8},{transform:'scale(1.02) rotate(3deg)'}],{duration:SLOW+FAST,easing:'ease-in'});
       setTimeout(()=>{
-        const fly=orb.animate([{transform:'scale(1.02)',filter:'blur(0)',opacity:1},{transform:'translateY(-30px) scale(.9)',filter:'blur(1px)',opacity:1,offset:.15},{transform:'translate(40vw,-110vh) scale(.25)',filter:'blur(6px)',opacity:0}],{duration:520,easing:'cubic-bezier(.6,0,.9,.4)',fill:'forwards'});
+        const fly=orb.animate([{transform:'scale(1.02)',filter:'blur(0)',opacity:1},{transform:'translateY(-30px) scale(.9)',filter:'blur(1px)',opacity:1,offset:.15},{transform:'translateY(-110vh) scale(.25)',filter:'blur(6px)',opacity:0}],{duration:520,easing:'cubic-bezier(.6,0,.9,.4)',fill:'forwards'});
         fly.onfinish=()=>{show(i);setTimeout(()=>{fly.cancel();if(spin)spin.playbackRate=1;btn.classList.remove('go');orbs.classList.remove('busy')},50)};
       },SLOW+FAST);
     });
