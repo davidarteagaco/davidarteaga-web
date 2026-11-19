@@ -604,6 +604,31 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
 .cases2 h3{font-size:20px;margin-top:4px}
 .cases2 .note{margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
 
+/* Dado sólido: caras blancas y negras, azul solo como acento */
+.dice .df{border-radius:3%;border:0;backface-visibility:visible;
+  background:linear-gradient(150deg,#ffffff 0%,#f1f3f7 55%,#dfe4ec 100%);color:#0a1020;
+  box-shadow:inset 0 0 0 1px rgba(10,16,32,.10),inset 0 0 0 calc(var(--s)*.018) #ffffff,inset 0 -18px 40px rgba(10,16,32,.10),inset 0 14px 28px rgba(255,255,255,.9)}
+.dice .df:nth-child(even){background:linear-gradient(150deg,#22262f 0%,#0d0f14 55%,#030406 100%);color:#fff;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),inset 0 0 0 calc(var(--s)*.018) #0b0d12,inset 0 -18px 40px rgba(0,0,0,.6),inset 0 14px 28px rgba(255,255,255,.06)}
+.dice .df::before{inset:8%;border:1px solid rgba(21,70,214,.55);border-radius:2%}
+.dice .df:nth-child(even)::before{border-color:rgba(107,147,255,.6)}
+.dice .df i{color:#1546d6}
+.dice .df:nth-child(even) i{color:#7fa2ff}
+.dice .df[data-i="4"],.dice .df[data-i="5"]{filter:brightness(.9)}
+.dice-shadow{background:radial-gradient(ellipse at center,rgba(0,0,0,.8),rgba(0,0,0,.35) 45%,transparent 72%);filter:blur(8px);height:56px}
+.mini .cb span{background:#fff!important;color:#0a1020!important;border:1px solid rgba(10,16,32,.25)!important}
+.mini .cb span:nth-child(even){background:#0b0d12!important;color:#fff!important;border-color:rgba(255,255,255,.25)!important}
+.big-cube button{background:linear-gradient(150deg,#ffffff,#e6eaf1)!important;color:#0a1020!important;border:1px solid rgba(10,16,32,.15)!important}
+.big-cube button:nth-child(even){background:linear-gradient(150deg,#22262f,#040507)!important;color:#fff!important;border-color:rgba(255,255,255,.12)!important}
+.big-cube button i{color:#1546d6!important}.big-cube button:nth-child(even) i{color:#7fa2ff!important}
+.big-cube button small{color:#566178!important}.big-cube button:nth-child(even) small{color:#aab5cc!important}
+.big-cube button:hover{outline:2px solid #1546d6;outline-offset:-2px}
+.dice .df{border:1px solid rgba(10,16,32,.22)}
+.dice .df:nth-child(even){border:1px solid rgba(255,255,255,.28)}
+.dice .df[data-i="3"]{background:linear-gradient(150deg,#363b47 0%,#1a1d25 60%,#0c0e13 100%)}
+.dice .df[data-i="5"]{filter:none;background:linear-gradient(150deg,#14171d 0%,#07080b 60%,#000 100%)}
+.dice .df[data-i="4"]{background:linear-gradient(150deg,#e9edf3 0%,#d9dee7 100%)}
+
 </style>
 <script type="importmap">{"imports":{"three":"/vendor/three-0.160.0.module.min.js"}}</script>
 </head>
@@ -1266,7 +1291,7 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
   }
   function flashSweep(){sweep.classList.remove('go');void sweep.offsetWidth;sweep.classList.add('go')}
   /* El dado: un cubo con el logo DA en sus seis caras */
-  const LOGO='<svg viewBox="0 0 120 120" aria-hidden="true"><rect x="1.5" y="1.5" width="117" height="117" fill="none" stroke="#cfe0ff" stroke-width="2.5"/><text x="60" y="76" text-anchor="middle" font-family="Sora,Segoe UI,sans-serif" font-weight="700" font-size="46" fill="#fff" letter-spacing="3">DA</text></svg>';
+  const LOGO='<svg viewBox="0 0 120 120" aria-hidden="true"><rect x="1.5" y="1.5" width="117" height="117" fill="none" stroke="currentColor" stroke-width="2.5"/><text x="60" y="76" text-anchor="middle" font-family="Sora,Segoe UI,sans-serif" font-weight="700" font-size="46" fill="currentColor" letter-spacing="3">DA</text></svg>';
   const diceStage=$('#dice-stage'),dice=$('#dice'),dshadow=$('#dice-shadow');
   const DPLACE=['','rotateY(90deg) ','rotateY(180deg) ','rotateY(-90deg) ','rotateX(90deg) ','rotateX(-90deg) '];
   faces.forEach((f,i)=>dice.insertAdjacentHTML('beforeend',`<div class="df" data-i="${i}">${LOGO}<i>Cara ${i+1}</i><b>${f.dataset.title}</b></div>`));
