@@ -629,6 +629,37 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
 .dice .df[data-i="5"]{filter:none;background:linear-gradient(150deg,#14171d 0%,#07080b 60%,#000 100%)}
 .dice .df[data-i="4"]{background:linear-gradient(150deg,#e9edf3 0%,#d9dee7 100%)}
 
+/* Tres esferas de reconocimiento */
+.orbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:34px;transition:opacity .5s}
+.orb-btn{background:none;border:0;padding:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:18px;color:var(--ink);font:inherit}
+.orb{--d:min(200px,26vw);width:var(--d);height:var(--d);border-radius:50%;position:relative;overflow:hidden;display:grid;place-items:center;
+  box-shadow:0 30px 50px -20px rgba(4,8,20,.45),0 0 0 1px rgba(10,16,32,.08);transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s;will-change:transform}
+.orb-btn:hover .orb,.orb-btn:focus-visible .orb{transform:translateY(-6px) scale(1.03);box-shadow:0 40px 60px -22px rgba(21,70,214,.45),0 0 0 1px rgba(21,70,214,.35)}
+.orb .tex{position:absolute;top:0;left:0;width:200%;height:100%;
+  background:repeating-linear-gradient(90deg,transparent 0 calc(var(--d)/8 - 1px),var(--mer) calc(var(--d)/8 - 1px) calc(var(--d)/8)),
+             repeating-linear-gradient(0deg,transparent 0 calc(var(--d)/6 - 1px),var(--par) calc(var(--d)/6 - 1px) calc(var(--d)/6));
+  animation:orbspin 9s linear infinite}
+@keyframes orbspin{to{transform:translateX(-50%)}}
+.orb .shine{position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.95) 0,rgba(255,255,255,.35) 14%,transparent 40%),
+             radial-gradient(circle at 50% 50%,transparent 52%,rgba(0,0,0,.38) 100%)}
+.orb b{position:relative;z-index:2;font:600 calc(var(--d)*.11)/1 var(--f-display);letter-spacing:.04em}
+.o-white{background:radial-gradient(circle at 35% 30%,#ffffff,#e7ebf2 60%,#c4ccd9);--mer:rgba(21,70,214,.28);--par:rgba(10,16,32,.10);color:#0a1020}
+.o-black{background:radial-gradient(circle at 35% 30%,#3a404c,#101318 60%,#000);--mer:rgba(143,176,255,.35);--par:rgba(255,255,255,.08);color:#fff}
+.o-blue{background:radial-gradient(circle at 35% 30%,#4d7bff,#1546d6 55%,#08227a);--mer:rgba(255,255,255,.35);--par:rgba(255,255,255,.12);color:#fff}
+.o-black .shine{background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.5) 0,rgba(255,255,255,.1) 16%,transparent 40%),radial-gradient(circle at 50% 50%,transparent 52%,rgba(0,0,0,.5) 100%)}
+.orb-l{display:flex;flex-direction:column;align-items:center;gap:6px;font:600 16px/1.2 var(--f-display);text-align:center}
+.orb-l i{font:500 11px/1 var(--f-mono);letter-spacing:.2em;color:var(--blue);font-style:normal}
+.orbs.busy .orb-btn{pointer-events:none}
+.orbs.busy .orb-btn:not(.go){opacity:.25;transition:opacity .4s}
+.cred-panel{margin-top:10px}
+.cred{border:1px solid var(--line);border-radius:18px;padding:clamp(22px,4vw,40px);background:var(--card);box-shadow:0 30px 60px -30px rgba(4,8,20,.25);display:flex;flex-direction:column;gap:14px;align-items:flex-start}
+.cred h3{font:600 clamp(22px,3vw,30px)/1.15 var(--f-display);margin:0}
+.cred p{margin:0;max-width:62ch}
+.cred .row{display:flex;flex-wrap:wrap;gap:12px;margin-top:6px}
+@media (max-width:640px){.orbs{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.orb{--d:26vw}.orb-l{font-size:13px}}
+@media (prefers-reduced-motion:reduce){.orb .tex{animation:none}}
+
 </style>
 <script type="importmap">{"imports":{"three":"/vendor/three-0.160.0.module.min.js"}}</script>
 </head>
@@ -729,6 +760,47 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
      <div data-r style="--d:2"><b data-count="500" data-suffix="+">500+</b><span>casos de gestión bancaria acompañados</span></div>
      <div data-r style="--d:3"><b data-count="12" data-suffix="+">12+</b><span>años asesorando empresas</span></div>
      <div data-r style="--d:4"><b data-count="2023" data-plain>2023</b><span>docente universitario en el ITM</span></div>
+    </div>
+   </div>
+  </section>
+
+
+  <section class="sec" id="reconocimiento" aria-labelledby="t-rec">
+   <div class="wrap">
+    <div class="sec-head">
+     <div class="stack">
+      <div class="room-label" data-r><i></i>Credenciales que puedes verificar</div>
+      <h2 class="h-xl split" id="t-rec">Tres lugares donde ya confían en mi trabajo.</h2>
+     </div>
+     <p class="lead" data-r style="--d:2">No tienes que creerme por lo que dice esta página. Toca cada esfera y mira dónde puedes comprobarlo.</p>
+    </div>
+    <div class="orbs" id="orbs">
+     <button class="orb-btn" data-orb="0" data-r style="--d:1" aria-controls="cred-panel"><span class="orb o-white"><span class="tex"></span><span class="shine"></span><b>FPS</b></span><span class="orb-l"><i>01</i>Extensionista nacional</span></button>
+     <button class="orb-btn" data-orb="1" data-r style="--d:2" aria-controls="cred-panel"><span class="orb o-black"><span class="tex"></span><span class="shine"></span><b>Banca</b></span><span class="orb-l"><i>02</i>Gerente bancario</span></button>
+     <button class="orb-btn" data-orb="2" data-r style="--d:3" aria-controls="cred-panel"><span class="orb o-blue"><span class="tex"></span><span class="shine"></span><b>ITM</b></span><span class="orb-l"><i>03</i>Docente universitario</span></button>
+    </div>
+    <div class="cred-panel" id="cred-panel" hidden aria-live="polite">
+     <article class="cred" data-cred="0" hidden>
+      <span class="tag">Fábricas de Productividad y Sostenibilidad</span>
+      <h3>Extensionista en la Base Nacional de Extensionistas</h3>
+      <p>Hago parte de la Base Nacional de Extensionistas del programa Fábricas de Productividad y Sostenibilidad, en las líneas de Gestión Comercial y Productividad Laboral. Llevo más de tres años acompañando empresas con la Cámara de Comercio de Medellín para Antioquia.</p>
+      <p class="muted">Cómo verificarlo: entra a la consulta pública y busca mi nombre, <b>David Alejandro Arteaga Taborda</b>.</p>
+      <div class="row"><a class="btn primary" href="https://colombiaproductiva.my.site.com/fabricasdeproductividad/s/consulta-publica-extensionistas" target="_blank" rel="noopener">Consultar la Base Nacional <span class="arr">↗</span></a><button class="btn orb-back">Ver las otras credenciales</button></div>
+     </article>
+     <article class="cred" data-cred="1" hidden>
+      <span class="tag">Banco Agrario de Colombia</span>
+      <h3>Gerente bancario</h3>
+      <p>Llevo más de 16 años en el sector financiero, en Banco Agrario, Itaú y AV Villas. Desde febrero de 2013 estoy en el Banco Agrario de Colombia, donde cumplo funciones de gerencia bancaria. He acompañado más de 500 casos de gestión bancaria: sé leer una empresa desde sus números, su flujo de caja y su capacidad de pago.</p>
+      <p class="muted">Esa mirada de banquero es la que llevo a cada intervención: vender más solo vale la pena si la empresa también cobra, ahorra y crece con orden.</p>
+      <div class="row"><button class="btn primary" data-open-annex>Ver productos del Banco Agrario</button><button class="btn orb-back">Ver las otras credenciales</button></div>
+     </article>
+     <article class="cred" data-cred="2" hidden>
+      <span class="tag">Instituto Tecnológico Metropolitano · ITM</span>
+      <h3>Docente de la Facultad de Ciencias Económicas y Administrativas</h3>
+      <p>Desde 2023 soy docente universitario en el ITM. Enseño a futuros administradores y profesionales en áreas como Gerencia de Proyectos, Matemáticas Financieras y Costos y Presupuestos.</p>
+      <p class="muted">Enseñar me obliga a explicar simple lo que en una empresa suele ser complejo. Por eso mis indicadores se entienden, y tu equipo los puede usar sin depender de mí.</p>
+      <div class="row"><button class="btn orb-back">Ver las otras credenciales</button></div>
+     </article>
     </div>
    </div>
   </section>
@@ -1212,6 +1284,7 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
       else if(kind==='roll'){whoosh(t,.5,240,620,.06);let k=t+.55;for(let i=0;i<9;i++){const len=.035,src=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();src.buffer=noiseBuf(.06);f.type='bandpass';f.frequency.value=1800+Math.random()*1600;f.Q.value=2.5;
           g.gain.setValueAtTime(.0001,k);g.gain.linearRampToValueAtTime(.11*(1-i/12),k+.004);g.gain.exponentialRampToValueAtTime(.0001,k+len);src.connect(f);f.connect(g);g.connect(a.destination);src.start(k);src.stop(k+.07);tone(k,140+Math.random()*60,.03,.08,'triangle');k+=.07+Math.random()*.11+i*.012}
         tone(t+1.9,90,.07,.35);const n=NOTES[(arg||1)-1];tone(t+1.95,n,.05,1.4);tone(t+2.03,n*1.5,.03,1.2);tone(t+2.12,n*2,.015,1)}
+      else if(kind==='launch'){whoosh(t,1.6,120,600,.06);whoosh(t+1.5,.6,400,4200,.12);tone(t+1.9,1046.5,.04,1);tone(t+1.98,1567.98,.03,.9)}
       else if(kind==='arrive'){whoosh(t,1.2,180,1200,.1);[0,4,7,12].forEach((s,i)=>tone(t+.6+i*.09,523.25*Math.pow(2,s/12),.04,1.4))}
       else{const notes=kind==='chime'?[659.25,987.77,1318.5]:[1320];notes.forEach((fq,k)=>tone(t+k*.09,fq,kind==='chime'?.05:.02,kind==='chime'?.9:.07))}
     }catch(e){}
@@ -1541,6 +1614,40 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
   const h=location.hash.slice(1);
   if(reduce||ALIAS[h]){finishIntro(true)}else{requestAnimationFrame(t=>{last=t;introLoop(t)})}
   addEventListener('resize',()=>{if(map&&!map.hidden)paintBig()});
+
+  /* Esferas: giro lento, aceleración y disparo */
+  (function(){
+    const orbs=document.getElementById('orbs'),panel=document.getElementById('cred-panel');if(!orbs)return;
+    const rm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function show(i){panel.hidden=false;panel.querySelectorAll('.cred').forEach(c=>c.hidden=c.dataset.cred!=i);
+      const c=panel.querySelector(`[data-cred="${i}"]`);c.animate([{opacity:0,transform:'translateY(40px) scale(.96)'},{opacity:1,transform:'none'}],{duration:620,easing:'cubic-bezier(.2,.8,.2,1)'});
+      orbs.hidden=true;c.querySelector('.btn').focus({preventScroll:true});
+      const f=panel.closest('.face');if(f){f.scrollTo({top:f.scrollTop+panel.getBoundingClientRect().top-140,behavior:rm?'auto':'smooth'})}}
+    orbs.addEventListener('click',e=>{const btn=e.target.closest('.orb-btn');if(!btn||orbs.classList.contains('busy'))return;
+      const i=btn.dataset.orb,orb=btn.querySelector('.orb'),tex=orb.querySelector('.tex');
+      if(rm){show(i);return}
+      orbs.classList.add('busy');btn.classList.add('go');sfx('launch');
+      if(navigator.vibrate&&matchMedia('(pointer:coarse)').matches){try{navigator.vibrate([6,300,8,200,10,120,30])}catch(_){}}
+      const spin=tex.getAnimations()[0];const t0=performance.now(),SLOW=1100,FAST=1000;
+      (function ramp(now){const k=now-t0;let r;
+        if(k<SLOW)r=1+k/SLOW*2;           // giro lento: 1x a 3x
+        else r=3+Math.pow((k-SLOW)/FAST,2.2)*60; // aceleración brusca: hasta ~63x
+        if(spin)spin.playbackRate=r;
+        if(k<SLOW+FAST)requestAnimationFrame(ramp)})(t0);
+      orb.animate([{transform:'none'},{transform:'scale(1.06)',offset:.45},{transform:'scale(.97) rotate(-4deg)',offset:.8},{transform:'scale(1.02) rotate(3deg)'}],{duration:SLOW+FAST,easing:'ease-in'});
+      setTimeout(()=>{
+        const fly=orb.animate([{transform:'scale(1.02)',filter:'blur(0)',opacity:1},{transform:'translateY(-30px) scale(.9)',filter:'blur(1px)',opacity:1,offset:.15},{transform:'translate(40vw,-110vh) scale(.25)',filter:'blur(6px)',opacity:0}],{duration:520,easing:'cubic-bezier(.6,0,.9,.4)',fill:'forwards'});
+        fly.onfinish=()=>{show(i);setTimeout(()=>{fly.cancel();if(spin)spin.playbackRate=1;btn.classList.remove('go');orbs.classList.remove('busy')},50)};
+      },SLOW+FAST);
+    });
+    panel.addEventListener('click',e=>{
+      if(e.target.closest('[data-open-annex]')){document.getElementById('annex').hidden=false;return}
+      if(!e.target.closest('.orb-back'))return;
+      panel.hidden=true;orbs.hidden=false;
+      orbs.querySelectorAll('.orb').forEach((o,k)=>o.animate([{transform:'translateY(60vh) scale(.4)',opacity:0},{transform:'none',opacity:1}],{duration:700,delay:k*90,easing:'cubic-bezier(.2,.9,.25,1.15)',fill:'backwards'}));
+      orbs.querySelector('.orb-btn').focus({preventScroll:true});
+    });
+  })();
 })();
 
 </script>
