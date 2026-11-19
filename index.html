@@ -51,8 +51,7 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-<style>
-:root{
+<style>:root{
   --bg:#ffffff; --bg2:#f3f6fb; --card:#ffffff; --ink:#0a1020; --muted:#536079; --line:#dde3ee;
   --blue:#1546d6; --blue2:#2f7bff; --cyan:#38b6ff; --soft:rgba(21,70,214,.08); --glow:rgba(47,123,255,.22);
   --night:#04070f; --night2:#0a1226; --on-night:#eef3ff; --on-night-muted:#9aa8c7; --night-line:rgba(255,255,255,.12);
@@ -73,7 +72,8 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:auto;-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.65;overflow-x:hidden}
+html,body{height:100%}
+body{margin:0;background:#03050b;color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.65;overflow:hidden;overscroll-behavior:none}
 img{max-width:100%}
 a{color:var(--blue)}
 :focus-visible{outline:2px solid var(--blue2);outline-offset:3px;border-radius:6px}
@@ -115,8 +115,9 @@ body:not(.in-intro) .bar{background:color-mix(in srgb,var(--bg) 82%,transparent)
 .sheet .close{position:absolute;top:calc(14px + env(safe-area-inset-top,0px));right:var(--gut)}
 
 /* ---------- Entrada cinematográfica ---------- */
-.intro{position:relative;height:420vh;background:var(--night)}
-.stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;color:#fff}
+.intro{position:fixed;inset:0;z-index:30;background:var(--night);transition:opacity 1s ease,visibility 1s}
+.intro.gone{opacity:0;visibility:hidden;pointer-events:none}
+.stage{position:absolute;inset:0;overflow:hidden;color:#fff;touch-action:none}
 #scene{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s ease}
 #scene.ready{opacity:1}
 .poster{position:absolute;inset:0;transition:opacity 1.2s ease}
@@ -420,500 +421,563 @@ input,select,textarea{border-color:var(--hair);box-shadow:0 1px 2px rgba(10,20,5
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
   [data-r],.split .w>span{opacity:1!important;transform:none!important}
-  .intro{display:none}
 }
+
+/* ---------- El cubo: seis caras ---------- */
+.world{position:fixed;inset:0;overflow:hidden;perspective:1300px;perspective-origin:50% 50%;
+  background:radial-gradient(ellipse 70% 55% at 50% 58%,#10214a 0%,#060b1a 55%,#02040a 100%)}
+.world::before{content:"";position:absolute;left:-50%;right:-50%;bottom:-10%;height:60%;pointer-events:none;
+  background-image:linear-gradient(rgba(143,176,255,.14) 1px,transparent 1px),linear-gradient(90deg,rgba(143,176,255,.14) 1px,transparent 1px);background-size:80px 80px;
+  transform:perspective(600px) rotateX(70deg);transform-origin:50% 0;-webkit-mask-image:linear-gradient(transparent,#000 40%);mask-image:linear-gradient(transparent,#000 40%)}
+.world::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 45%,rgba(91,140,255,.18),transparent 45%)}
+.rig{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
+.face{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;
+  background:var(--bg);backface-visibility:hidden;-webkit-backface-visibility:hidden;outline:1px solid transparent;scroll-behavior:smooth}
+.face[hidden]{display:none!important}
+.face.dark-face{background:var(--night)}
+.face .shade{position:sticky;top:0;height:0;z-index:5;pointer-events:none}
+.face .shade::before{content:"";position:absolute;left:0;right:0;top:0;height:100vh;height:100dvh;background:#02040a;opacity:var(--shade,0);transition:none}
+body.turning .face{outline:1px solid rgba(143,176,255,.55);box-shadow:0 0 0 1px rgba(143,176,255,.25),0 0 120px rgba(60,110,255,.35);overflow:hidden}
+body.turning .bar,body.turning .dock{pointer-events:none}
+.sweep{position:fixed;inset:0;z-index:45;pointer-events:none;opacity:0;
+  background:linear-gradient(105deg,transparent 35%,rgba(160,195,255,.28) 48%,rgba(255,255,255,.4) 50%,rgba(160,195,255,.28) 52%,transparent 65%);background-size:250% 100%}
+.sweep.go{animation:sweep 1.1s cubic-bezier(.22,1,.36,1)}
+@keyframes sweep{0%{opacity:1;background-position:120% 0}100%{opacity:0;background-position:-30% 0}}
+
+.face-pad{padding-top:calc(76px + env(safe-area-inset-top,0px));padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+.face .sec{padding-top:clamp(56px,8vw,110px);padding-bottom:clamp(56px,8vw,110px)}
+.face .sec:first-child{padding-top:clamp(36px,6vw,80px)}
+.face-num{font:500 11px/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+
+/* Encabezado de cara */
+.bar{background:color-mix(in srgb,var(--bg) 78%,transparent)!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--hair)!important;color:var(--ink)!important}
+body.in-intro .bar{background:transparent!important;border-color:transparent!important;color:#fff!important;backdrop-filter:none}
+body.on-dark .bar{background:rgba(4,7,15,.72)!important;color:#fff!important;border-bottom-color:rgba(255,255,255,.08)!important}
+.where{display:flex;align-items:center;gap:10px;font:500 12px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase}
+.where b{font:600 14px/1 var(--f-display);letter-spacing:0;text-transform:none}
+body.in-intro .where{visibility:hidden}
+
+/* Dock de navegación */
+.dock{position:fixed;z-index:50;left:50%;bottom:calc(14px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;align-items:center;gap:6px;
+  padding:6px;border-radius:999px;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border:1px solid var(--hair);box-shadow:0 20px 50px -20px rgba(5,15,50,.45),0 1px 0 rgba(255,255,255,.6) inset;max-width:calc(100vw - 24px);transition:opacity .6s,transform .6s var(--ease)}
+body.in-intro .dock{opacity:0;transform:translate(-50%,30px);pointer-events:none}
+body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.1);box-shadow:0 20px 50px -20px #000,0 1px 0 rgba(255,255,255,.06) inset;color:#fff}
+.dock button{border:0;background:none;color:inherit;cursor:pointer;font:600 13px/1 var(--f-body);border-radius:999px;display:flex;align-items:center;gap:8px;padding:10px 12px;white-space:nowrap;transition:background .25s,color .25s}
+.dock{color:var(--ink)}
+.dock .pill i{font:500 10.5px/1 var(--f-mono);opacity:.6;font-style:normal}
+.dock .pill:hover{background:var(--soft)}
+.dock .pill[aria-current="true"]{background:var(--blue);color:#fff}
+.dock .pill[aria-current="true"] i{opacity:.85}
+.dock .arrow{width:40px;height:40px;justify-content:center;padding:0;border:1px solid var(--hair);font-size:16px}
+.dock .arrow:hover{border-color:var(--blue)}
+.mini{width:40px;height:40px;perspective:200px;padding:0!important;justify-content:center}
+.mini .cb{width:20px;height:20px;position:relative;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.7,0,.2,1)}
+.mini .cb span{position:absolute;inset:0;border:1px solid currentColor;display:grid;place-items:center;font:600 9px/1 var(--f-mono);background:color-mix(in srgb,var(--blue) 18%,transparent)}
+@media (max-width:900px){.dock .pill span{display:none}.dock .pill[aria-current="true"] span{display:inline}.dock button{padding:10px}}
+@media (max-width:430px){.dock .arrow{display:none}.dock .pill{padding:9px 9px}}
+
+/* Mapa del cubo */
+.map{position:fixed;inset:0;z-index:65;display:grid;place-items:center;background:rgba(2,4,10,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:#fff;padding:16px}
+.map-in{display:flex;flex-direction:column;align-items:center;gap:26px;max-width:720px;width:100%}
+.map h2{font:600 clamp(24px,3vw,32px)/1.2 var(--f-display);text-align:center}
+.map p.hint2{font:500 11px/1.4 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:#9fb3df;text-align:center}
+.big-cube-wrap{width:240px;height:240px;margin:40px 0;perspective:900px;touch-action:none;cursor:grab}
+.big-cube{width:100%;height:100%;position:relative;transform-style:preserve-3d}
+.big-cube button{position:absolute;inset:0;border:1px solid rgba(143,176,255,.7);background:linear-gradient(160deg,rgba(30,60,140,.55),rgba(5,10,25,.85));color:#fff;cursor:pointer;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;font:600 18px/1.2 var(--f-display);text-align:center;padding:16px;backface-visibility:hidden}
+.big-cube button i{font:500 10.5px/1 var(--f-mono);letter-spacing:.18em;color:#8fb0ff;font-style:normal}
+.big-cube button small{font:400 12px/1.4 var(--f-body);color:#b8c7ea}
+.big-cube button:hover{background:linear-gradient(160deg,rgba(47,123,255,.8),rgba(10,20,50,.9))}
+.map-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%}
+.map-list button{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.04);color:#fff;border-radius:14px;padding:12px;text-align:left;cursor:pointer;font:600 14px/1.2 var(--f-display)}
+.map-list button i{display:block;font:500 10px/1 var(--f-mono);letter-spacing:.14em;color:#8fb0ff;font-style:normal;margin-bottom:6px}
+.map-list button[aria-current="true"]{border-color:#8fb0ff;background:rgba(91,140,255,.18)}
+@media (max-width:520px){.map-list{grid-template-columns:repeat(2,minmax(0,1fr))}.big-cube-wrap{width:190px;height:190px}}
+
+/* Frases que golpean */
+.punch{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media (max-width:860px){.punch{grid-template-columns:minmax(0,1fr)}}
+.punch .card p.big{font:600 clamp(19px,1.9vw,23px)/1.3 var(--f-display);letter-spacing:-.015em}
+.next-face{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-top:1px solid var(--hair);padding-top:28px;margin-top:20px}
+.next-face b{font:600 clamp(20px,2.2vw,28px)/1.2 var(--f-display)}
+.dark-face .next-face{border-color:rgba(255,255,255,.1)}
+.footer-mini{border-top:1px solid rgba(255,255,255,.1);margin-top:48px;padding-top:24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:#8d9abb}
+.footer-mini a,.footer-mini button{color:#cfd8ec;text-decoration:none;background:none;border:0;font:inherit;cursor:pointer;padding:0}
+.footer-mini a:hover,.footer-mini button:hover{color:#8fb0ff}
+.footer-mini nav{display:flex;gap:16px;flex-wrap:wrap}
+
+/* Entrada sin scroll */
+.intro-ctl{justify-content:flex-end}
+.intro-ctl .hint{margin-right:auto}
+.drag-hint{position:absolute;z-index:5;left:50%;bottom:calc(5vh + 80px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);font:500 10.5px/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:#c9d6f2;opacity:0}
+@media (max-width:640px){.intro-ctl{flex-direction:column;align-items:stretch}.intro-ctl .row{flex-direction:column;align-items:stretch}.intro-ctl .hint{margin:0 auto 4px}.cap-1{bottom:calc(30vh + env(safe-area-inset-bottom,0px))}}
 </style>
 <script type="importmap">{"imports":{"three":"/vendor/three-0.160.0.module.min.js"}}</script>
 </head>
 <body class="in-intro">
 
 <header class="bar" id="bar">
-  <a class="brand" href="#inicio" aria-label="David Arteaga, ir a la recepción">
+  <a class="brand" href="#inicio" aria-label="David Arteaga, ir a la bienvenida">
     <span class="mono">DA</span>
     <span><b>David Arteaga®</b><small>Vender más y producir mejor</small></span>
   </a>
-  <nav class="nav" aria-label="Secciones">
-    <a href="#servicios">Cómo te ayudo</a>
-    <a href="#metodo">Método</a>
-    <a href="#herramientas">Herramientas</a>
-    <a href="#casos">Casos</a>
-    <a href="#quien-soy">Quién soy</a>
-    <a href="#programa">Programa</a>
-    <a href="#preguntas">Preguntas</a>
-  </nav>
+  <div class="where" aria-live="polite"><span id="where-n">1 / 6</span><b id="where-t">Bienvenida</b></div>
   <div class="bar-actions">
-    <button class="btn ghost sm hide-xs" id="snd" aria-pressed="false" title="Activar o desactivar sonido ambiente">Sonido: no</button>
+    <button class="btn ghost sm hide-xs" id="snd" aria-pressed="false" title="Activar o desactivar el sonido">Sonido: no</button>
     <a class="btn primary sm" href="#asesoria">Asesoría gratuita</a>
-    <button class="btn ghost sm menu-btn" id="menu-btn" aria-expanded="false" aria-controls="sheet">Menú</button>
   </div>
 </header>
 
-<div class="sheet" id="sheet" hidden>
-  <button class="btn sm close" id="menu-close">Cerrar</button>
-  <a href="#inicio">Recepción <small>Inicio</small></a>
-  <a href="#servicios">Cómo te ayudo <small>Servicios</small></a>
-  <a href="#metodo">Método <small>12 semanas</small></a>
-  <a href="#herramientas">Herramientas <small>Calculadoras</small></a>
-  <a href="#casos">Casos <small>Resultados</small></a>
-  <a href="#quien-soy">Quién soy <small>Despacho</small></a>
-  <a href="#programa">Programa <small>Fábricas</small></a>
-  <a href="#preguntas">Preguntas <small>Dudas</small></a>
-  <a href="#asesoria">Asesoría gratuita <small>30 min</small></a>
-  <button class="btn ghost" id="snd2" style="margin-top:20px;align-self:flex-start">Sonido: no</button>
-</div>
-
-<!-- ============ ENTRADA ============ -->
+<!-- ============ ENTRADA A LA CASA ============ -->
 <section class="intro" id="intro" aria-label="Entrada a la oficina">
-  <div class="stage">
+  <div class="stage" id="stage">
     <div class="poster" id="poster" aria-hidden="true">
       <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
         <defs>
-          <linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#061433"/><stop offset=".55" stop-color="#3d5f9e"/><stop offset="1" stop-color="#c7d6ee"/></linearGradient>
-          <linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e4a3e"/><stop offset="1" stop-color="#0f1b17"/></linearGradient>
+          <linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0a1f4d"/><stop offset=".6" stop-color="#6b8cc8"/><stop offset="1" stop-color="#c9d6ec"/></linearGradient>
+          <linearGradient id="gr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a4438"/><stop offset="1" stop-color="#0f1b17"/></linearGradient>
           <linearGradient id="dl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#eaf2ff"/><stop offset="1" stop-color="#8fb0ff"/></linearGradient>
         </defs>
         <rect width="1600" height="900" fill="url(#sk)"/>
-        <path d="M0 560 L180 470 L330 520 L520 430 L700 505 L880 440 L1080 515 L1260 450 L1420 500 L1600 460 V900 H0Z" fill="#58739f" opacity=".7"/>
-        <path d="M0 600 L240 540 L420 585 L640 535 L860 590 L1080 545 L1320 595 L1600 550 V900 H0Z" fill="#3c5a6e" opacity=".85"/>
+        <path d="M0 600 Q300 520 600 575 T1200 560 T1600 570 V900 H0Z" fill="#7d93b8" opacity=".75"/>
         <rect y="610" width="1600" height="290" fill="url(#gr)"/>
-        <g fill="#16291f">
-          <path d="M120 640 l26 -150 l26 150z"/><path d="M200 650 l30 -190 l30 190z"/><path d="M1340 650 l30 -190 l30 190z"/><path d="M1430 640 l26 -150 l26 150z"/>
-          <circle cx="330" cy="585" r="48"/><circle cx="380" cy="600" r="40"/><circle cx="1250" cy="590" r="50"/><circle cx="1200" cy="605" r="38"/>
-        </g>
-        <rect x="570" y="300" width="460" height="330" fill="#0b0f18"/>
-        <rect x="570" y="300" width="460" height="6" fill="#dfe8ff" opacity=".7"/>
-        <rect x="725" y="380" width="150" height="250" fill="url(#dl)"/>
-        <rect x="725" y="380" width="72" height="250" fill="#0d1526"/><rect x="803" y="380" width="72" height="250" fill="#0d1526"/>
+        <g fill="#1d3a2e"><path d="M140 650 l26 -170 l26 170z"/><path d="M220 655 l30 -200 l30 200z"/><path d="M1320 655 l30 -200 l30 200z"/><path d="M1410 650 l26 -170 l26 170z"/></g>
+        <rect x="570" y="300" width="460" height="330" fill="#0c0f16"/><rect x="560" y="292" width="480" height="10" fill="#eef2f8"/>
+        <rect x="725" y="380" width="150" height="250" fill="url(#dl)"/><rect x="725" y="380" width="72" height="250" fill="#0d1526"/><rect x="803" y="380" width="72" height="250" fill="#0d1526"/>
         <text x="800" y="355" text-anchor="middle" fill="#fff" font-family="Sora,sans-serif" font-weight="700" font-size="30" letter-spacing="4">DA</text>
-        <path d="M760 900 L780 630 H820 L840 900Z" fill="#cfd6e2" opacity=".55"/>
-        <rect x="620" y="640" width="130" height="260" fill="#0b1a33" opacity=".7"/><rect x="850" y="640" width="130" height="260" fill="#0b1a33" opacity=".7"/>
+        <path d="M760 900 L782 630 H818 L840 900Z" fill="#d7dce5" opacity=".6"/>
       </svg>
     </div>
     <canvas id="scene" aria-hidden="true"></canvas>
     <div class="grain" aria-hidden="true"></div>
     <div class="vignette" aria-hidden="true"></div>
     <div class="bars-cine t" aria-hidden="true"></div><div class="bars-cine b" aria-hidden="true"></div>
-
     <div class="progress-ring" aria-hidden="true"><span id="pr-label">Afuera</span><span class="track"><span class="fill" id="pr-fill"></span></span></div>
 
     <div class="cap cap-1" id="cap1">
       <div class="kick">Medellín · Caucasia · Antioquia</div>
       <p class="big">Bienvenido.<br><b>Pasa, la puerta está abierta.</b></p>
-      <p class="sub">Esta es la oficina donde las empresas aprenden a vender más y a producir mejor. Desliza para entrar.</p>
+      <p class="sub">Esta es la casa donde las empresas aprenden a vender más y a producir mejor.</p>
     </div>
     <div class="cap cap-2" id="cap2">
       <div class="kick">Método · Estrategia · Ejecución</div>
-      <p class="big">Aquí hablamos de <b>ventas, equipos y números.</b></p>
-      <p class="sub">Con calma, con datos y con un plan que tu gente pueda cumplir.</p>
+      <p class="big">Adentro hay <b>seis salas.</b> Cada una resuelve algo.</p>
+      <p class="sub">Ventas, equipo, números, programa y una conversación contigo.</p>
     </div>
 
-    <div class="intro-ctl">
-      <div class="hint"><span class="mouse" aria-hidden="true"></span>Desliza para entrar</div>
+    <div class="intro-ctl" id="intro-ctl">
+      <div class="hint"><span class="mouse" aria-hidden="true"></span>Desliza o gira la rueda para avanzar</div>
       <div class="row">
         <button class="btn ghost sm" id="skip">Saltar la entrada</button>
-        <button class="btn primary" id="enter">Entrar a la oficina <span class="arr">→</span></button>
+        <button class="btn ghost" id="enter-quiet">Entrar en silencio</button>
+        <button class="btn primary" id="enter">Entrar con sonido <span class="arr">→</span></button>
       </div>
     </div>
     <div class="flash" id="flash"></div>
   </div>
 </section>
 
-<main id="main">
+<!-- ============ EL CUBO ============ -->
+<div class="world" id="world">
+<div class="rig" id="rig">
 
-<!-- ============ RECEPCIÓN ============ -->
-<section class="sec" id="inicio" aria-labelledby="t-inicio">
-  <div class="spot" aria-hidden="true"></div>
-  <div class="wrap">
-    <div class="room-label" data-r><i></i>Recepción</div>
-    <div class="hero" id="hero">
-      <div class="stack" style="gap:26px">
-        <p class="eyebrow" data-r style="--d:1">Extensionista en Gestión Comercial y Productividad Laboral</p>
-        <h1 class="h-hero split" id="t-inicio">Hola, soy David. Ayudo a las empresas a vender más y producir mejor.</h1>
-        <p class="lead" data-r style="--d:3">Llevo más de 16 años en la banca conociendo de cerca cómo funcionan las empresas: lo que les da resultado y lo que les cuesta dinero sin que lo noten. Hoy uso esa experiencia para sentarme contigo, revisar tus números y armar un plan que tu equipo sí pueda cumplir.</p>
-        <div class="row" data-r style="--d:4">
-          <a class="btn primary" href="#asesoria" data-mag>Conversemos 30 minutos, sin costo <span class="arr">→</span></a>
-          <a class="btn" href="#servicios" data-mag>Ver cómo trabajo</a>
-        </div>
-        <p class="note" data-r style="--d:5">Sábados presenciales en Medellín, el Valle de Aburrá y Caucasia. Entre semana, por videollamada.</p>
+<!-- CARA 1 · BIENVENIDA -->
+<article class="face" id="f1" data-face="1" data-title="Bienvenida" aria-label="Cara 1: Bienvenida">
+ <div class="shade"></div>
+ <div class="face-pad">
+  <section class="sec" aria-labelledby="t-inicio">
+   <div class="spot" aria-hidden="true"></div>
+   <div class="wrap">
+    <div class="room-label" data-r><i></i>Cara 1 · Bienvenida</div>
+    <div class="hero">
+     <div class="stack" style="gap:24px">
+      <p class="eyebrow" data-r style="--d:1">Extensionista en Gestión Comercial y Productividad Laboral</p>
+      <h1 class="h-hero split" id="t-inicio">Si quieres vender más con lo que ya tienes, yo te enseño.</h1>
+      <p class="lead" data-r style="--d:3">Soy David Arteaga. Llevo más de 16 años en la banca viendo por dentro cómo funcionan las empresas: lo que les deja plata y lo que se la come sin que nadie lo note. Hoy me siento con empresarios como tú a revisar los números y a armar un plan que tu gente sí pueda cumplir.</p>
+      <div class="row" data-r style="--d:4">
+       <a class="btn primary" href="#asesoria" data-mag>Quiero mi asesoría gratuita <span class="arr">→</span></a>
+       <button class="btn" data-next data-mag>Recorrer la casa <span class="arr">→</span></button>
       </div>
-      <div class="portrait" id="portrait" data-r="scale" style="--d:2" aria-label="Espacio para fotografía profesional">
-        <span class="chip"><i></i>Atención presencial los sábados</span>
-        <span class="da">DA</span>
-        <span class="ph">Fotografía profesional</span>
-      </div>
+      <p class="note" data-r style="--d:5">Sábados presenciales en Medellín, el Valle de Aburrá y Caucasia. Entre semana, por videollamada.</p>
+     </div>
+     <div class="portrait" id="portrait" data-r="scale" style="--d:2" aria-label="Espacio para fotografía profesional">
+      <span class="chip"><i></i>Atención presencial los sábados</span>
+      <span class="da">DA</span>
+      <span class="ph">Fotografía profesional</span>
+     </div>
     </div>
     <div class="stats">
-      <div data-r style="--d:1"><b data-count="16" data-suffix="+">0</b><span>años en el sector financiero</span></div>
-      <div data-r style="--d:2"><b data-count="500" data-suffix="+">0</b><span>casos de gestión bancaria acompañados</span></div>
-      <div data-r style="--d:3"><b data-count="12" data-suffix="+">0</b><span>años asesorando empresas</span></div>
-      <div data-r style="--d:4"><b data-count="2023" data-plain>0</b><span>docente universitario en el ITM</span></div>
+     <div data-r style="--d:1"><b data-count="16" data-suffix="+">16+</b><span>años en el sector financiero</span></div>
+     <div data-r style="--d:2"><b data-count="500" data-suffix="+">500+</b><span>casos de gestión bancaria acompañados</span></div>
+     <div data-r style="--d:3"><b data-count="12" data-suffix="+">12+</b><span>años asesorando empresas</span></div>
+     <div data-r style="--d:4"><b data-count="2023" data-plain>2023</b><span>docente universitario en el ITM</span></div>
     </div>
-  </div>
-</section>
+   </div>
+  </section>
 
-<div class="ribbon" aria-hidden="true"><div class="track">
-  <span>Vender más</span><span>Producir mejor</span><span>Gestión comercial</span><span>Productividad laboral</span><span>Indicadores que se entienden</span><span>Equipos que rinden</span><span>Método, estrategia y ejecución</span>
-  <span>Vender más</span><span>Producir mejor</span><span>Gestión comercial</span><span>Productividad laboral</span><span>Indicadores que se entienden</span><span>Equipos que rinden</span><span>Método, estrategia y ejecución</span>
-</div></div>
-
-<!-- ============ SALA DE ESPERA ============ -->
-<section class="sec alt" aria-labelledby="t-frases">
-  <div class="wrap">
+  <section class="sec alt" aria-labelledby="t-preg">
+   <div class="wrap">
     <div class="sec-head">
-      <div>
-        <div class="room-label" data-r><i></i>Sala de espera</div>
-        <h2 class="h-xl split" id="t-frases">¿Te suena alguna de estas frases?</h2>
-      </div>
-      <p class="lead" data-r style="--d:2">Son situaciones muy comunes en las pymes, y tienen solución. Casi nunca hace falta trabajar más horas. Hace falta medir bien, ordenar y decidir mejor.</p>
+     <h2 class="h-xl split" id="t-preg">Tres preguntas incómodas.</h2>
+     <p class="lead" data-r style="--d:2">Si dudaste en alguna, no es culpa de nadie. Es falta de medición, y eso tiene arreglo.</p>
     </div>
     <div class="quotes">
-      <article class="quote" data-r style="--d:1"><q>Vendemos bien, pero a fin de mes la plata no se ve.</q><span class="tag">Gestión Comercial</span></article>
-      <article class="quote" data-r style="--d:2"><q>Mi equipo no para en todo el día y aun así no damos abasto.</q><span class="tag">Productividad Laboral</span></article>
-      <article class="quote" data-r style="--d:3"><q>Tengo los datos en Excel, pero no sé qué decisión tomar con ellos.</q><span class="tag">Indicadores</span></article>
+     <article class="quote" data-r style="--d:1"><q>¿Tu gente sí es productiva, o no sabes si te dicen la verdad?</q><span class="tag">Producir mejor</span></article>
+     <article class="quote" data-r style="--d:2"><q>¿Vendes más que el año pasado, pero te queda menos plata?</q><span class="tag">Vender más</span></article>
+     <article class="quote" data-r style="--d:3"><q>¿Sabes cuánto te cuesta cada hora que tu equipo gasta en lo que no le toca?</q><span class="tag">Números</span></article>
     </div>
-  </div>
-</section>
+   </div>
+  </section>
 
-<!-- ============ SERVICIOS ============ -->
-<section class="sec dark" id="servicios" aria-labelledby="t-serv">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <div class="room-label" data-r><i></i>Salas de trabajo</div>
-        <h2 class="h-xl split" id="t-serv">Dos formas de ayudarte, un mismo objetivo.</h2>
+  <section class="sec" id="quien-soy" aria-labelledby="t-quien">
+   <div class="wrap">
+    <div class="about">
+     <div class="stack" style="gap:22px">
+      <div class="room-label" data-r><i></i>Quién te recibe</div>
+      <h2 class="h-xl split" id="t-quien">Leo tu empresa como la lee un banco y te la explico como un profesor.</h2>
+      <div class="story lead" data-r style="--d:2">
+       <p>Empecé en la banca hace más de 16 años, en Banco Agrario, Itaú y AV Villas. Desde 2013 estoy en el Banco Agrario, donde hoy cumplo funciones de gerencia bancaria. He acompañado más de 500 casos de gestión bancaria y llevo más de 12 años asesorando empresas.</p>
+       <p>En 2023 empecé a dar clases en el ITM y confirmé algo que ya sabía: un indicador solo sirve si la gente lo entiende y lo usa. Por eso mi trabajo no termina en un informe. Termina cuando tu equipo puede seguir sin mí.</p>
       </div>
-      <p class="lead" data-r style="--d:2">Trabajo en las dos líneas del programa Fábricas de Productividad que mejor conozco. Puedes empezar por la que más te duela hoy.</p>
+     </div>
+     <div class="card" data-r style="--d:3">
+      <span class="proto">Formación</span>
+      <ul class="clean edu" style="margin-top:6px">
+       <li><b>Ingeniero Administrador</b><span>Universidad Nacional de Colombia</span></li>
+       <li><b>Especialista en Alta Gerencia</b><span>Universidad de Medellín</span></li>
+       <li><b>MBA en Administración</b><span>Universidad de Medellín</span></li>
+       <li style="border-bottom:0"><b>Formación complementaria</b><span>Agilidad, inteligencia artificial aplicada a los negocios, pedagogía y gestión consultiva financiera agropecuaria</span></li>
+      </ul>
+     </div>
+    </div>
+    <div class="values">
+     <div class="card" data-r style="--d:1"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span><h3>Primero los datos</h3><p class="muted">Después las opiniones. Cada decisión parte de una línea base real.</p></div>
+     <div class="card" data-r style="--d:2"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></span><h3>Cada tarea con dueño</h3><p class="muted">Ninguna recomendación queda sin responsable ni fecha.</p></div>
+     <div class="card" data-r style="--d:3"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg></span><h3>Que funcione sin mí</h3><p class="muted">Si el resultado depende del consultor, el trabajo no está terminado.</p></div>
+    </div>
+    <div class="next-face"><span><span class="face-num">Siguiente sala · 2 de 6</span><br><b>Vender más</b></span><button class="btn primary" data-go="2">Girar el cubo <span class="arr">→</span></button></div>
+   </div>
+  </section>
+ </div>
+</article>
+
+<!-- CARA 2 · VENDER MÁS -->
+<article class="face dark-face" id="f2" data-face="2" data-title="Vender más" data-dark aria-label="Cara 2: Vender más" hidden>
+ <div class="shade"></div>
+ <div class="face-pad">
+  <section class="sec dark" aria-labelledby="t-ventas">
+   <div class="wrap">
+    <div class="sec-head">
+     <div>
+      <div class="room-label" data-r><i></i>Cara 2 · Sala comercial</div>
+      <h2 class="h-xl split" id="t-ventas">No te faltan clientes. Te falta saber cuáles te dejan plata.</h2>
+     </div>
+     <p class="lead" data-r style="--d:2">Vender más no siempre es salir a buscar clientes nuevos. Casi siempre empieza por conocer a los que ya tienes, cerrar las fugas del embudo y cobrar a tiempo.</p>
+    </div>
+    <div class="punch">
+     <div class="card" data-r style="--d:1"><span class="eyebrow">Clientes</span><p class="big" style="margin-top:12px">Tus mejores clientes ya te compran. Hay que encontrarlos y cuidarlos.</p></div>
+     <div class="card" data-r style="--d:2"><span class="eyebrow">Embudo</span><p class="big" style="margin-top:12px">Si no sabes dónde se te caen las ventas, cualquier esfuerzo comercial va a ciegas.</p></div>
+     <div class="card" data-r style="--d:3"><span class="eyebrow">Cartera</span><p class="big" style="margin-top:12px">Una venta que no se cobra no es una venta. Es un préstamo sin intereses.</p></div>
+    </div>
+    <div class="svc" style="margin-top:22px">
+     <article class="svc-card" id="gestion-comercial" data-tilt data-r style="--d:1">
+      <span class="num">Gestión Comercial · Lo que revisamos</span>
+      <ul class="clean" style="color:#dbe3f5"><li>Clientes y segmentos: quién compra, cuánto y cada cuánto</li><li>Propuesta de valor y portafolio</li><li>Embudo comercial y conversión</li><li>Ticket promedio y recompra</li><li>Cartera y presupuesto comercial</li></ul>
+     </article>
+     <article class="svc-card" data-tilt data-r style="--d:2">
+      <span class="num">Lo que te llevas</span>
+      <ul class="clean" style="color:#dbe3f5"><li>Diagnóstico comercial con tus propios datos</li><li>Plan con responsables y fechas</li><li>Cinco indicadores medidos al inicio y al cierre: dos fijos del programa y tres acordados contigo</li><li>Rutinas comerciales que tu equipo puede sostener</li></ul>
+     </article>
+    </div>
+   </div>
+  </section>
+  <section class="sec" id="casos" aria-labelledby="t-casos">
+   <div class="wrap">
+    <div class="case">
+     <div class="stack">
+      <div class="room-label" data-r><i></i>Un caso real</div>
+      <h2 class="h-l split" id="t-casos">Esto pasó en una empresa de Medellín.</h2>
+      <p class="lead" data-r style="--d:2"><b style="color:var(--ink)">Vimar Vidrios Medellín S.A.S.</b> comercializa, transforma e instala vidrios. Trabajamos juntos la línea de Gestión Comercial en el ciclo 7 del programa Fábricas de Productividad y Sostenibilidad: ordenamos la información de ventas, definimos indicadores y acordamos rutinas con el equipo.</p>
+      <div class="row" data-r style="--d:3"><span class="tag">Gestión Comercial</span><span class="tag">Ciclo 7</span><span class="tag">Medellín</span></div>
+      <p class="note" data-r style="--d:4">Resultado medido con la metodología del programa. Publicado con autorización de la empresa.</p>
+     </div>
+     <div class="case-kpi" data-r="scale" style="--d:2">
+      <svg viewBox="0 0 200 120" aria-hidden="true"><path class="case-line" d="M0 110 C40 100 60 90 90 80 S140 40 200 10" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="320" stroke-dashoffset="320"/></svg>
+      <div class="n"><span data-count="32" data-prefix="+" data-suffix="%">+32%</span></div>
+      <p class="l">de crecimiento en ventas durante la intervención, según la medición del programa.</p>
+     </div>
+    </div>
+    <div class="next-face"><span><span class="face-num">Siguiente sala · 3 de 6</span><br><b>Producir mejor</b></span><button class="btn primary" data-go="3">Girar el cubo <span class="arr">→</span></button></div>
+   </div>
+  </section>
+ </div>
+</article>
+
+<!-- CARA 3 · PRODUCIR MEJOR -->
+<article class="face" id="f3" data-face="3" data-title="Producir mejor" aria-label="Cara 3: Producir mejor" hidden>
+ <div class="shade"></div>
+ <div class="face-pad">
+  <section class="sec" aria-labelledby="t-prod">
+   <div class="wrap">
+    <div class="sec-head">
+     <div>
+      <div class="room-label" data-r><i></i>Cara 3 · Taller</div>
+      <h2 class="h-xl split" id="t-prod">¿Tu gente sí es productiva, o no sabes si te dicen la verdad?</h2>
+     </div>
+     <p class="lead" data-r style="--d:2">No se trata de desconfiar de nadie. Se trata de medir. Cuando los números están claros, la conversación con el equipo cambia: menos suposiciones y más acuerdos.</p>
+    </div>
+    <div class="punch">
+     <div class="card" data-r style="--d:1"><span class="eyebrow">Tiempo</span><p class="big" style="margin-top:12px">Estar ocupado no es lo mismo que producir.</p></div>
+     <div class="card" data-r style="--d:2"><span class="eyebrow">Cargos</span><p class="big" style="margin-top:12px">Cada hora que alguien gasta en lo que no le toca la pagas y no la recuperas.</p></div>
+     <div class="card" data-r style="--d:3"><span class="eyebrow">Procesos</span><p class="big" style="margin-top:12px">Un proceso claro rinde más que un equipo agotado.</p></div>
+    </div>
+   </div>
+  </section>
+  <section class="sec dark" id="productividad-laboral" aria-labelledby="t-prod2">
+   <div class="wrap">
+    <div class="sec-head">
+     <h2 class="h-l split" id="t-prod2">Producir más con el mismo equipo, y con menos desgaste.</h2>
+     <p class="lead" data-r style="--d:2">Vemos cómo se reparte el trabajo, en qué se va el tiempo y qué tareas no le corresponden a cada cargo. Con eso ajustamos procesos para que el esfuerzo rinda.</p>
     </div>
     <div class="svc">
-      <article class="svc-card" id="gestion-comercial" data-tilt data-r style="--d:1">
-        <span class="num">01 · Sala comercial</span>
-        <h3>Gestión Comercial</h3>
-        <p class="lead">Para que vender más también signifique ganar más. Miramos juntos quiénes son tus mejores clientes, dónde se te caen las ventas y qué producto o canal te deja rentabilidad. Luego armamos un plan sencillo, con metas que tu equipo entienda.</p>
-        <div class="svc-cols">
-          <div><h4>Lo que revisamos</h4><ul class="clean"><li>Clientes y segmentos</li><li>Propuesta de valor y portafolio</li><li>Embudo y conversión</li><li>Ticket promedio y recompra</li><li>Cartera y presupuesto comercial</li></ul></div>
-          <div><h4>Lo que te llevas</h4><ul class="clean"><li>Diagnóstico con tus datos</li><li>Plan con responsables y fechas</li><li>Cinco indicadores medidos al inicio y al cierre</li><li>Rutinas comerciales sostenibles</li></ul></div>
-        </div>
-        <a class="btn primary" href="#asesoria">Hablemos de tus ventas <span class="arr">→</span></a>
-      </article>
-      <article class="svc-card" id="productividad-laboral" data-tilt data-r style="--d:2">
-        <span class="num">02 · Taller</span>
-        <h3>Productividad Laboral</h3>
-        <p class="lead">Para que tu equipo rinda más con menos desgaste. Vemos cómo se reparte el trabajo, en qué se va el tiempo y qué tareas no le corresponden a cada cargo. Con eso ajustamos procesos para producir más con el mismo esfuerzo.</p>
-        <div class="svc-cols">
-          <div><h4>Lo que revisamos</h4><ul class="clean"><li>Roles, funciones y cargas</li><li>Productividad por trabajador</li><li>Tareas fuera del cargo y su costo</li><li>Tiempos y procesos</li><li>Liderazgo y seguimiento</li></ul></div>
-          <div><h4>Lo que te llevas</h4><ul class="clean"><li>Línea base de productividad</li><li>Procesos más claros</li><li>Hasta seis indicadores, tres de ellos fijos del programa</li><li>Rutinas de seguimiento</li></ul></div>
-        </div>
-        <a class="btn primary" href="#asesoria">Hablemos de tu equipo <span class="arr">→</span></a>
-      </article>
+     <article class="svc-card" data-tilt data-r style="--d:1">
+      <span class="num">Productividad Laboral · Lo que revisamos</span>
+      <ul class="clean" style="color:#dbe3f5"><li>Roles, funciones y cargas de trabajo</li><li>Productividad por trabajador y línea base</li><li>Tareas fuera del cargo y lo que cuestan</li><li>Tiempos, procesos y estandarización</li><li>Liderazgo y seguimiento</li></ul>
+     </article>
+     <article class="svc-card" data-tilt data-r style="--d:2">
+      <span class="num">Lo que te llevas</span>
+      <ul class="clean" style="color:#dbe3f5"><li>Línea base de productividad de tu equipo</li><li>Procesos más claros y documentados</li><li>Hasta seis indicadores, tres de ellos fijos del programa: PL, PANAC y CANAC</li><li>Rutinas de seguimiento que no dependen de mí</li></ul>
+     </article>
     </div>
-  </div>
-</section>
+    <div class="next-face"><span><span class="face-num" style="color:var(--on-night-muted)">Siguiente sala · 4 de 6</span><br><b>Herramientas</b></span><button class="btn primary" data-go="4" style="background:#fff;color:#0a1020;border-color:#fff">Girar el cubo <span class="arr">→</span></button></div>
+   </div>
+  </section>
+ </div>
+</article>
 
-<!-- ============ MÉTODO ============ -->
-<section class="sec" id="metodo" aria-labelledby="t-metodo">
-  <div class="wrap">
+<!-- CARA 4 · HERRAMIENTAS -->
+<article class="face" id="f4" data-face="4" data-title="Herramientas" aria-label="Cara 4: Herramientas" hidden>
+ <div class="shade"></div>
+ <div class="face-pad">
+  <section class="sec alt" id="herramientas" aria-labelledby="t-herr">
+   <div class="wrap">
     <div class="sec-head">
-      <div>
-        <div class="room-label" data-r><i></i>Patio central</div>
-        <h2 class="h-xl split" id="t-metodo">Doce semanas, paso a paso, sin enredos.</h2>
-      </div>
-      <p class="lead" data-r style="--d:2">Así es el recorrido del programa: hasta 60 horas, con visitas a tu empresa y trabajo con tu equipo. La meta es mejorar al menos 8% uno de los indicadores fijos de la línea.</p>
-    </div>
-    <div class="timeline" id="timeline">
-      <div class="line"><i></i></div>
-      <div class="tl"><span class="wk">Semanas 1 y 2</span><h3>Conocernos y medir</h3><p>Entiendo cómo vende y cómo trabaja tu empresa. Con tus datos levantamos la línea base.</p></div>
-      <div class="tl"><span class="wk">Semanas 3 y 4</span><h3>Encontrar lo importante</h3><p>Qué te está costando dinero, por qué pasa y qué conviene resolver primero.</p></div>
-      <div class="tl"><span class="wk">Semana 4</span><h3>Acordar el plan</h3><p>Actividades, responsables, fechas e indicadores, acordados con la gerencia.</p></div>
-      <div class="tl"><span class="wk">Semanas 5 a 10</span><h3>Hacerlo juntos</h3><p>Trabajo con tu equipo, no solo con la gerencia. Seguimiento con el Gestor de la Cámara.</p></div>
-      <div class="tl"><span class="wk">Semanas 11 y 12</span><h3>Medir y sostener</h3><p>Comparamos contra la línea base y dejamos rutinas para que el resultado se quede.</p></div>
-    </div>
-    <div class="method-note">
-      <div class="card" data-r style="--d:1"><b>60 h</b><p class="muted">de acompañamiento técnico, con visitas presenciales según el proyecto.</p></div>
-      <div class="card" data-r style="--d:2"><b>8%</b><p class="muted">es la meta mínima de mejora en uno de los indicadores fijos de la línea.</p></div>
-      <div class="card" data-r style="--d:3"><b>1 a 1</b><p class="muted">cada indicador tiene un responsable dentro de tu empresa y una fecha.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ HERRAMIENTAS ============ -->
-<section class="sec alt" id="herramientas" aria-labelledby="t-herr">
-  <div class="wrap">
-    <div class="sec-head">
-      <div>
-        <div class="room-label" data-r><i></i>Biblioteca</div>
-        <h2 class="h-xl split" id="t-herr">Antes de hablar, haz tus cuentas.</h2>
-      </div>
-      <p class="lead" data-r style="--d:2">Seis calculadoras gratuitas para mirar tu empresa con otros ojos. No te pido registro y los datos que escribes no salen de tu navegador.</p>
+     <div>
+      <div class="room-label" data-r><i></i>Cara 4 · Biblioteca</div>
+      <h2 class="h-xl split" id="t-herr">Haz tus cuentas antes de que te las haga el banco.</h2>
+     </div>
+     <p class="lead" data-r style="--d:2">Seis calculadoras gratuitas para mirar tu empresa con otros ojos. No te pido registro y lo que escribes no sale de tu navegador.</p>
     </div>
     <div class="tabs" role="tablist" aria-label="Herramientas" id="tool-tabs" data-r></div>
     <div id="tool-panels" data-r style="--d:1">
-
-      <div class="tool" data-tool="chequeo">
-        <div class="calc">
-          <div class="card stack" style="gap:12px">
-            <span class="proto">Chequeo rápido · 8 preguntas</span>
-            <div class="quiz" id="check-q"></div>
-          </div>
-          <div class="card stack">
-            <span class="proto">Resultado orientativo</span>
-            <div class="meter"><span>Gestión Comercial</span><div class="track"><div class="fill" id="m-gc"></div></div><b id="m-gc-v">0%</b></div>
-            <div class="meter"><span>Productividad Laboral</span><div class="track"><div class="fill" id="m-pl"></div></div><b id="m-pl-v">0%</b></div>
-            <p id="check-read" style="font-size:15px">Responde las preguntas y te muestro en qué línea tiene más espacio de mejora tu empresa.</p>
-            <a class="btn primary" href="#asesoria" style="align-self:flex-start">Revisarlo juntos en la asesoría</a>
-          </div>
-        </div>
+     <div class="tool" data-tool="chequeo">
+      <div class="calc">
+       <div class="card stack" style="gap:12px"><span class="proto">Chequeo rápido · 8 preguntas</span><div class="quiz" id="check-q"></div></div>
+       <div class="card stack">
+        <span class="proto">Resultado orientativo</span>
+        <div class="meter"><span>Gestión Comercial</span><div class="track"><div class="fill" id="m-gc"></div></div><b id="m-gc-v">0%</b></div>
+        <div class="meter"><span>Productividad Laboral</span><div class="track"><div class="fill" id="m-pl"></div></div><b id="m-pl-v">0%</b></div>
+        <p id="check-read" style="font-size:15px">Responde las preguntas y te muestro en qué línea tiene más espacio de mejora tu empresa.</p>
+        <a class="btn primary" href="#asesoria" style="align-self:flex-start">Revisarlo juntos en la asesoría</a>
+       </div>
       </div>
-
-      <div class="tool" data-tool="tpv" hidden>
-        <div class="calc">
-          <div class="card stack" style="gap:14px">
-            <div class="formula">TPV = Total de ventas del período / Número de clientes atendidos en el período</div>
-            <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px" id="calc-inputs"></div>
-            <p class="note">Valores de ejemplo. Cámbialos por los de tu empresa.</p>
-          </div>
-          <div class="card stack">
-            <span class="proto">Ticket promedio del último mes</span>
-            <div class="result" id="tpv-out">$0</div>
-            <div class="bars" id="tpv-bars"></div>
-            <p id="tpv-read" style="font-size:15px"></p>
-          </div>
-        </div>
+     </div>
+     <div class="tool" data-tool="tpv" hidden>
+      <div class="calc">
+       <div class="card stack" style="gap:14px"><div class="formula">TPV = Total de ventas del período / Número de clientes atendidos en el período</div><div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px" id="calc-inputs"></div><p class="note">Valores de ejemplo. Cámbialos por los de tu empresa.</p></div>
+       <div class="card stack"><span class="proto">Ticket promedio del último mes</span><div class="result" id="tpv-out">$0</div><div class="bars" id="tpv-bars"></div><p id="tpv-read" style="font-size:15px"></p></div>
       </div>
-
-      <div class="tool" data-tool="embudo" hidden>
-        <div class="calc">
-          <div class="card stack" style="gap:14px">
-            <div class="formula">Conversión de cada etapa = clientes que pasan / clientes que entran a la etapa × 100</div>
-            <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
-              <label for="e0">Prospectos contactados<input id="e0" inputmode="numeric" value="400"></label>
-              <label for="e1">Interesados<input id="e1" inputmode="numeric" value="180"></label>
-              <label for="e2">Cotizaciones enviadas<input id="e2" inputmode="numeric" value="90"></label>
-              <label for="e3">Ventas cerradas<input id="e3" inputmode="numeric" value="27"></label>
-            </div>
-            <p class="note">Valores de ejemplo. En una intervención se usa la ficha técnica del programa.</p>
-          </div>
-          <div class="card stack" style="gap:12px">
-            <span class="proto">Tu embudo comercial</span>
-            <div id="funnel" class="funnel"></div>
-            <p id="funnel-read" style="font-size:15px"></p>
-          </div>
-        </div>
+     </div>
+     <div class="tool" data-tool="embudo" hidden>
+      <div class="calc">
+       <div class="card stack" style="gap:14px"><div class="formula">Conversión de cada etapa = clientes que pasan / clientes que entran a la etapa × 100</div>
+        <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+         <label for="e0">Prospectos contactados<input id="e0" inputmode="numeric" value="400"></label><label for="e1">Interesados<input id="e1" inputmode="numeric" value="180"></label>
+         <label for="e2">Cotizaciones enviadas<input id="e2" inputmode="numeric" value="90"></label><label for="e3">Ventas cerradas<input id="e3" inputmode="numeric" value="27"></label>
+        </div><p class="note">Valores de ejemplo. En una intervención se usa la ficha técnica del programa.</p></div>
+       <div class="card stack" style="gap:12px"><span class="proto">Tu embudo comercial</span><div id="funnel" class="funnel"></div><p id="funnel-read" style="font-size:15px"></p></div>
       </div>
-
-      <div class="tool" data-tool="pl" hidden>
-        <div class="calc">
-          <div class="card stack" style="gap:14px">
-            <div class="formula">Productividad por trabajador = Ventas (o producción) del período / Trabajadores del período</div>
-            <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
-              <label for="p0">Ventas línea base ($)<input id="p0" inputmode="numeric" value="180000000"></label>
-              <label for="p1">Trabajadores línea base<input id="p1" inputmode="numeric" value="12"></label>
-              <label for="p2">Ventas período actual ($)<input id="p2" inputmode="numeric" value="198000000"></label>
-              <label for="p3">Trabajadores período actual<input id="p3" inputmode="numeric" value="12"></label>
-            </div>
-            <p class="note">Definición de referencia. El indicador PL del programa se calcula según su ficha técnica: población, período e inclusiones definidas.</p>
-          </div>
-          <div class="card stack">
-            <span class="proto">Variación de productividad</span>
-            <div class="result" id="pl-out">0%</div>
-            <div class="bars" id="pl-bars"></div>
-            <p id="pl-read" style="font-size:15px"></p>
-          </div>
-        </div>
+     </div>
+     <div class="tool" data-tool="pl" hidden>
+      <div class="calc">
+       <div class="card stack" style="gap:14px"><div class="formula">Productividad por trabajador = Ventas (o producción) del período / Trabajadores del período</div>
+        <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+         <label for="p0">Ventas línea base ($)<input id="p0" inputmode="numeric" value="180000000"></label><label for="p1">Trabajadores línea base<input id="p1" inputmode="numeric" value="12"></label>
+         <label for="p2">Ventas período actual ($)<input id="p2" inputmode="numeric" value="198000000"></label><label for="p3">Trabajadores período actual<input id="p3" inputmode="numeric" value="12"></label>
+        </div><p class="note">Definición de referencia. El indicador PL del programa se calcula según su ficha técnica: población, período e inclusiones definidas.</p></div>
+       <div class="card stack"><span class="proto">Variación de productividad</span><div class="result" id="pl-out">0%</div><div class="bars" id="pl-bars"></div><p id="pl-read" style="font-size:15px"></p></div>
       </div>
-
-      <div class="tool" data-tool="canac" hidden>
-        <div class="calc">
-          <div class="card stack" style="gap:14px">
-            <div class="formula">Costo mensual = Horas semanales en tareas que no corresponden al cargo × 4,33 × Costo por hora</div>
-            <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
-              <label for="k0">Personas en el cargo<input id="k0" inputmode="numeric" value="3"></label>
-              <label for="k1">Horas semanales por persona fuera del cargo<input id="k1" inputmode="numeric" value="8"></label>
-              <label for="k2">Salario mensual con prestaciones ($)<input id="k2" inputmode="numeric" value="2600000"></label>
-              <label for="k3">Horas laborales al mes<input id="k3" inputmode="numeric" value="190"></label>
-            </div>
-            <p class="note">Ejercicio de referencia. CANAC y PANAC se miden en la intervención con la metodología del programa.</p>
-          </div>
-          <div class="card stack">
-            <span class="proto">Lo que cuesta al mes</span>
-            <div class="result" id="k-out">$0</div>
-            <p id="k-read" style="font-size:15px"></p>
-            <div class="meter"><span>Tiempo fuera del cargo</span><div class="track"><div class="fill" id="k-bar"></div></div><b id="k-pct">0%</b></div>
-          </div>
-        </div>
+     </div>
+     <div class="tool" data-tool="canac" hidden>
+      <div class="calc">
+       <div class="card stack" style="gap:14px"><div class="formula">Costo mensual = Horas semanales en tareas que no corresponden al cargo × 4,33 × Costo por hora</div>
+        <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+         <label for="k0">Personas en el cargo<input id="k0" inputmode="numeric" value="3"></label><label for="k1">Horas semanales por persona fuera del cargo<input id="k1" inputmode="numeric" value="8"></label>
+         <label for="k2">Salario mensual con prestaciones ($)<input id="k2" inputmode="numeric" value="2600000"></label><label for="k3">Horas laborales al mes<input id="k3" inputmode="numeric" value="190"></label>
+        </div><p class="note">Ejercicio de referencia. CANAC y PANAC se miden en la intervención con la metodología del programa.</p></div>
+       <div class="card stack"><span class="proto">Lo que cuesta al mes</span><div class="result" id="k-out">$0</div><p id="k-read" style="font-size:15px"></p><div class="meter"><span>Tiempo fuera del cargo</span><div class="track"><div class="fill" id="k-bar"></div></div><b id="k-pct">0%</b></div></div>
       </div>
-
-      <div class="tool" data-tool="cartera" hidden>
-        <div class="calc">
-          <div class="card stack" style="gap:14px">
-            <div class="formula">Días de cartera = Cartera por cobrar / Ventas a crédito del período × Días del período</div>
-            <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
-              <label for="r0">Cartera por cobrar hoy ($)<input id="r0" inputmode="numeric" value="85000000"></label>
-              <label for="r1">Ventas a crédito del período ($)<input id="r1" inputmode="numeric" value="120000000"></label>
-              <label for="r2">Días del período<input id="r2" inputmode="numeric" value="90"></label>
-              <label for="r3">Plazo que otorgas (días)<input id="r3" inputmode="numeric" value="45"></label>
-            </div>
-            <p class="note">Valores de ejemplo. Herramienta de referencia con criterio bancario.</p>
-          </div>
-          <div class="card stack">
-            <span class="proto">Días que tardas en cobrar</span>
-            <div class="result" id="r-out">0</div>
-            <p id="r-read" style="font-size:15px"></p>
-          </div>
-        </div>
+     </div>
+     <div class="tool" data-tool="cartera" hidden>
+      <div class="calc">
+       <div class="card stack" style="gap:14px"><div class="formula">Días de cartera = Cartera por cobrar / Ventas a crédito del período × Días del período</div>
+        <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+         <label for="r0">Cartera por cobrar hoy ($)<input id="r0" inputmode="numeric" value="85000000"></label><label for="r1">Ventas a crédito del período ($)<input id="r1" inputmode="numeric" value="120000000"></label>
+         <label for="r2">Días del período<input id="r2" inputmode="numeric" value="90"></label><label for="r3">Plazo que otorgas (días)<input id="r3" inputmode="numeric" value="45"></label>
+        </div><p class="note">Valores de ejemplo. Herramienta de referencia con criterio bancario.</p></div>
+       <div class="card stack"><span class="proto">Días que tardas en cobrar</span><div class="result" id="r-out">0</div><p id="r-read" style="font-size:15px"></p></div>
       </div>
+     </div>
     </div>
     <p class="note" style="margin-top:22px">¿Necesitas más? Amortización, tasas, presupuesto personal, simulador hipotecario e indicadores: <a href="/finanzas">abrir herramientas financieras</a>.</p>
-  </div>
-</section>
+    <div class="next-face"><span><span class="face-num">Siguiente sala · 5 de 6</span><br><b>Programa Fábricas</b></span><button class="btn primary" data-go="5">Girar el cubo <span class="arr">→</span></button></div>
+   </div>
+  </section>
+ </div>
+</article>
 
-<!-- ============ CASOS ============ -->
-<section class="sec" id="casos" aria-labelledby="t-casos">
-  <div class="wrap">
-    <div class="room-label" data-r><i></i>Archivo</div>
-    <div class="case">
-      <div class="stack">
-        <h2 class="h-xl split" id="t-casos">Un caso real, con nombre propio.</h2>
-        <p class="lead" data-r style="--d:2"><b style="color:var(--ink)">Vimar Vidrios Medellín S.A.S.</b> comercializa, transforma e instala vidrios. Trabajamos juntos la línea de Gestión Comercial en el ciclo 7 del programa Fábricas de Productividad y Sostenibilidad: ordenamos la información de ventas, definimos indicadores y acordamos rutinas con el equipo.</p>
-        <div class="row" data-r style="--d:3"><span class="tag">Gestión Comercial</span><span class="tag">Ciclo 7</span><span class="tag">Medellín</span></div>
-        <p class="note" data-r style="--d:4">Resultado medido con la metodología del programa. Publicado con autorización de la empresa.</p>
-      </div>
-      <div class="case-kpi" data-r="scale" style="--d:2">
-        <svg viewBox="0 0 200 120" aria-hidden="true"><path id="case-line" d="M0 110 C40 100 60 90 90 80 S140 40 200 10" fill="none" stroke="#fff" stroke-width="3" stroke-dasharray="320" stroke-dashoffset="320"/></svg>
-        <div class="n"><span data-count="32" data-prefix="+" data-suffix="%">0</span></div>
-        <p class="l">de crecimiento en ventas durante la intervención, según la medición del programa.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ QUIÉN SOY ============ -->
-<section class="sec alt" id="quien-soy" aria-labelledby="t-quien">
-  <div class="wrap">
-    <div class="room-label" data-r><i></i>Despacho</div>
-    <div class="about">
-      <div class="stack" style="gap:22px">
-        <h2 class="h-xl split" id="t-quien">Leo tu empresa como la lee un banco y te la explico como un profesor.</h2>
-        <div class="story lead" data-r style="--d:2">
-          <p>Empecé en la banca hace más de 16 años, en Banco Agrario, Itaú y AV Villas. Desde 2013 estoy en el Banco Agrario, donde hoy cumplo funciones de gerencia bancaria. He acompañado más de 500 casos de gestión bancaria y más de 12 años asesorando empresas.</p>
-          <p>En 2023 empecé a dar clases en el ITM, y ahí confirmé algo que ya intuía: un indicador solo sirve si la gente lo entiende y lo usa. Por eso mi trabajo no termina en un informe. Termina cuando tu equipo puede seguir solo.</p>
-          <p>Hoy acompaño empresas como extensionista del programa Fábricas de Productividad y Sostenibilidad, en Gestión Comercial y Productividad Laboral.</p>
-        </div>
-      </div>
-      <div class="card" data-r style="--d:3">
-        <span class="proto">Formación</span>
-        <ul class="clean edu" style="margin-top:6px">
-          <li><b>Ingeniero Administrador</b><span>Universidad Nacional de Colombia</span></li>
-          <li><b>Especialista en Alta Gerencia</b><span>Universidad de Medellín</span></li>
-          <li><b>MBA en Administración</b><span>Universidad de Medellín</span></li>
-          <li style="border-bottom:0"><b>Formación complementaria</b><span>Agilidad, inteligencia artificial aplicada a los negocios, pedagogía y gestión consultiva financiera agropecuaria</span></li>
-        </ul>
-      </div>
-    </div>
-    <div class="values">
-      <div class="card" data-r style="--d:1"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span><h3>Primero los datos</h3><p class="muted">Después las opiniones. Cada decisión parte de una línea base real.</p></div>
-      <div class="card" data-r style="--d:2"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg></span><h3>Cada tarea con dueño</h3><p class="muted">Ninguna recomendación queda sin responsable ni fecha.</p></div>
-      <div class="card" data-r style="--d:3"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg></span><h3>Que funcione sin mí</h3><p class="muted">Si el resultado depende del consultor, el trabajo no está terminado.</p></div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ PROGRAMA ============ -->
-<section class="sec" id="programa" aria-labelledby="t-prog">
-  <div class="wrap">
+<!-- CARA 5 · PROGRAMA -->
+<article class="face" id="f5" data-face="5" data-title="Programa" aria-label="Cara 5: Programa" hidden>
+ <div class="shade"></div>
+ <div class="face-pad">
+  <section class="sec" id="programa" aria-labelledby="t-prog">
+   <div class="wrap">
     <div class="sec-head">
-      <div>
-        <div class="room-label" data-r><i></i>Puerta del programa</div>
-        <h2 class="h-xl split" id="t-prog">Hasta 60 horas de acompañamiento, pagando solo una parte.</h2>
-      </div>
-      <p class="lead" data-r style="--d:2">Fábricas de Productividad y Sostenibilidad es un programa del Ministerio de Comercio, Industria y Turismo, con Colombia Productiva e iNNpulsa. En Antioquia lo opera la Cámara de Comercio de Medellín para Antioquia.</p>
+     <div>
+      <div class="room-label" data-r><i></i>Cara 5 · Programa Fábricas</div>
+      <h2 class="h-xl split" id="t-prog">Hasta 60 horas de consultoría, y tu empresa solo pone una parte.</h2>
+     </div>
+     <p class="lead" data-r style="--d:2">Fábricas de Productividad y Sostenibilidad es un programa del Ministerio de Comercio, Industria y Turismo, con Colombia Productiva e iNNpulsa. En Antioquia lo opera la Cámara de Comercio de Medellín para Antioquia.</p>
     </div>
     <div class="grid g2" style="align-items:start;gap:28px">
-      <div class="stack" style="gap:12px" data-r style="--d:1">
-        <h3 class="h-m">¿Tu empresa puede entrar? <span class="note" id="quiz-count">0 / 5</span></h3>
-        <div class="quiz" id="quiz"></div>
-        <div class="verdict" id="verdict"><p class="note">Responde las cinco preguntas.</p></div>
-      </div>
-      <div class="stack" style="gap:14px" data-r style="--d:2">
-        <h3 class="h-m">Lo máximo que aporta tu empresa</h3>
-        <div class="table-wrap card" style="padding:6px 14px"><table>
-          <thead><tr><th>Tamaño</th><th>%</th><th style="text-align:right">Aporte</th></tr></thead>
-          <tbody><tr><td>Micro</td><td>10%</td><td class="num">$1.410.000</td></tr><tr><td>Pequeña</td><td>20%</td><td class="num">$2.820.000</td></tr><tr><td>Mediana</td><td>30%</td><td class="num">$4.230.000</td></tr><tr><td>Grande</td><td>100%</td><td class="num">$14.100.000</td></tr></tbody>
-        </table></div>
-        <p class="note">Aportes máximos por 60 horas según los Términos y Condiciones del programa, actualizados el 18 de noviembre de 2026. La Cámara puede fijar requisitos adicionales.</p>
-        <div class="card" style="background:var(--soft);border-color:transparent"><b>Tú eliges a tu extensionista.</b> Después del diagnóstico, el Gestor de la Cámara te presenta la Base Nacional de Extensionistas para que tu empresa preseleccione. Luego pide mínimo tres ofertas y tu representante legal o su delegado decide. Si quieres que yo te acompañe, puedes incluirme en esa preselección.</div>
-      </div>
+     <div class="stack" style="gap:12px" data-r style="--d:1">
+      <h3 class="h-m">¿Tu empresa puede entrar? <span class="note" id="quiz-count">0 / 5</span></h3>
+      <div class="quiz" id="quiz"></div>
+      <div class="verdict" id="verdict"><p class="note">Responde las cinco preguntas.</p></div>
+     </div>
+     <div class="stack" style="gap:14px" data-r style="--d:2">
+      <h3 class="h-m">Lo máximo que aporta tu empresa</h3>
+      <div class="table-wrap card" style="padding:6px 14px"><table>
+       <thead><tr><th>Tamaño</th><th>%</th><th style="text-align:right">Aporte</th></tr></thead>
+       <tbody><tr><td>Micro</td><td>10%</td><td class="num">$1.410.000</td></tr><tr><td>Pequeña</td><td>20%</td><td class="num">$2.820.000</td></tr><tr><td>Mediana</td><td>30%</td><td class="num">$4.230.000</td></tr><tr><td>Grande</td><td>100%</td><td class="num">$14.100.000</td></tr></tbody>
+      </table></div>
+      <p class="note">Aportes máximos por 60 horas según los Términos y Condiciones del programa, actualizados el 18 de noviembre de 2026. La Cámara puede fijar requisitos adicionales.</p>
+      <div class="card" style="background:var(--soft);border-color:transparent;box-shadow:none"><b>Tú eliges a tu extensionista.</b> Después del diagnóstico, el Gestor de la Cámara te presenta la Base Nacional de Extensionistas para que tu empresa preseleccione. Luego pide mínimo tres ofertas y tu representante legal o su delegado decide. Si quieres que yo te acompañe, puedes incluirme en esa preselección.</div>
+     </div>
     </div>
-  </div>
-</section>
-
-<!-- ============ PREGUNTAS ============ -->
-<section class="sec alt" id="preguntas" aria-labelledby="t-faq">
-  <div class="wrap" style="max-width:900px">
-    <div class="room-label" data-r><i></i>Pasillo</div>
-    <h2 class="h-xl split" id="t-faq" style="margin-bottom:40px">Lo que más me preguntan.</h2>
+   </div>
+  </section>
+  <section class="sec alt" id="metodo" aria-labelledby="t-metodo">
+   <div class="wrap">
+    <div class="sec-head">
+     <h2 class="h-l split" id="t-metodo">Doce semanas, paso a paso, sin enredos.</h2>
+     <p class="lead" data-r style="--d:2">Hasta 60 horas, con visitas a tu empresa y trabajo con tu equipo. La meta es mejorar al menos 8% uno de los indicadores fijos de la línea.</p>
+    </div>
+    <div class="timeline" id="timeline">
+     <div class="line"><i></i></div>
+     <div class="tl"><span class="wk">Semanas 1 y 2</span><h3>Conocernos y medir</h3><p>Entiendo cómo vende y cómo trabaja tu empresa. Con tus datos levantamos la línea base.</p></div>
+     <div class="tl"><span class="wk">Semanas 3 y 4</span><h3>Encontrar lo importante</h3><p>Qué te está costando dinero, por qué pasa y qué conviene resolver primero.</p></div>
+     <div class="tl"><span class="wk">Semana 4</span><h3>Acordar el plan</h3><p>Actividades, responsables, fechas e indicadores, acordados con la gerencia.</p></div>
+     <div class="tl"><span class="wk">Semanas 5 a 10</span><h3>Hacerlo juntos</h3><p>Trabajo con tu equipo, no solo con la gerencia. Seguimiento con el Gestor de la Cámara.</p></div>
+     <div class="tl"><span class="wk">Semanas 11 y 12</span><h3>Medir y sostener</h3><p>Comparamos contra la línea base y dejamos rutinas para que el resultado se quede.</p></div>
+    </div>
+   </div>
+  </section>
+  <section class="sec" id="preguntas" aria-labelledby="t-faq">
+   <div class="wrap" style="max-width:900px">
+    <h2 class="h-l split" id="t-faq" style="margin-bottom:32px">Lo que más me preguntan.</h2>
     <div class="faq" data-r style="--d:1">
-      <details><summary>¿La asesoría gratuita tiene letra menuda?<span class="pm">+</span></summary><p class="ans">No. Son 30 minutos para conocernos, entender tu empresa y decirte con franqueza qué mejoraría primero. Si al final no ves valor en trabajar juntos, no pasa nada.</p></details>
-      <details><summary>¿De verdad atiendes los sábados?<span class="pm">+</span></summary><p class="ans">Sí. Los sábados atiendo de forma presencial en Medellín, el Valle de Aburrá y Caucasia, según la agenda. Entre semana trabajamos por videollamada.</p></details>
-      <details><summary>¿Qué es Fábricas de Productividad y Sostenibilidad?<span class="pm">+</span></summary><p class="ans">Es un programa del Gobierno nacional que cofinancia hasta 60 horas de asistencia técnica especializada para mejorar la productividad de tu empresa. Tu empresa aporta un porcentaje según su tamaño y el resto lo cubre el programa.</p></details>
-      <details><summary>¿Cómo puedo trabajar contigo dentro del programa?<span class="pm">+</span></summary><p class="ans">Primero inscribes tu empresa y haces el autodiagnóstico. Después, con el Gestor de la Cámara, tu empresa preselecciona extensionistas de la Base Nacional y se piden mínimo tres ofertas. La decisión final es de tu representante legal o su delegado.</p></details>
-      <details><summary>¿Y si mi empresa no cumple los requisitos?<span class="pm">+</span></summary><p class="ans">Agenda la asesoría gratuita igual. Revisamos tu caso y te cuento qué alternativas tienes, dentro o fuera del programa.</p></details>
-      <details><summary>¿Qué pasa con la información de mi empresa?<span class="pm">+</span></summary><p class="ans">La trato con reserva y solo la uso para ayudarte. Puedes leer los detalles en la <a href="/politica-de-datos">política de datos</a>.</p></details>
+     <details><summary>¿La asesoría gratuita tiene letra menuda?<span class="pm">+</span></summary><p class="ans">No. Son 30 minutos para conocernos, entender tu empresa y decirte con franqueza qué mejoraría primero. Si al final no ves valor en trabajar juntos, no pasa nada.</p></details>
+     <details><summary>¿De verdad atiendes los sábados?<span class="pm">+</span></summary><p class="ans">Sí. Los sábados atiendo de forma presencial en Medellín, el Valle de Aburrá y Caucasia, según la agenda. Entre semana trabajamos por videollamada.</p></details>
+     <details><summary>¿Cómo puedo trabajar contigo dentro del programa?<span class="pm">+</span></summary><p class="ans">Primero inscribes tu empresa y haces el autodiagnóstico. Después, con el Gestor de la Cámara, tu empresa preselecciona extensionistas de la Base Nacional y se piden mínimo tres ofertas. La decisión final es de tu representante legal o su delegado.</p></details>
+     <details><summary>¿Y si mi empresa no cumple los requisitos?<span class="pm">+</span></summary><p class="ans">Agenda la asesoría gratuita igual. Revisamos tu caso y te cuento qué alternativas tienes, dentro o fuera del programa.</p></details>
+     <details><summary>¿Qué pasa con la información de mi empresa?<span class="pm">+</span></summary><p class="ans">La trato con reserva y solo la uso para ayudarte. Puedes leer los detalles en la <a href="/politica-de-datos">política de datos</a>.</p></details>
     </div>
-  </div>
-</section>
+    <div class="next-face"><span><span class="face-num">Última sala · 6 de 6</span><br><b>Hablemos</b></span><button class="btn primary" data-go="6">Girar el cubo <span class="arr">→</span></button></div>
+   </div>
+  </section>
+ </div>
+</article>
 
-<!-- ============ ASESORÍA ============ -->
-<section class="sec dark" id="asesoria" aria-labelledby="t-ases">
-  <div class="wrap">
+<!-- CARA 6 · HABLEMOS -->
+<article class="face dark-face" id="f6" data-face="6" data-title="Hablemos" data-dark aria-label="Cara 6: Hablemos" hidden>
+ <div class="shade"></div>
+ <div class="face-pad">
+  <section class="sec dark" id="asesoria" aria-labelledby="t-ases">
+   <div class="wrap">
     <div class="meet">
-      <div>
-        <div class="room-label" data-r><i></i>Sala de reuniones</div>
-        <h2 class="h-xl split" id="t-ases">Tomémonos un café y miremos tu empresa.</h2>
-        <p class="lead" data-r style="--d:2" style="margin-top:20px">30 minutos, sin costo y sin compromiso. Revisamos cómo vendes, cómo trabaja tu equipo y qué números tienes hoy. Al final te digo qué haría primero y si el programa te conviene.</p>
-        <div class="contact-list" data-r style="--d:3">
-          <a href="https://wa.me/573225347242" target="_blank" rel="noopener"><span>+57 322 534 7242</span><small>WhatsApp</small></a>
-          <a href="mailto:contacto@davidarteaga.co"><span>contacto@davidarteaga.co</span><small>Correo</small></a>
-          <a href="https://www.instagram.com/david.arteagaoficial" target="_blank" rel="noopener"><span>@david.arteagaoficial</span><small>Instagram</small></a>
-        </div>
+     <div>
+      <div class="room-label" data-r><i></i>Cara 6 · Sala de reuniones</div>
+      <h2 class="h-xl split" id="t-ases">Un café, 30 minutos y tus números sobre la mesa.</h2>
+      <p class="lead" data-r style="--d:2;margin-top:20px">Sin costo y sin compromiso. Revisamos cómo vendes, cómo trabaja tu equipo y qué números tienes hoy. Al final te digo qué haría primero y si el programa te conviene.</p>
+      <div class="contact-list" data-r style="--d:3">
+       <a href="https://wa.me/573225347242" target="_blank" rel="noopener"><span>+57 322 534 7242</span><small>WhatsApp</small></a>
+       <a href="mailto:contacto@davidarteaga.co"><span>contacto@davidarteaga.co</span><small>Correo</small></a>
+       <a href="https://www.instagram.com/david.arteagaoficial" target="_blank" rel="noopener"><span>@david.arteagaoficial</span><small>Instagram</small></a>
       </div>
-      <div data-r style="--d:2">
-        <form id="lead-form" class="card" novalidate>
-          <div class="grid g2" style="gap:14px">
-            <label for="f-nombre">¿Cómo te llamas?<input id="f-nombre" required autocomplete="name"></label>
-            <label for="f-empresa">¿Cuál es tu empresa?<input id="f-empresa" required autocomplete="organization"></label>
-            <label for="f-municipio">Municipio<select id="f-municipio"><option>Medellín</option><option>Valle de Aburrá</option><option>Caucasia</option><option>Otro municipio de Antioquia</option><option>Fuera de Antioquia</option></select></label>
-            <label for="f-tamano">Tamaño<select id="f-tamano"><option>Micro</option><option>Pequeña</option><option>Mediana</option><option>Grande</option></select></label>
-            <label for="f-interes">¿Qué quieres mejorar?<select id="f-interes"><option>Ventas</option><option>Productividad del equipo</option><option>Ambas</option><option>No sé todavía</option></select></label>
-            <label for="f-horario">¿Cuándo te queda mejor?<select id="f-horario"><option>Sábado presencial</option><option>Virtual entre semana</option></select></label>
-            <label for="f-contacto">WhatsApp o correo<input id="f-contacto" required></label>
-            <label for="f-origen">¿Cómo me conociste?<select id="f-origen"><option>Instagram</option><option>LinkedIn</option><option>Cámara de Comercio</option><option>ITM</option><option>Referido</option><option>Otro</option></select></label>
-          </div>
-          <label class="check" for="f-datos" style="margin-top:16px"><input type="checkbox" id="f-datos" required> <span>Autorizo el tratamiento de mis datos según la <a href="/politica-de-datos" target="_blank" style="color:#8fb0ff">política de datos</a> (Ley 1581 de 2012).</span></label>
-          <div class="row" style="margin-top:18px"><button class="btn primary" type="submit" style="background:#fff;color:#0a1020;border-color:#fff">Quiero mi asesoría <span class="arr">→</span></button><span class="note" id="form-err"></span></div>
-        </form>
-        <div class="ok-msg" id="form-ok" hidden>Gracias. Se abrió WhatsApp con tu solicitud lista para enviar. Si no se abrió, escríbeme a contacto@davidarteaga.co o al +57 322 534 7242.</div>
-        <p class="note" style="margin-top:16px;color:var(--on-night-muted)">La asesoría gratuita es independiente del programa Fábricas de Productividad y Sostenibilidad. Si tu empresa se inscribe, elige libremente a su extensionista en la Base Nacional, con el acompañamiento del Gestor de la Cámara.</p>
-      </div>
+     </div>
+     <div data-r style="--d:2">
+      <form id="lead-form" class="card" novalidate>
+       <div class="grid g2" style="gap:14px">
+        <label for="f-nombre">¿Cómo te llamas?<input id="f-nombre" required autocomplete="name"></label>
+        <label for="f-empresa">¿Cuál es tu empresa?<input id="f-empresa" required autocomplete="organization"></label>
+        <label for="f-municipio">Municipio<select id="f-municipio"><option>Medellín</option><option>Valle de Aburrá</option><option>Caucasia</option><option>Otro municipio de Antioquia</option><option>Fuera de Antioquia</option></select></label>
+        <label for="f-tamano">Tamaño<select id="f-tamano"><option>Micro</option><option>Pequeña</option><option>Mediana</option><option>Grande</option></select></label>
+        <label for="f-interes">¿Qué quieres mejorar?<select id="f-interes"><option>Ventas</option><option>Productividad del equipo</option><option>Ambas</option><option>No sé todavía</option></select></label>
+        <label for="f-horario">¿Cuándo te queda mejor?<select id="f-horario"><option>Sábado presencial</option><option>Virtual entre semana</option></select></label>
+        <label for="f-contacto">WhatsApp o correo<input id="f-contacto" required></label>
+        <label for="f-origen">¿Cómo me conociste?<select id="f-origen"><option>Instagram</option><option>LinkedIn</option><option>Cámara de Comercio</option><option>ITM</option><option>Referido</option><option>Otro</option></select></label>
+       </div>
+       <label class="check" for="f-datos" style="margin-top:16px"><input type="checkbox" id="f-datos" required> <span>Autorizo el tratamiento de mis datos según la <a href="/politica-de-datos" target="_blank" style="color:#8fb0ff">política de datos</a> (Ley 1581 de 2012).</span></label>
+       <div class="row" style="margin-top:18px"><button class="btn primary" type="submit" style="background:#fff;color:#0a1020;border-color:#fff">Quiero mi asesoría <span class="arr">→</span></button><span class="note" id="form-err"></span></div>
+      </form>
+      <div class="ok-msg" id="form-ok" hidden>Gracias. Se abrió WhatsApp con tu solicitud lista para enviar. Si no se abrió, escríbeme a contacto@davidarteaga.co o al +57 322 534 7242.</div>
+      <p class="note" style="margin-top:16px;color:var(--on-night-muted)">La asesoría gratuita es independiente del programa Fábricas de Productividad y Sostenibilidad. Si tu empresa se inscribe, elige libremente a su extensionista en la Base Nacional, con el acompañamiento del Gestor de la Cámara.</p>
+     </div>
     </div>
-  </div>
-</section>
-</main>
-
-<footer>
-  <div class="wrap">
-    <div>
-      <span class="mono" style="color:#fff">DA</span>
-      <p class="motto">Vender más y producir mejor. Método, estrategia y ejecución.</p>
+    <div class="footer-mini">
+     <span>© 2026 David Arteaga®. Vender más y producir mejor. Método, estrategia y ejecución.</span>
+     <nav aria-label="Enlaces">
+      <a href="https://colombiaproductiva.my.site.com/fabricasdeproductividad/s/registroempresa" target="_blank" rel="noopener">Inscribir mi empresa</a>
+      <a href="/finanzas">Herramientas financieras</a>
+      <button id="annex-open">Banca</button>
+      <a href="/politica-de-datos">Política de datos</a>
+      <a href="https://www.linkedin.com/in/david-alejandro-arteaga-taborda-59115a249" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://www.youtube.com/@davidarteaga.c0" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://www.tiktok.com/@davidarteaga.c0" target="_blank" rel="noopener">TikTok</a>
+     </nav>
     </div>
-    <div><h4>Oficina</h4><a href="#servicios">Cómo te ayudo</a><a href="#metodo">Método</a><a href="#herramientas">Herramientas</a><a href="#casos">Casos</a><a href="#quien-soy">Quién soy</a></div>
-    <div><h4>Empresas</h4><a href="#programa">Programa Fábricas</a><a href="https://colombiaproductiva.my.site.com/fabricasdeproductividad/s/registroempresa" target="_blank" rel="noopener">Inscribir mi empresa</a><a href="#asesoria">Asesoría gratuita</a><a href="/finanzas">Herramientas financieras</a><button class="link" id="annex-open">Banca</button></div>
-    <div><h4>Redes</h4><a href="https://www.instagram.com/david.arteagaoficial" target="_blank" rel="noopener">Instagram</a><a href="https://www.linkedin.com/in/david-alejandro-arteaga-taborda-59115a249" target="_blank" rel="noopener">LinkedIn</a><a href="https://www.youtube.com/@davidarteaga.c0" target="_blank" rel="noopener">YouTube</a><a href="https://www.tiktok.com/@davidarteaga.c0" target="_blank" rel="noopener">TikTok</a></div>
-    <div class="legal"><span>© 2026 David Arteaga®. Medellín, Colombia.</span><a href="/politica-de-datos" style="display:inline;color:#7f8db0">Política de datos</a></div>
-  </div>
-</footer>
+   </div>
+  </section>
+ </div>
+</article>
 
-<a class="btn primary wa-float" id="wa-float" href="https://wa.me/573225347242" target="_blank" rel="noopener" aria-label="Escribir por WhatsApp">WhatsApp</a>
-<button class="btn to-top" id="to-top" aria-label="Volver arriba">↑</button>
+</div>
+</div>
+<div class="sweep" id="sweep" aria-hidden="true"></div>
+
+<nav class="dock" id="dock" aria-label="Salas de la casa">
+  <button class="arrow" id="prev" aria-label="Sala anterior">←</button>
+  <button class="pill" data-go="1"><i>1</i><span>Bienvenida</span></button>
+  <button class="pill" data-go="2"><i>2</i><span>Vender más</span></button>
+  <button class="pill" data-go="3"><i>3</i><span>Producir mejor</span></button>
+  <button class="pill" data-go="4"><i>4</i><span>Herramientas</span></button>
+  <button class="pill" data-go="5"><i>5</i><span>Programa</span></button>
+  <button class="pill" data-go="6"><i>6</i><span>Hablemos</span></button>
+  <button class="arrow" id="next" aria-label="Sala siguiente">→</button>
+  <button class="mini" id="map-btn" aria-label="Ver el cubo completo" title="Ver el cubo completo"><span class="cb" id="mini-cb"><span style="transform:translateZ(10px)">1</span><span style="transform:rotateY(90deg) translateZ(10px)">2</span><span style="transform:rotateY(180deg) translateZ(10px)">3</span><span style="transform:rotateY(-90deg) translateZ(10px)">4</span><span style="transform:rotateX(90deg) translateZ(10px)">5</span><span style="transform:rotateX(-90deg) translateZ(10px)">6</span></span></button>
+</nav>
+
+<div class="map" id="map" hidden role="dialog" aria-modal="true" aria-labelledby="map-title">
+  <div class="map-in">
+    <p class="hint2">Arrastra para girarlo · toca una cara para entrar</p>
+    <h2 id="map-title">La casa tiene seis caras</h2>
+    <div class="big-cube-wrap" id="bcw"><div class="big-cube" id="bc"></div></div>
+    <div class="map-list" id="map-list"></div>
+    <button class="btn ghost sm" id="map-close" style="color:#fff">Cerrar</button>
+  </div>
+</div>
 
 <div class="annex-dlg" id="annex" hidden role="dialog" aria-modal="true" aria-labelledby="annex-title">
   <div class="annex-card">
@@ -930,137 +994,231 @@ input,select,textarea{border-color:var(--hair);box-shadow:0 1px 2px rgba(10,20,5
 (function(){
   const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
   const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const intro=$('#intro');
-  window.DA={progress:0,reduce};
+  const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+  const band=(p,a,b)=>clamp((p-a)/(b-a));
+  window.DA={progress:0,reduce,introDone:false};
 
-  /* ---------- Sonido: apagado por defecto, sintetizado (sin música con derechos) ---------- */
+  /* ================= Sonido (sintetizado, apagado por defecto) ================= */
   let soundOn=false,ac=null,amb=null,birdT=null;
   try{soundOn=localStorage.getItem('da-sound')==='1'}catch(e){}
-  const sndBtns=[$('#snd'),$('#snd2')];
-  function paintSnd(){sndBtns.forEach(b=>{b.textContent='Sonido: '+(soundOn?'sí':'no');b.setAttribute('aria-pressed',String(soundOn))})}
+  const sndBtn=$('#snd');
+  function paintSnd(){sndBtn.textContent='Sonido: '+(soundOn?'sí':'no');sndBtn.setAttribute('aria-pressed',String(soundOn))}
+  function setSound(on){soundOn=on;try{localStorage.setItem('da-sound',on?'1':'0')}catch(e){}paintSnd();if(on&&!DA.introDone)startAmbient();if(!on)stopAmbient()}
   paintSnd();
   function ctx(){ac=ac||new (window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume();return ac}
   function noiseBuf(sec){const a=ctx(),len=a.sampleRate*sec,b=a.createBuffer(1,len,a.sampleRate),d=b.getChannelData(0);let last=0;for(let i=0;i<len;i++){const w=Math.random()*2-1;last=(last+.02*w)/1.02;d[i]=last*3.5}return b}
   function startAmbient(){
-    if(amb||!soundOn)return;try{
+    if(amb||!soundOn||DA.introDone)return;try{
       const a=ctx(),src=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain(),lfo=a.createOscillator(),lg=a.createGain();
       src.buffer=noiseBuf(4);src.loop=true;f.type='lowpass';f.frequency.value=520;g.gain.value=0;
       lfo.frequency.value=.08;lg.gain.value=180;lfo.connect(lg);lg.connect(f.frequency);
       src.connect(f);f.connect(g);g.connect(a.destination);src.start();lfo.start();
       g.gain.linearRampToValueAtTime(.05,a.currentTime+2);amb={src,g,lfo};
-      const chirp=()=>{if(!soundOn)return;if(DA.progress<.92&&!document.hidden)bird();birdT=setTimeout(chirp,2500+Math.random()*5000)};birdT=setTimeout(chirp,1200);
+      const chirp=()=>{if(!soundOn||DA.introDone)return;if(!document.hidden)bird();birdT=setTimeout(chirp,2200+Math.random()*4500)};birdT=setTimeout(chirp,900);
     }catch(e){}
   }
-  function stopAmbient(){if(!amb)return;try{const a=ctx();amb.g.gain.linearRampToValueAtTime(0,a.currentTime+.6);const s=amb;setTimeout(()=>{try{s.src.stop();s.lfo.stop()}catch(e){}},700)}catch(e){}amb=null;clearTimeout(birdT)}
+  function stopAmbient(){clearTimeout(birdT);if(!amb)return;try{const a=ctx();amb.g.gain.linearRampToValueAtTime(0,a.currentTime+.8);const s=amb;setTimeout(()=>{try{s.src.stop();s.lfo.stop()}catch(e){}},900)}catch(e){}amb=null}
   function bird(){try{const a=ctx(),t=a.currentTime,n=2+Math.floor(Math.random()*3),base=2600+Math.random()*1400;
     for(let i=0;i<n;i++){const o=a.createOscillator(),g=a.createGain(),s=t+i*.13;o.type='sine';o.frequency.setValueAtTime(base,s);o.frequency.exponentialRampToValueAtTime(base*1.45,s+.05);o.frequency.exponentialRampToValueAtTime(base*.9,s+.1);
       g.gain.setValueAtTime(0,s);g.gain.linearRampToValueAtTime(.018,s+.015);g.gain.exponentialRampToValueAtTime(.0001,s+.11);o.connect(g);g.connect(a.destination);o.start(s);o.stop(s+.12)}}catch(e){}}
-  function sfx(kind){
+  function whoosh(t,dur,from,to,vol){const a=ctx(),src=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();src.buffer=noiseBuf(dur+.1);f.type='bandpass';f.Q.value=.9;
+    f.frequency.setValueAtTime(from,t);f.frequency.exponentialRampToValueAtTime(to,t+dur*.55);f.frequency.exponentialRampToValueAtTime(from*1.4,t+dur);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+dur*.45);g.gain.linearRampToValueAtTime(0,t+dur);src.connect(f);f.connect(g);g.connect(a.destination);src.start(t);src.stop(t+dur+.1)}
+  function tone(t,fq,vol,dur,type){const a=ctx(),o=a.createOscillator(),g=a.createGain();o.type=type||'sine';o.frequency.value=fq;o.connect(g);g.connect(a.destination);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.012);g.gain.exponentialRampToValueAtTime(.0001,t+dur);o.start(t);o.stop(t+dur+.05)}
+  const NOTES=[523.25,587.33,659.25,783.99,880,1046.5];
+  function sfx(kind,arg){
     if(!soundOn)return;
     try{const a=ctx(),t=a.currentTime;
-      if(kind==='door'){
-        const src=a.createBufferSource(),f=a.createBiquadFilter(),g=a.createGain();src.buffer=noiseBuf(2.6);f.type='bandpass';f.Q.value=.9;
-        f.frequency.setValueAtTime(140,t);f.frequency.exponentialRampToValueAtTime(900,t+1.4);f.frequency.exponentialRampToValueAtTime(220,t+2.5);
-        g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.16,t+.9);g.gain.linearRampToValueAtTime(0,t+2.5);src.connect(f);f.connect(g);g.connect(a.destination);src.start(t);src.stop(t+2.6);
-        const o=a.createOscillator(),og=a.createGain();o.type='sine';o.frequency.setValueAtTime(55,t);o.frequency.linearRampToValueAtTime(42,t+1.8);
-        og.gain.setValueAtTime(0,t);og.gain.linearRampToValueAtTime(.09,t+.3);og.gain.exponentialRampToValueAtTime(.0001,t+2);o.connect(og);og.connect(a.destination);o.start(t);o.stop(t+2.1);
-      }else{
-        const notes=kind==='chime'?[659.25,987.77,1318.5]:[1320];
-        notes.forEach((fq,k)=>{const o=a.createOscillator(),gg=a.createGain();o.type='sine';o.frequency.value=fq;o.connect(gg);gg.connect(a.destination);
-          const s=t+k*.09,v=kind==='chime'?.05:.02,dur=kind==='chime'?.9:.07;
-          gg.gain.setValueAtTime(0,s);gg.gain.linearRampToValueAtTime(v,s+.01);gg.gain.exponentialRampToValueAtTime(.0001,s+dur);o.start(s);o.stop(s+dur+.02)});
-      }
+      if(kind==='door'){whoosh(t,2.5,140,900,.16);const o=a.createOscillator(),og=a.createGain();o.frequency.setValueAtTime(55,t);o.frequency.linearRampToValueAtTime(42,t+1.8);og.gain.setValueAtTime(0,t);og.gain.linearRampToValueAtTime(.09,t+.3);og.gain.exponentialRampToValueAtTime(.0001,t+2);o.connect(og);og.connect(a.destination);o.start(t);o.stop(t+2.1)}
+      else if(kind==='turn'){whoosh(t,.55,260,700,.07);whoosh(t+.5,.75,300,1500,.09);tone(t+.02,110,.06,.5);const n=NOTES[(arg||1)-1];tone(t+1.25,n,.05,1.4);tone(t+1.33,n*1.5,.03,1.2);tone(t+1.42,n*2,.015,1)}
+      else if(kind==='arrive'){whoosh(t,1.2,180,1200,.1);[0,4,7,12].forEach((s,i)=>tone(t+.6+i*.09,523.25*Math.pow(2,s/12),.04,1.4))}
+      else{const notes=kind==='chime'?[659.25,987.77,1318.5]:[1320];notes.forEach((fq,k)=>tone(t+k*.09,fq,kind==='chime'?.05:.02,kind==='chime'?.9:.07))}
     }catch(e){}
   }
   window.DA.sfx=sfx;
-  sndBtns.forEach(b=>b.addEventListener('click',()=>{soundOn=!soundOn;try{localStorage.setItem('da-sound',soundOn?'1':'0')}catch(e){}paintSnd();
-    if(soundOn){sfx('chime');if(DA.progress<.95)startAmbient()}else stopAmbient()}));
+  sndBtn.addEventListener('click',()=>{setSound(!soundOn);if(soundOn)sfx('chime')});
 
-  /* ---------- Entrada: progreso de scroll ---------- */
-  const cap1=$('#cap1'),cap2=$('#cap2'),flash=$('#flash'),prFill=$('#pr-fill'),prLabel=$('#pr-label'),ctl=$('.intro-ctl');
-  const clamp=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
-  const band=(p,a,b)=>clamp((p-a)/(b-a));
-  let doorPlayed=false;
-  function introProgress(){
-    if(!intro||intro.offsetParent===null&&getComputedStyle(intro).display==='none')return 1;
-    const r=intro.getBoundingClientRect(),total=intro.offsetHeight-innerHeight;
-    return clamp(-r.top/total);
-  }
-  function paintIntro(){
-    const p=introProgress();DA.progress=p;
-    document.body.classList.toggle('in-intro',p<.985);
+  /* ================= Entrada a la casa ================= */
+  const intro=$('#intro'),stage=$('#stage'),cap1=$('#cap1'),cap2=$('#cap2'),flash=$('#flash'),prFill=$('#pr-fill'),prLabel=$('#pr-label'),ctl=$('#intro-ctl');
+  let target=0,shown=0,autoT=null,doorPlayed=false,last=performance.now();
+  const nudge=d=>{if(DA.introDone)return;cancelAuto();target=clamp(target+d)};
+  function cancelAuto(){if(autoT){cancelAnimationFrame(autoT);autoT=null}}
+  stage.addEventListener('wheel',e=>{e.preventDefault();nudge(e.deltaY/2600)},{passive:false});
+  let ty=null;
+  stage.addEventListener('touchstart',e=>{ty=e.touches[0].clientY},{passive:true});
+  stage.addEventListener('touchmove',e=>{if(ty==null)return;const y=e.touches[0].clientY;nudge((ty-y)/(innerHeight*1.8));ty=y},{passive:true});
+  addEventListener('keydown',e=>{if(DA.introDone)return;
+    if(['ArrowDown','PageDown',' '].includes(e.key)){e.preventDefault();nudge(.08)}
+    if(['ArrowUp','PageUp'].includes(e.key)){e.preventDefault();nudge(-.08)}
+    if(e.key==='Enter'&&!e.target.closest('button,a'))autoEnter()});
+  function autoEnter(){cancelAuto();const from=target,t0=performance.now(),dur=6200*(1-from)+400,ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+    const step=now=>{const k=clamp((now-t0)/dur);target=from+(1-from)*ease(k);if(k<1)autoT=requestAnimationFrame(step);else autoT=null};autoT=requestAnimationFrame(step)}
+  $('#enter').addEventListener('click',()=>{setSound(true);sfx('chime');autoEnter()});
+  $('#enter-quiet').addEventListener('click',()=>{setSound(false);autoEnter()});
+  $('#skip').addEventListener('click',()=>finishIntro(true));
+  function introLoop(now){
+    if(DA.introDone)return;
+    const dt=Math.min((now-last)/1000,.1);last=now;
+    shown+= (target-shown)*(1-Math.exp(-dt*3.2));DA.progress=target;
+    const p=shown;
     document.body.classList.toggle('cine',p>.04&&p<.97);
-    const a=1-band(p,.08,.2);cap1.style.opacity=a;cap1.style.transform=`translateY(${-band(p,.02,.2)*40}px)`;
-    const b=band(p,.3,.4)*(1-band(p,.58,.68));cap2.style.opacity=b;cap2.style.transform=`translateY(calc(-50% + ${(1-band(p,.3,.42))*30}px))`;
+    cap1.style.opacity=1-band(p,.06,.18);cap1.style.transform=`translateY(${-band(p,.02,.18)*40}px)`;
+    cap2.style.opacity=band(p,.3,.4)*(1-band(p,.58,.68));cap2.style.transform=`translateY(calc(-50% + ${(1-band(p,.3,.42))*30}px))`;
     ctl.style.opacity=1-band(p,.03,.1);ctl.style.pointerEvents=p>.08?'none':'auto';
-    flash.style.opacity=band(p,.88,.985);
+    flash.style.opacity=band(p,.86,.985);
     prFill.style.width=(p*100)+'%';
-    prLabel.textContent=p<.32?'Afuera':p<.62?'Puertas':p<.88?'Entrando':'Recepción';
+    prLabel.textContent=p<.32?'Afuera':p<.62?'Puertas':p<.88?'Entrando':'Adentro';
     if(p>.42&&!doorPlayed){doorPlayed=true;sfx('door')} if(p<.3)doorPlayed=false;
-    if(soundOn){if(p<.95)startAmbient();else stopAmbient()}
+    if(p>.985){finishIntro(false);return}
+    requestAnimationFrame(introLoop);
   }
-  addEventListener('scroll',paintIntro,{passive:true});addEventListener('resize',paintIntro);
 
-  // Entrar: recorrido automático y cancelable
-  let auto=null;
-  function glide(to,dur){
-    const from=scrollY,t0=performance.now();cancelAnimationFrame(auto);
-    const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-    const step=now=>{const t=clamp((now-t0)/dur);scrollTo(0,from+(to-from)*ease(t));if(t<1)auto=requestAnimationFrame(step)};
-    auto=requestAnimationFrame(step);
+  /* ================= El cubo ================= */
+  const SLUG=['inicio','ventas','productividad','herramientas','programa','asesoria'];
+  const ALIAS={'inicio':1,'quien-soy':1,'ventas':2,'gestion-comercial':2,'casos':2,'productividad':3,'productividad-laboral':3,'herramientas':4,'programa':5,'metodo':5,'preguntas':5,'asesoria':6,'hablemos':6};
+  const faces=$$('.face'),rig=$('#rig'),sweep=$('#sweep');
+  faces.forEach(f=>{const s=f.querySelector('.shade');s.innerHTML='<b style="position:absolute;left:0;right:0;top:0;height:100vh;height:100dvh;background:#02040a;opacity:0;display:block"></b>'});
+  let cur=0,busy=false,queued=null;
+  const pills=$$('.dock .pill'),whereN=$('#where-n'),whereT=$('#where-t'),mini=$('#mini-cb');
+  const ROT=[[0,0],[0,-90],[0,-180],[0,90],[-90,0],[90,0]];
+  function chrome(n){
+    const f=faces[n-1];
+    pills.forEach(p=>p.setAttribute('aria-current',String(+p.dataset.go===n)));
+    whereN.textContent=n+' / 6';whereT.textContent=f.dataset.title;
+    document.body.classList.toggle('on-dark',f.hasAttribute('data-dark'));
+    mini.style.transform=`rotateX(${ROT[n-1][0]-18}deg) rotateY(${ROT[n-1][1]+28}deg)`;
+    $$('#map-list button').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.go===n)));
+    history.replaceState(null,'','#'+SLUG[n-1]);
+    document.title=(n===1?'':f.dataset.title+' · ')+'David Arteaga · Extensionista en Gestión Comercial y Productividad Laboral';
   }
-  ['wheel','touchstart','keydown'].forEach(ev=>addEventListener(ev,()=>cancelAnimationFrame(auto),{passive:true}));
-  $('#enter').addEventListener('click',()=>{ if(soundOn)startAmbient(); glide(topOf(intro)+intro.offsetHeight-innerHeight+2,6500)});
-  const topOf=el=>el.getBoundingClientRect().top+scrollY;
-  $('#skip').addEventListener('click',()=>{cancelAnimationFrame(auto);scrollTo(0,topOf($('#inicio')))});
+  function replay(f){f.querySelectorAll('[data-r],.split').forEach(el=>{el.classList.remove('in');io.observe(el)});f.querySelectorAll('.case-line').forEach(l=>{l.style.transition='none';l.style.strokeDashoffset='320'})}
+  const shadeOf=f=>f.querySelector('.shade b');
+  const EASE='cubic-bezier(.65,0,.35,1)';
+  function show(n){faces.forEach((f,i)=>{f.hidden=i!==n-1;f.style.transform=''})}
 
-  /* ---------- Navegación ---------- */
-  const sheet=$('#sheet'),mb=$('#menu-btn');
-  const closeSheet=()=>{sheet.hidden=true;mb.setAttribute('aria-expanded','false')};
-  mb.addEventListener('click',()=>{sheet.hidden=false;mb.setAttribute('aria-expanded','true')});
-  $('#menu-close').addEventListener('click',closeSheet);
+  function arrive(n,scrollTo){
+    cur=n;show(n);chrome(n);replay(faces[n-1]);
+    const f=faces[n-1];f.scrollTop=0;if(scrollTo)jumpInside(f,scrollTo);
+    if(reduce){return}
+    const half=innerWidth/2,far=Math.max(innerWidth,innerHeight)*2.2;
+    document.body.classList.add('turning');busy=true;
+    f.style.transform=`translateZ(${half}px)`;
+    const a=rig.animate([{transform:`translateZ(${-half-far}px) rotateY(-28deg) rotateX(8deg)`,offset:0},{transform:`translateZ(${-half-far*.35}px) rotateY(-6deg) rotateX(2deg)`,offset:.55,easing:EASE},{transform:`translateZ(${-half}px)`,offset:1}],{duration:1900,easing:EASE,fill:'forwards'});
+    shadeOf(f).animate([{opacity:.55},{opacity:0}],{duration:1900,easing:EASE,fill:'forwards'});
+    sfx('arrive');
+    a.onfinish=()=>{rig.style.transform='';a.cancel();f.style.transform='';document.body.classList.remove('turning');busy=false;flashSweep();if(queued){const q=queued;queued=null;go(q)}};
+  }
+  function flashSweep(){sweep.classList.remove('go');void sweep.offsetWidth;sweep.classList.add('go')}
+  function go(n,scrollTarget){
+    n=((n-1+6)%6)+1;
+    if(!DA.introDone){finishIntro(true,n,scrollTarget);return}
+    if(n===cur){if(scrollTarget)jumpInside(faces[n-1],scrollTarget);else faces[n-1].scrollTo({top:0,behavior:reduce?'auto':'smooth'});return}
+    if(busy){queued=n;return}
+    const from=faces[cur-1],to=faces[n-1],dir=n>cur?1:-1;
+    replay(to);to.scrollTop=0;
+    if(reduce){show(n);cur=n;chrome(n);if(scrollTarget)jumpInside(to,scrollTarget);return}
+    busy=true;document.body.classList.add('turning');
+    const half=innerWidth/2,far=Math.max(innerWidth,innerHeight)*1.25;
+    from.style.transform=`translateZ(${half}px)`;
+    to.hidden=false;to.style.transform=`rotateY(${90*dir}deg) translateZ(${half}px)`;
+    const D=1750;
+    // 1. Alejarse para ver el cubo · 2. girar · 3. avanzar en profundidad hacia la nueva cara
+    const a=rig.animate([
+      {transform:`translateZ(${-half}px) rotateY(0deg)`,offset:0,easing:EASE},
+      {transform:`translateZ(${-half-far}px) rotateY(0deg) rotateX(4deg)`,offset:.3,easing:EASE},
+      {transform:`translateZ(${-half-far}px) rotateY(${-90*dir}deg) rotateX(4deg)`,offset:.68,easing:EASE},
+      {transform:`translateZ(${-half}px) rotateY(${-90*dir}deg)`,offset:1}],{duration:D,fill:'forwards'});
+    shadeOf(from).animate([{opacity:0},{opacity:.08,offset:.3},{opacity:.7,offset:.68},{opacity:.7}],{duration:D,fill:'forwards'});
+    shadeOf(to).animate([{opacity:.7},{opacity:.7,offset:.3},{opacity:.08,offset:.68},{opacity:0}],{duration:D,fill:'forwards'});
+    sfx('turn',n);
+    if(navigator.vibrate&&matchMedia('(pointer:coarse)').matches){try{navigator.vibrate([10,500,14])}catch(e){}}
+    chrome(n);
+    a.onfinish=()=>{
+      rig.style.transform='';a.cancel();from.hidden=true;from.style.transform='';to.style.transform='';
+      from.getAnimations({subtree:true}).forEach(x=>x.cancel());to.getAnimations({subtree:true}).forEach(x=>x.cancel());
+      cur=n;document.body.classList.remove('turning');busy=false;flashSweep();
+      if(scrollTarget)jumpInside(to,scrollTarget);
+      to.focus({preventScroll:true});
+      if(queued){const q=queued;queued=null;go(q)}
+    };
+  }
+  faces.forEach(f=>f.tabIndex=-1);
+  function jumpInside(face,id){const el=document.getElementById(id);if(!el||!face.contains(el))return;
+    const firstSec=face.querySelector('.sec');if(el===firstSec||el===face)return;
+    setTimeout(()=>face.scrollTo({top:el.getBoundingClientRect().top-face.getBoundingClientRect().top+face.scrollTop-70,behavior:reduce?'auto':'smooth'}),60)}
+
+  function finishIntro(instant,n,scrollTarget){
+    if(DA.introDone)return;DA.introDone=true;cancelAuto();stopAmbient();
+    intro.classList.add('gone');document.body.classList.remove('in-intro','cine');
+    setTimeout(()=>{intro.hidden=true},1100);
+    const h=location.hash.slice(1);
+    arrive(n||ALIAS[h]||1,scrollTarget||(ALIAS[h]?h:null));
+  }
+
+  // Navegación: dock, flechas, enlaces, teclado y gesto de deslizar
+  $('#prev').onclick=()=>go(cur-1);$('#next').onclick=()=>go(cur+1);
   document.addEventListener('click',e=>{
+    const g=e.target.closest('[data-go]');if(g){e.preventDefault();closeMap();go(+g.dataset.go);return}
+    if(e.target.closest('[data-next]')){e.preventDefault();go(cur+1);return}
     const a=e.target.closest('a[href^="#"]');if(!a)return;
-    const id=a.getAttribute('href').slice(1),el=document.getElementById(id);if(!el)return;
-    e.preventDefault();closeSheet();cancelAnimationFrame(auto);
-    const y=el.getBoundingClientRect().top+scrollY-(id==='inicio'?0:64);
-    scrollTo({top:y,behavior:reduce?'auto':'smooth'});history.replaceState(null,'','#'+id);
+    const id=a.getAttribute('href').slice(1);
+    const el=document.getElementById(id),face=el&&el.closest('.face');
+    const n=face?+face.dataset.face:ALIAS[id];if(!n)return;
+    e.preventDefault();closeMap();go(n,id);
   });
-  // Enlaces antiguos (#quien-soy, #casos…) saltan directo a la sección
-  if(location.hash){const el=document.getElementById(location.hash.slice(1));if(el)requestAnimationFrame(()=>scrollTo(0,el.getBoundingClientRect().top+scrollY-64))}
-  const navLinks=$$('.nav a'),secs=navLinks.map(a=>document.getElementById(a.getAttribute('href').slice(1)));
-  const toTop=$('#to-top'),wa=$('#wa-float');
-  function navState(){
-    const y=innerHeight*.35;let cur=-1;secs.forEach((s,i)=>{if(s&&s.getBoundingClientRect().top<y)cur=i});
-    navLinks.forEach((a,i)=>a.setAttribute('aria-current',String(i===cur)));
-    const past=DA.progress>=.99&&$('#inicio').getBoundingClientRect().top<-200;
-    toTop.classList.toggle('on',past);wa.classList.toggle('on',past);
-  }
-  addEventListener('scroll',navState,{passive:true});
-  toTop.addEventListener('click',()=>scrollTo({top:topOf($('#inicio')),behavior:'smooth'}));
+  addEventListener('keydown',e=>{
+    if(!DA.introDone||e.target.closest('input,select,textarea'))return;
+    if(e.key==='ArrowRight'){e.preventDefault();go(cur+1)}
+    if(e.key==='ArrowLeft'){e.preventDefault();go(cur-1)}
+    if(/^[1-6]$/.test(e.key))go(+e.key);
+    if(e.key==='Escape'){closeMap();annex.hidden=true}
+  });
+  let sx=null,sy=null,st=0;
+  $('#world').addEventListener('touchstart',e=>{if(e.target.closest('input,select,textarea,.table-wrap,.tabs,.funnel')){sx=null;return}sx=e.touches[0].clientX;sy=e.touches[0].clientY;st=Date.now()},{passive:true});
+  $('#world').addEventListener('touchend',e=>{if(sx==null)return;const t=e.changedTouches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.6&&Date.now()-st<700)go(cur+(dx<0?1:-1));sx=null},{passive:true});
+  addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(ALIAS[h]&&ALIAS[h]!==cur)go(ALIAS[h],h)});
 
-  /* ---------- Movimiento de las secciones ---------- */
+  /* ================= Mapa del cubo ================= */
+  const map=$('#map'),bc=$('#bc'),bcw=$('#bcw'),ml=$('#map-list');
+  const DESC=['Quién soy y por qué confiar','Clientes, embudo, cartera','Equipos, tiempos, procesos','Seis calculadoras','Requisitos, aportes, método','Asesoría gratuita'];
+  const PLACE=['translateZ(var(--h))','rotateY(90deg) translateZ(var(--h))','rotateY(180deg) translateZ(var(--h))','rotateY(-90deg) translateZ(var(--h))','rotateX(90deg) translateZ(var(--h))','rotateX(-90deg) translateZ(var(--h))'];
+  faces.forEach((f,i)=>{
+    bc.insertAdjacentHTML('beforeend',`<button data-go="${i+1}" style="transform:${PLACE[i]}"><i>CARA ${i+1}</i>${f.dataset.title}<small>${DESC[i]}</small></button>`);
+    ml.insertAdjacentHTML('beforeend',`<button data-go="${i+1}"><i>${i+1}</i>${f.dataset.title}</button>`)});
+  let rx=-18,ry=28,drag=null,spin=null,moved=false;
+  const paintBig=()=>{bc.style.setProperty('--h',(bcw.clientWidth/2)+'px');bc.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`};
+  function openMap(){map.hidden=false;rx=ROT[cur-1][0]-18;ry=ROT[cur-1][1]+28;paintBig();sfx('tick');
+    const loop=()=>{if(map.hidden)return;if(!drag)ry+=.12;paintBig();spin=requestAnimationFrame(loop)};if(!reduce)spin=requestAnimationFrame(loop)}
+  function closeMap(){map.hidden=true;cancelAnimationFrame(spin)}
+  $('#map-btn').onclick=openMap;$('#map-close').onclick=closeMap;
+  map.addEventListener('click',e=>{if(e.target===map)closeMap()});
+  bcw.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY};moved=false});
+  addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>4)moved=true;ry+=dx*.45;rx=clamp(rx-dy*.45,-80,80);drag={x:e.clientX,y:e.clientY};paintBig()});
+  addEventListener('pointerup',()=>{drag=null});
+  bc.addEventListener('click',e=>{if(moved){e.stopPropagation();e.preventDefault();moved=false}},true);
+
+  /* ================= Movimiento dentro de cada cara ================= */
   $$('.split').forEach(h=>{const words=h.textContent.trim().split(/\s+/);h.setAttribute('aria-label',h.textContent.trim());
     h.innerHTML=words.map((w,i)=>`<span class="w" aria-hidden="true"><span style="--i:${i}">${w}</span></span>`).join(' ')});
   const countUp=el=>{const end=+el.dataset.count,plain='plain' in el.dataset,pre=el.dataset.prefix||'',suf=el.dataset.suffix||'',t0=performance.now(),dur=plain?1400:1800,start=plain?end-30:0;
+    if(reduce){el.textContent=pre+(plain?end:end.toLocaleString('es-CO'))+suf;return}
     const step=now=>{const t=clamp((now-t0)/dur),e=1-Math.pow(1-t,4),v=Math.round(start+(end-start)*e);el.textContent=pre+(plain?v:v.toLocaleString('es-CO'))+suf;if(t<1)requestAnimationFrame(step)};requestAnimationFrame(step)};
   const io=new IntersectionObserver(es=>es.forEach(e=>{if(!e.isIntersecting)return;const el=e.target;el.classList.add('in');
-    el.querySelectorAll('[data-count]').forEach(countUp);if(el.matches('[data-count]'))countUp(el);
-    if(el.classList.contains('case-kpi')){const l=$('#case-line');l.style.transition='stroke-dashoffset 2.2s cubic-bezier(.22,1,.36,1)';l.style.strokeDashoffset='0'}
-    io.unobserve(el)}),{threshold:.18,rootMargin:'0px 0px -6% 0px'});
+    el.querySelectorAll('[data-count]').forEach(countUp);
+    if(el.classList.contains('case-kpi')){const l=el.querySelector('.case-line');l.style.transition='stroke-dashoffset 2.2s cubic-bezier(.22,1,.36,1)';requestAnimationFrame(()=>l.style.strokeDashoffset='0')}
+    io.unobserve(el)}),{threshold:.15});
   $$('[data-r],.split').forEach(el=>io.observe(el));
-  if(reduce)$$('[data-count]').forEach(el=>{el.textContent=(el.dataset.prefix||'')+(+el.dataset.count).toLocaleString('es-CO')+(el.dataset.suffix||'')});
 
-  // Línea del método guiada por el scroll
   const tlEl=$('#timeline'),tls=$$('.tl');
   function timeline(){const r=tlEl.getBoundingClientRect(),vert=innerWidth<=900;
-    const p=clamp((innerHeight*.75-r.top)/(r.height+innerHeight*.15));tlEl.style.setProperty('--p',(p*100)+'%');
-    tls.forEach((t,i)=>t.classList.toggle('on',p>=(vert?(i/(tls.length)):(i/(tls.length-1))*.92)+.02))}
-  addEventListener('scroll',timeline,{passive:true});timeline();
+    const p=clamp((innerHeight*.8-r.top)/(r.height+innerHeight*.1));tlEl.style.setProperty('--p',(p*100)+'%');
+    tls.forEach((t,i)=>t.classList.toggle('on',p>=(vert?(i/tls.length):(i/(tls.length-1))*.92)+.02))}
+  $('#f5').addEventListener('scroll',timeline,{passive:true});
 
-  // Luz que sigue el cursor, inclinación de tarjetas y botones magnéticos
   const fine=matchMedia('(pointer:fine)').matches;
-  const hero=$('#inicio');hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hero.querySelector('.spot').style.setProperty('--mx',(e.clientX-r.left+160)+'px');hero.querySelector('.spot').style.setProperty('--my',(e.clientY-r.top+160)+'px')});
+  const hero=$('#f1 .sec');hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect(),s=hero.querySelector('.spot');s.style.setProperty('--mx',(e.clientX-r.left+160)+'px');s.style.setProperty('--my',(e.clientY-r.top+160)+'px')});
   if(fine&&!reduce){
     $$('[data-tilt]').forEach(c=>{c.addEventListener('pointermove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
       c.style.transform=`perspective(1200px) rotateX(${(.5-y)*5}deg) rotateY(${(x-.5)*7}deg)`;c.style.setProperty('--mx',x*100+'%');c.style.setProperty('--my',y*100+'%')});
@@ -1070,26 +1228,22 @@ input,select,textarea{border-color:var(--hair);box-shadow:0 1px 2px rgba(10,20,5
     $$('[data-mag]').forEach(b=>{b.addEventListener('pointermove',e=>{const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.3}px)`});b.addEventListener('pointerleave',()=>{b.style.transform=''})});
   }
 
-  /* ---------- Anexo Banca ---------- */
+  /* ================= Banca ================= */
   const annex=$('#annex');
-  $('#annex-open').onclick=()=>{annex.hidden=false};
-  $('#annex-close').onclick=()=>{annex.hidden=true};
+  $('#annex-open').onclick=()=>{annex.hidden=false};$('#annex-close').onclick=()=>{annex.hidden=true};
   annex.addEventListener('click',e=>{if(e.target===annex)annex.hidden=true});
-  addEventListener('keydown',e=>{if(e.key==='Escape'){annex.hidden=true;closeSheet()}});
 
-  /* ---------- Herramientas ---------- */
+  /* ================= Herramientas ================= */
   const TOOLS=[['chequeo','Chequeo rápido'],['tpv','Ticket promedio'],['embudo','Embudo y conversión'],['pl','Productividad por trabajador'],['canac','Tareas fuera del cargo'],['cartera','Días de cartera']];
   const tabs=$('#tool-tabs');
   TOOLS.forEach(([id,l],i)=>{const b=document.createElement('button');b.setAttribute('role','tab');b.textContent=l;b.dataset.tool=id;b.setAttribute('aria-selected',String(i===0));
-    b.onclick=()=>{tabs.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected',String(x===b)));
-      $$('.tool').forEach(t=>t.hidden=t.dataset.tool!==id);sfx('tick')};tabs.appendChild(b)});
+    b.onclick=()=>{tabs.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected',String(x===b)));$$('.tool').forEach(t=>t.hidden=t.dataset.tool!==id);sfx('tick')};tabs.appendChild(b)});
   const num=id=>+(document.getElementById(id).value||'').replace(/[^\d]/g,'')||0;
   const pct=n=>n.toFixed(1).replace('.',',')+'%';
   const fmt=n=>'$'+Math.round(n).toLocaleString('es-CO');
   const yn=(host,list,onPick)=>list.forEach((q,i)=>{const d=document.createElement('div');d.className='q';d.innerHTML=`<p>${q}</p><div class="yn"><button type="button" aria-pressed="false" data-a="1">Sí</button><button type="button" aria-pressed="false" data-a="0">No</button></div>`;
     d.querySelectorAll('button').forEach(b=>b.onclick=()=>{d.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));sfx('tick');onPick(i,b.dataset.a==='1')});host.appendChild(d)});
 
-  // Chequeo
   const CQ=[['gc','¿Sabes qué clientes te dejan más rentabilidad?'],['gc','¿Mides cuántos prospectos terminan comprando?'],['gc','¿Tienes metas de venta por vendedor o canal?'],['gc','¿Tu cartera se cobra dentro del plazo que otorgas?'],
     ['pl','¿Cada cargo tiene funciones escritas y claras?'],['pl','¿Sabes cuánto produce o vende cada trabajador?'],['pl','¿Tu equipo dedica poco tiempo a tareas que no le corresponden?'],['pl','¿Revisas resultados con tu equipo cada semana?']];
   const ca=Array(CQ.length).fill(null);
@@ -1097,28 +1251,22 @@ input,select,textarea{border-color:var(--hair);box-shadow:0 1px 2px rgba(10,20,5
   function check(){
     const gap=k=>{const it=CQ.map((c,i)=>[c[0],ca[i]]).filter(x=>x[0]===k&&x[1]!==null);return it.length?it.filter(x=>!x[1]).length/4*100:0};
     const g=gap('gc'),p=gap('pl');
-    $('#m-gc').style.width=g+'%';$('#m-gc-v').textContent=Math.round(g)+'%';
-    $('#m-pl').style.width=p+'%';$('#m-pl-v').textContent=Math.round(p)+'%';
+    $('#m-gc').style.width=g+'%';$('#m-gc-v').textContent=Math.round(g)+'%';$('#m-pl').style.width=p+'%';$('#m-pl-v').textContent=Math.round(p)+'%';
     const n=ca.filter(x=>x!==null).length,r=$('#check-read');
     if(n<8){r.textContent=`Llevas ${n} de 8. Cada barra muestra cuánto espacio de mejora hay en esa línea.`;return}
     sfx('chime');
-    r.innerHTML=g===0&&p===0?'Tu empresa tiene buenas prácticas en ambas líneas. El reto ahora es medir y sostener.':
-      `<b>Tu mayor oportunidad está en ${g>=p?'Gestión Comercial':'Productividad Laboral'}.</b> Es un resultado orientativo, no un diagnóstico.`}
+    r.innerHTML=g===0&&p===0?'Tu empresa tiene buenas prácticas en ambas líneas. El reto ahora es medir y sostener.':`<b>Tu mayor oportunidad está en ${g>=p?'Gestión Comercial':'Productividad Laboral'}.</b> Es un resultado orientativo, no un diagnóstico.`}
 
-  // TPV
   const months=[{m:'Mes 1',v:48000000,c:320},{m:'Mes 2',v:51500000,c:330},{m:'Mes 3',v:55200000,c:336}];
   const ci=$('#calc-inputs');
   months.forEach((d,i)=>ci.insertAdjacentHTML('beforeend',`<label for="v${i}">${d.m} · ventas ($)<input id="v${i}" inputmode="numeric" value="${d.v}"></label><label for="c${i}">${d.m} · clientes<input id="c${i}" inputmode="numeric" value="${d.c}"></label>`));
-  function tpv(){
-    const t=months.map((d,i)=>{const v=num('v'+i),c=num('c'+i);return {m:d.m,tpv:c?v/c:0}});
-    const max=Math.max(...t.map(x=>x.tpv),1);
+  function tpv(){const t=months.map((d,i)=>{const v=num('v'+i),c=num('c'+i);return {m:d.m,tpv:c?v/c:0}}),max=Math.max(...t.map(x=>x.tpv),1);
     $('#tpv-out').textContent=fmt(t[2].tpv);
     $('#tpv-bars').innerHTML=t.map(x=>`<div class="bar-row"><span>${x.m}</span><div class="track"><div class="fill" style="width:${x.tpv/max*100}%"></div></div><span>${fmt(x.tpv)}</span></div>`).join('');
     const ch=t[0].tpv?((t[2].tpv/t[0].tpv-1)*100):0;
     $('#tpv-read').textContent=t[0].tpv?`Entre el mes 1 y el mes 3 tu ticket promedio ${ch>=0?'subió':'bajó'} ${pct(Math.abs(ch))}.`:'Escribe ventas y clientes para ver la variación.'}
   ci.addEventListener('input',tpv);tpv();
 
-  // Embudo
   const FN=['Prospectos','Interesados','Cotizaciones','Ventas'];
   function funnel(){const v=[0,1,2,3].map(i=>num('e'+i)),f=$('#funnel');
     f.innerHTML=v.map((x,i)=>`${i?`<span class="rate">${v[i-1]?pct(x/v[i-1]*100):'—'} pasan</span>`:''}<div class="lvl" style="width:${v[0]?Math.max(x/v[0]*100,24):24}%">${FN[i]} · ${x.toLocaleString('es-CO')}</div>`).join('');
@@ -1126,27 +1274,22 @@ input,select,textarea{border-color:var(--hair);box-shadow:0 1px 2px rgba(10,20,5
     $('#funnel-read').innerHTML=v[0]?`Conversión total: <b>${pct(v[3]/v[0]*100)}</b>. Donde más clientes se pierden es entre <b>${FN[w]} y ${FN[w+1]}</b>: ahí está la primera mejora.`:'Escribe tus datos.'}
   ['e0','e1','e2','e3'].forEach(id=>document.getElementById(id).addEventListener('input',funnel));funnel();
 
-  // Productividad por trabajador
   function pl(){const b=num('p1')?num('p0')/num('p1'):0,a=num('p3')?num('p2')/num('p3'):0,ch=b?(a/b-1)*100:0,max=Math.max(a,b,1);
     $('#pl-out').textContent=(ch>=0?'+':'')+pct(ch);
     $('#pl-bars').innerHTML=[['Base',b],['Actual',a]].map(x=>`<div class="bar-row"><span>${x[0]}</span><div class="track"><div class="fill" style="width:${x[1]/max*100}%"></div></div><span>${fmt(x[1])}</span></div>`).join('');
     $('#pl-read').textContent=b?`Cada trabajador pasó de ${fmt(b)} a ${fmt(a)} en el período. Compara siempre períodos equivalentes y la misma población.`:'Escribe tus datos.'}
   ['p0','p1','p2','p3'].forEach(id=>document.getElementById(id).addEventListener('input',pl));pl();
 
-  // Tareas fuera del cargo
   function canac(){const per=num('k0'),h=num('k1'),sal=num('k2'),hm=num('k3');const ch=hm?sal/hm:0,cost=per*h*4.33*ch,share=hm?Math.min(h*4.33/hm*100,100):0;
-    $('#k-out').textContent=fmt(cost);
-    $('#k-read').textContent=`Son ${fmt(cost*12)} al año pagados por trabajo que no le corresponde a ese cargo.`;
+    $('#k-out').textContent=fmt(cost);$('#k-read').textContent=`Son ${fmt(cost*12)} al año pagados por trabajo que no le corresponde a ese cargo.`;
     $('#k-bar').style.width=share+'%';$('#k-pct').textContent=Math.round(share)+'%'}
   ['k0','k1','k2','k3'].forEach(id=>document.getElementById(id).addEventListener('input',canac));canac();
 
-  // Cartera
   function cart(){const d=num('r1')?num('r0')/num('r1')*num('r2'):0,plz=num('r3');
     $('#r-out').textContent=Math.round(d)+' días';
     $('#r-read').innerHTML=!num('r1')?'Escribe tus datos.':d>plz?`Cobras <b>${Math.round(d-plz)} días después</b> del plazo que otorgas. Ese dinero lo está financiando tu empresa.`:'Cobras dentro del plazo que otorgas. Muy bien.'}
   ['r0','r1','r2','r3'].forEach(id=>document.getElementById(id).addEventListener('input',cart));cart();
 
-  // Requisitos del programa
   const QS=['¿Tu empresa tiene al menos dos años de constituida y dos años seguidos de operación?','¿Tiene mínimo cuatro personas vinculadas, con cualquier tipo de contrato?','¿Su actividad es de manufactura, agroindustria (no agricultura) o servicios?','¿Tiene el registro mercantil renovado y no está en disolución ni liquidación?','¿Ha participado en el programa menos de tres veces?'];
   const ans=Array(QS.length).fill(null);
   yn($('#quiz'),QS,(i,v)=>{ans[i]=v;verdict()});
@@ -1155,7 +1298,6 @@ input,select,textarea{border-color:var(--hair);box-shadow:0 1px 2px rgba(10,20,5
     if(ans.every(Boolean)){sfx('chime');v.className='verdict ok';v.innerHTML='<p style="margin-bottom:12px"><b>Tu empresa cumple los requisitos básicos.</b> Al inscribirte harás un autodiagnóstico en el que debes obtener al menos 49,5 puntos.</p><a class="btn primary" target="_blank" rel="noopener" href="https://colombiaproductiva.my.site.com/fabricasdeproductividad/s/registroempresa">Inscribir mi empresa</a>'}
     else{v.className='verdict';v.innerHTML='<p style="margin-bottom:12px">Hoy tu empresa no cumple uno de los requisitos. Agenda la asesoría gratuita y revisamos alternativas.</p><a class="btn" href="#asesoria">Agendar asesoría</a>'}}
 
-  // Formulario: arma el mensaje de WhatsApp
   $('#lead-form').addEventListener('submit',e=>{e.preventDefault();
     const v=id=>document.getElementById(id).value.trim();
     const ok=['f-nombre','f-empresa','f-contacto'].every(v)&&$('#f-datos').checked;
@@ -1165,7 +1307,10 @@ input,select,textarea{border-color:var(--hair);box-shadow:0 1px 2px rgba(10,20,5
     e.target.hidden=true;$('#form-ok').hidden=false;sfx('chime');
     window.open('https://wa.me/573225347242?text='+encodeURIComponent(msg),'_blank','noopener')});
 
-  paintIntro();navState();
+  /* ================= Arranque ================= */
+  const h=location.hash.slice(1);
+  if(reduce||ALIAS[h]){finishIntro(true)}else{requestAnimationFrame(t=>{last=t;introLoop(t)})}
+  addEventListener('resize',()=>{if(map&&!map.hidden)paintBig()});
 })();
 </script>
 
@@ -1360,6 +1505,7 @@ function start(){
   let visible=true;new IntersectionObserver(e=>{visible=e[0].isIntersecting}).observe(canvas);
   const clock=new THREE.Clock();let first=true,lastScr=-1,frame=0;
   renderer.setAnimationLoop(()=>{
+    if(DA.introDone){renderer.setAnimationLoop(null);renderer.dispose();return}
     if(!visible||document.hidden)return;
     const time=clock.elapsedTime,target=DA.progress||0;
     const dt=Math.min(clock.getDelta(),.1),kk=1-Math.exp(-dt*3.2);cur+=(target-cur)*kk;mx+=(tmx-mx)*kk*.6;my+=(tmy-my)*kk*.6;
