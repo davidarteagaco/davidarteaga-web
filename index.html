@@ -698,6 +698,44 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
 #face-progress i{display:block;height:100%;background:linear-gradient(90deg,#1546d6,#5b8cff);transform-origin:0 50%;transform:scaleX(0)}
 body.in-intro #face-progress{display:none}
 
+/* Docencia */
+.doc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:30px}
+@media (max-width:900px){.doc-grid{grid-template-columns:minmax(0,1fr)}}
+.doc-card{border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:24px;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.015));display:flex;flex-direction:column;gap:10px;transition:border-color .4s,translate .4s}
+.doc-card:hover{border-color:rgba(107,147,255,.6);translate:0 -4px}
+.doc-card i{font:500 11px/1.3 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:#8fb0ff;font-style:normal}
+.doc-card h3{font:600 20px/1.2 var(--f-display);color:#fff;margin:0}
+.doc-card p{margin:0;color:var(--on-night-muted);font-size:15px}
+.doc-foot{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:28px;align-items:center;margin-top:32px}
+@media (max-width:760px){.doc-foot{grid-template-columns:minmax(0,1fr)}}
+.doc-ph{aspect-ratio:4/3;border-color:rgba(255,255,255,.12)}.doc-ph img{height:100%;object-fit:cover}
+/* Contenido */
+.content-strip{margin-top:48px}
+.cs-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.cs-track{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:18px 2px 10px;-webkit-overflow-scrolling:touch}
+.cs-item{flex:0 0 auto;width:min(220px,58vw);aspect-ratio:9/16;border-radius:16px;overflow:hidden;scroll-snap-align:start;border:1px solid var(--line);box-shadow:0 20px 40px -24px rgba(4,8,20,.5);transition:translate .4s var(--ease)}
+.cs-item.sq{width:min(390px,80vw)}
+.cs-item:hover{translate:0 -6px}
+.cs-item img{width:100%;height:100%;object-fit:cover;display:block}
+/* Casos */
+.case-ph{aspect-ratio:16/10;margin:4px 0}.case-ph img{height:100%;object-fit:cover}
+.cempi-list li{padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}
+.cempi-list li:last-child{border-bottom:0}
+.human{grid-template-columns:1.2fr .9fr .7fr}
+
+/* Entrada legible en cualquier pantalla */
+.cap-2{top:calc(14vh + 40px)!important;transform:none}
+.cap{isolation:isolate}
+.cap::before{content:"";position:absolute;inset:-14% -10%;z-index:-1;background:radial-gradient(closest-side,rgba(3,8,22,.62),rgba(3,8,22,.35) 60%,transparent);filter:blur(10px);border-radius:50%}
+.cap .big,.cap .sub,.cap .kick{text-shadow:0 2px 18px rgba(0,0,0,.55)}
+@media (max-width:640px){
+ .cap .big{font-size:clamp(28px,8.6vw,40px);line-height:1.08}
+ .cap .kick{font-size:10px;letter-spacing:.14em;flex-wrap:wrap;justify-content:center}
+ .cap .sub{font-size:15px}
+ .cap-1{bottom:calc(30vh + env(safe-area-inset-bottom,0px))}
+}
+.cempi-list li{display:block!important;grid-template-columns:none!important}.cempi-list li b{display:inline;margin-right:4px}
+
 </style>
 <script type="importmap">{"imports":{"three":"/vendor/three-0.160.0.module.min.js"}}</script>
 </head>
@@ -788,7 +826,7 @@ body.in-intro #face-progress{display:none}
       <p class="note" data-r style="--d:5">Sábados presenciales en Medellín, el Valle de Aburrá y Caucasia. Entre semana, por videollamada.</p>
      </div>
      <div class="portrait has-photo" id="portrait" data-r="scale" style="--d:2">
-      <picture><source srcset="/media/david-oficina.webp" type="image/webp"><img src="/media/david-oficina.jpg" alt="David Arteaga en la oficina, con camisa y corbata, conversando con un café en la mano" width="900" height="1546" fetchpriority="high"></picture>
+      <picture><source srcset="/media/david-escritorio.webp" type="image/webp"><img src="/media/david-escritorio.jpg" alt="David Arteaga sonriendo en su escritorio, listo para revisar los números de una empresa" width="900" height="1599" fetchpriority="high"></picture>
       <span class="chip"><i></i>Atención presencial los sábados</span>
      </div>
     </div>
@@ -917,8 +955,43 @@ body.in-intro #face-progress{display:none}
       <p class="lead" data-r style="--d:2">Mi familia es la razón por la que hago las cosas con método y sin atajos. Cuando acompaño una empresa pienso en las familias que dependen de ella: si la empresa vende más y produce mejor, a esas casas también les va mejor.</p>
      </div>
      <figure class="ph-card ph-fam" data-r="scale" style="--d:2"><picture><source srcset="/media/familia.webp" type="image/webp"><img src="/media/familia.jpg" alt="David Arteaga con su familia, todos vestidos de blanco" width="1000" height="1333" loading="lazy"></picture></figure>
-     <figure class="ph-card ph-out" data-r="scale" style="--d:3"><picture><source srcset="/media/david-cipreses.webp" type="image/webp"><img src="/media/david-cipreses.jpg" alt="David Arteaga y su pareja frente a una hilera de cipreses" width="900" height="1200" loading="lazy"></picture></figure>
-     <figure class="ph-card ph-vid" data-r="scale" style="--d:4"><video src="/media/video-exterior.mp4" poster="/media/video-exterior.jpg" controls playsinline preload="none" width="478" height="850"></video><figcaption>Un minuto conmigo, al aire libre</figcaption></figure>
+     <figure class="ph-card ph-out" data-r="scale" style="--d:3"><picture><source srcset="/media/david-blazer.webp" type="image/webp"><img src="/media/david-blazer.jpg" alt="David Arteaga de pie en su oficina, con blazer azul claro" width="800" height="1421" loading="lazy"></picture></figure>
+    </div>
+    <div class="content-strip">
+     <div class="cs-head"><div class="room-label" data-r><i></i>Lo que comparto</div><a class="btn" href="https://www.instagram.com/davidarteaga.co" target="_blank" rel="noopener">Ver más en Instagram <span class="arr">↗</span></a></div>
+     <div class="cs-track">
+      <a class="cs-item sq" href="https://www.instagram.com/davidarteaga.co" target="_blank" rel="noopener" data-r style="--d:1"><picture><source srcset="/media/contenido-talentosos.webp" type="image/webp"><img src="/media/contenido-talentosos.jpg" alt="Pieza: Los talentosos ya no están donde consiguen trabajo para ganarse la vida" width="700" height="700" loading="lazy"></picture></a>
+      <a class="cs-item" href="https://www.instagram.com/davidarteaga.co" target="_blank" rel="noopener" data-r style="--d:2"><picture><source srcset="/media/contenido-aprendamos.webp" type="image/webp"><img src="/media/contenido-aprendamos.jpg" alt="Pieza: Aprendamos juntos de bancos y finanzas" width="600" height="1067" loading="lazy"></picture></a>
+      <a class="cs-item" href="https://www.instagram.com/davidarteaga.co" target="_blank" rel="noopener" data-r style="--d:3"><picture><source srcset="/media/contenido-creditos.webp" type="image/webp"><img src="/media/contenido-creditos.jpg" alt="Pieza: No le temas a los créditos" width="600" height="1067" loading="lazy"></picture></a>
+      <a class="cs-item" href="https://www.instagram.com/davidarteaga.co" target="_blank" rel="noopener" data-r style="--d:4"><picture><source srcset="/media/contenido-bancos.webp" type="image/webp"><img src="/media/contenido-bancos.jpg" alt="Pieza: No le tengas miedo a los bancos, sí a la desinformación" width="600" height="1067" loading="lazy"></picture></a>
+      <a class="cs-item" href="https://www.instagram.com/davidarteaga.co" target="_blank" rel="noopener" data-r style="--d:5"><picture><source srcset="/media/contenido-deuda.webp" type="image/webp"><img src="/media/contenido-deuda.jpg" alt="Pieza: La deuda como método de apalancamiento" width="600" height="1067" loading="lazy"></picture></a>
+     </div>
+    </div>
+   </div>
+  </section>
+  <section class="sec dark" id="docencia" aria-labelledby="t-doc">
+   <div class="wrap">
+    <div class="sec-head">
+     <div>
+      <div class="room-label" data-r><i></i>Docente ITM · Facultad de Ciencias Económicas y Administrativas</div>
+      <h2 class="h-xl split" id="t-doc">Lo que enseño en la universidad lo aplico en tu empresa.</h2>
+     </div>
+     <p class="lead" data-r style="--d:2">Desde 2023 soy docente de cátedra del ITM. Entre 2023 y 2025 la institución me certifica <b style="color:#fff">1.564 horas de clase</b>. Cada asignatura que dicto tiene una aplicación directa en las decisiones de un empresario.</p>
+    </div>
+    <div class="doc-grid">
+     <article class="doc-card" data-r style="--d:1"><i>Matemáticas Financieras</i><h3>Decidir un crédito con números</h3><p>Comparar tasas, plazos y cuotas para saber cuánto te cuesta de verdad el dinero y qué financiación le conviene a tu empresa.</p></article>
+     <article class="doc-card" data-r style="--d:2"><i>Administración Financiera</i><h3>Flujo de caja y capital de trabajo</h3><p>Anticipar cuándo entra y sale la plata, cuánto necesitas para operar y cómo evitar quedarte sin liquidez aunque vendas bien.</p></article>
+     <article class="doc-card" data-r style="--d:3"><i>Costos y Presupuestos</i><h3>Saber qué producto sí deja margen</h3><p>Costear por producto o servicio, fijar precios con criterio y construir un presupuesto comercial que se pueda cumplir.</p></article>
+     <article class="doc-card" data-r style="--d:1"><i>Riesgo de Crédito y Operacional</i><h3>Vender a crédito sin perder plata</h3><p>Definir a quién darle plazo, con qué cupo y cómo cobrar, y detectar las fallas de proceso que te cuestan dinero cada mes.</p></article>
+     <article class="doc-card" data-r style="--d:2"><i>Gerencia de Proyectos</i><h3>Planes que sí se ejecutan</h3><p>Convertir una idea de mejora en un plan con alcance, cronograma, responsables y entregables, y evaluar si una inversión vale la pena.</p></article>
+     <article class="doc-card" data-r style="--d:3"><i>Valoración de Empresas</i><h3>Cuánto vale tu negocio</h3><p>Entender qué decisiones aumentan el valor de tu empresa y preparar los números antes de buscar socios, crédito o inversión.</p></article>
+    </div>
+    <div class="doc-foot">
+     <figure class="ph-card doc-ph" data-r="scale" style="--d:2"><picture><source srcset="/media/itm-evento.webp" type="image/webp"><img src="/media/itm-evento.jpg" alt="David Arteaga en un evento académico de finanzas, con asistentes que reciben certificados" width="900" height="1200" loading="lazy"></picture></figure>
+     <div class="stack" style="gap:14px" data-r style="--d:3">
+      <p class="lead" style="color:var(--on-night)">Por eso mis informes no se quedan en el diagnóstico. Explico cada indicador como lo explico en clase, para que tú y tu equipo lo entiendan, lo usen y lo sigan midiendo cuando yo ya no esté.</p>
+      <p class="note" style="color:var(--on-night-muted)">Fuente: certificación laboral del Departamento de Personal del ITM (agosto de 2025) y asignación académica 2026.</p>
+     </div>
     </div>
     <div class="next-face"><span><span class="face-num">Siguiente sala · 2 de 6</span><br><b>Vender más</b></span><button class="btn primary" data-go="2">Girar el cubo <span class="arr">→</span></button></div>
    </div>
@@ -988,8 +1061,17 @@ body.in-intro #face-progress{display:none}
      </div>
     </div>
     <div class="cases2">
-     <article class="card" data-r style="--d:1"><div class="row"><span class="tag">Gestión Comercial</span><span class="tag">Productividad Laboral</span></div><h3>Vimar Vidrios Medellín S.A.S.</h3><p class="muted">Comercialización, transformación e instalación de vidrios en Medellín.</p><p>Acompañé a la empresa en las dos líneas del programa. En Gestión Comercial trabajamos la información de ventas, los indicadores comerciales y las rutinas de seguimiento del equipo. En Productividad Laboral medimos la productividad por trabajador con una línea base, y definimos con claridad qué colaboradores entran en la medición y por qué, para comparar períodos equivalentes.</p><p class="note">Publicado con autorización de la empresa.</p></article>
-     <article class="card" data-r style="--d:2"><div class="row"><span class="tag">Gestión Comercial</span><span class="tag">Caucasia, Antioquia</span></div><h3>CEMPI · Centro Empresarial Informático S.A.S.</h3><p class="muted">Corresponsal bancario en Caucasia, Antioquia: depósitos, retiros y pagos.</p><p>Construimos una estrategia comercial a la medida de un corresponsal: segmentamos a los clientes entre depositantes, retirantes y mixtos, identificamos comerciantes, compradores de oro, mineros, pymes y empresas como prospectos, y analizamos frecuencia, recurrencia y rentabilidad por segmento, cuidando siempre el cupo operativo que permite atender a todos.</p><p class="note">El acompañamiento también llega a las subregiones de Antioquia.</p></article>
+     <article class="card" data-r style="--d:1"><div class="row"><span class="tag">Gestión Comercial</span><span class="tag">Productividad Laboral</span></div><figure class="ph-card case-ph"><picture><source srcset="/media/vimar-capacitacion.webp" type="image/webp"><img src="/media/vimar-capacitacion.jpg" alt="Sesión de trabajo con el equipo de Vimar Vidrios en sus instalaciones" width="900" height="1144" loading="lazy"></picture></figure><h3>Vimar Vidrios Medellín S.A.S.</h3><p class="muted">Comercialización, transformación e instalación de vidrios en Medellín.</p><p>Acompañé a la empresa en las dos líneas del programa. En Gestión Comercial trabajamos la información de ventas, los indicadores comerciales y las rutinas de seguimiento del equipo. En Productividad Laboral medimos la productividad por trabajador con una línea base, y definimos con claridad qué colaboradores entran en la medición y por qué, para comparar períodos equivalentes.</p><p class="note">Publicado con autorización de la empresa.</p></article>
+     <article class="card cempi" data-r style="--d:2"><div class="row"><span class="tag">Gestión Comercial</span><span class="tag">Caucasia, Antioquia</span></div><h3>CEMPI · Centro Empresarial Informático S.A.S.</h3><p class="muted">Corresponsal bancario de Bancolombia en Caucasia: depósitos, retiros, pagos y recaudos, con un gerente general y tres asesores transaccionales.</p>
+      <p>Un corresponsal no gana por vender más de cualquier cosa: gana por cada transacción que atiende, y solo puede atender si tiene cupo operativo y liquidez. Con mi experiencia en banca construimos una estrategia comercial pensada para ese negocio:</p>
+      <ul class="clean cempi-list">
+       <li><b>Segmentación transaccional.</b> Clientes depositantes, retirantes y mixtos, porque cada uno afecta distinto la caja.</li>
+       <li><b>Mapa de clientes de la región.</b> Comerciantes, compradores de oro, mineros, barequeros, pymes y empresas, cada uno con su frecuencia y su monto típico.</li>
+       <li><b>Prospección de nuevos flujos.</b> Empresas y comercios con necesidad de recaudos, consignaciones, retiros y pagos.</li>
+       <li><b>Rentabilidad por cliente y segmento.</b> Frecuencia, recurrencia y aporte de cada grupo al ingreso del corresponsal.</li>
+       <li><b>Cupo operativo y continuidad.</b> Equilibrio entre depósitos y retiros para no quedarse sin cupo ni sin efectivo en las horas de mayor demanda.</li>
+      </ul>
+      <p class="note">Las oportunidades identificadas y negociadas no se presentan aquí como resultados. El aprendizaje: en un negocio de transacciones, crecer exige cuidar la caja tanto como al cliente.</p></article>
     </div>
     <div class="next-face"><span><span class="face-num">Siguiente sala · 3 de 6</span><br><b>Producir mejor</b></span><button class="btn primary" data-go="3">Girar el cubo <span class="arr">→</span></button></div>
    </div>
@@ -1366,7 +1448,7 @@ body.in-intro #face-progress{display:none}
     const p=shown;
     document.body.classList.toggle('cine',p>.04&&p<.97);
     cap1.style.opacity=1-band(p,.06,.18);cap1.style.transform=`translateX(-50%) translateY(${-band(p,.02,.18)*40}px)`;
-    cap2.style.opacity=band(p,.3,.4)*(1-band(p,.58,.68));cap2.style.transform=`translateY(calc(-50% + ${(1-band(p,.3,.42))*30}px))`;
+    cap2.style.opacity=band(p,.2,.28)*(1-band(p,.4,.48));cap2.style.transform=`translateY(${(1-band(p,.2,.3))*30}px)`;
     ctl.style.opacity=1-band(p,.03,.1);ctl.style.pointerEvents=p>.08?'none':'auto';
     flash.style.opacity=band(p,.86,.985);
     prFill.style.width=(p*100)+'%';
@@ -1828,11 +1910,11 @@ function start(){
   const scrCv=document.createElement('canvas');scrCv.width=1600;scrCv.height=800;const sc=scrCv.getContext('2d');
   const scrTex=new THREE.CanvasTexture(scrCv);scrTex.colorSpace=THREE.SRGBColorSpace;
   const drawScreen=(t)=>{const gr=sc.createLinearGradient(0,0,0,800);gr.addColorStop(0,'#0b1a44');gr.addColorStop(1,'#050a18');sc.fillStyle=gr;sc.fillRect(0,0,1600,800);
-    sc.fillStyle='#8fb0ff';sc.font='500 34px "JetBrains Mono", monospace';sc.fillText('MÉTODO · ESTRATEGIA · EJECUCIÓN',90,120);
-    sc.fillStyle='#ffffff';sc.font='700 92px Sora, Segoe UI, sans-serif';sc.fillText('Vender más y',90,250);sc.fillText('producir mejor.',90,360);
-    const vals=[.34,.42,.4,.52,.58,.66,.74,.86];vals.forEach((v,i)=>{const h=v*330*Math.min(1,Math.max(0,t*1.6-i*.08));const x=860+i*84;
-      const bg=sc.createLinearGradient(0,720-h,0,720);bg.addColorStop(0,'#5b8cff');bg.addColorStop(1,'#1546d6');sc.fillStyle=bg;sc.fillRect(x,720-h,54,h)});
-    sc.strokeStyle='rgba(255,255,255,.2)';sc.lineWidth=2;sc.beginPath();sc.moveTo(840,720);sc.lineTo(1540,720);sc.stroke();scrTex.needsUpdate=true};
+    sc.textAlign='center';sc.fillStyle='#8fb0ff';sc.font='500 30px "JetBrains Mono", monospace';sc.fillText('MÉTODO · ESTRATEGIA · EJECUCIÓN',800,110);
+    sc.fillStyle='#ffffff';sc.font='700 84px Sora, Segoe UI, sans-serif';sc.fillText('Vender más y',800,250);sc.fillText('producir mejor.',800,350);sc.textAlign='left';
+    const vals=[.34,.42,.4,.52,.58,.66,.74,.86];vals.forEach((v,i)=>{const hh=v*250*Math.min(1,Math.max(0,t*1.6-i*.08));const x=520+i*72;
+      const bg=sc.createLinearGradient(0,740-hh,0,740);bg.addColorStop(0,'#5b8cff');bg.addColorStop(1,'#1546d6');sc.fillStyle=bg;sc.fillRect(x,740-hh,46,hh)});
+    sc.strokeStyle='rgba(255,255,255,.2)';sc.lineWidth=2;sc.beginPath();sc.moveTo(500,740);sc.lineTo(1100,740);sc.stroke();scrTex.needsUpdate=true};
   const screen=new THREE.Mesh(new THREE.PlaneGeometry(9,4.5),new THREE.MeshBasicMaterial({map:scrTex,toneMapped:false}));screen.position.set(0,6.6,-fz+.36);office.add(screen);
   box(7,1.1,1.6,white,0,1.1,-2.5,office);box(7.02,.06,.06,glow,0,.62,-1.68,office);   // recepción
   for(const s of[-1,1]){const p=new THREE.Mesh(new THREE.CylinderGeometry(.5,.38,1.2,24),black);p.position.set(s*5.5,1.1,-4);office.add(p);
