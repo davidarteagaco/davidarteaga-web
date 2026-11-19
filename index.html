@@ -1,0 +1,857 @@
+<!doctype html>
+<html lang="es-CO">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>David Arteaga · Extensionista en Gestión Comercial y Productividad Laboral</title>
+<meta name="description" content="Ayudo a pymes de Antioquia a vender más y producir mejor con método, indicadores y ejecución. Asesoría gratuita y acompañamiento en Fábricas de Productividad.">
+<link rel="canonical" href="https://www.davidarteaga.co/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CO">
+<meta property="og:title" content="David Arteaga · Vender más y producir mejor">
+<meta property="og:description" content="Extensionista en Gestión Comercial y Productividad Laboral. 16 años en banca, docente del ITM.">
+<meta property="og:url" content="https://www.davidarteaga.co/">
+<meta property="og:image" content="https://www.davidarteaga.co/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#05070d">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Person",
+   "@id": "https://www.davidarteaga.co/#david",
+   "name": "David Arteaga",
+   "jobTitle": "Extensionista en Gestión Comercial y Productividad Laboral",
+   "url": "https://www.davidarteaga.co/",
+   "alumniOf": [
+    {
+     "@type": "CollegeOrUniversity",
+     "name": "Universidad Nacional de Colombia"
+    },
+    {
+     "@type": "CollegeOrUniversity",
+     "name": "Universidad de Medellín"
+    }
+   ],
+   "sameAs": [
+    "https://www.instagram.com/david.arteagaoficial",
+    "https://www.linkedin.com/in/david-alejandro-arteaga-taborda-59115a249",
+    "https://www.youtube.com/@davidarteaga.c0",
+    "https://www.tiktok.com/@davidarteaga.c0"
+   ]
+  },
+  {
+   "@type": "ProfessionalService",
+   "name": "David Arteaga®",
+   "url": "https://www.davidarteaga.co/",
+   "founder": {
+    "@id": "https://www.davidarteaga.co/#david"
+   },
+   "areaServed": "Antioquia, Colombia",
+   "email": "contacto@davidarteaga.co",
+   "slogan": "Vender más y producir mejor. Método, estrategia y ejecución.",
+   "serviceType": [
+    "Gestión Comercial",
+    "Productividad Laboral"
+   ]
+  }
+ ]
+}
+</script>
+<style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: una casa de 3 x 3 habitaciones; la cámara se desplaza entre ellas y se aleja a mitad de camino para mostrar el plano */
+:root{
+  --bg:#f4f6fa; --room:#ffffff; --ink:#0b1220; --muted:#566178; --line:#d6dce8;
+  --blue:#1546d6; --cyan:#2aa7e0; --blue-soft:rgba(21,70,214,.09); --wall:#0b1220; --glow:rgba(21,70,214,.16);
+  --good:#127a4a;
+  --f-display:"Sora","Segoe UI",system-ui,sans-serif;
+  --f-body:"Inter","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.65,0,.25,1);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#05070d; --room:#0a0f1c; --ink:#eef2fb; --muted:#93a0bb; --line:#1c2640;
+  --blue:#4d7dff; --cyan:#45c6ff; --blue-soft:rgba(77,125,255,.12); --wall:#2a3a66; --glow:rgba(77,125,255,.22); --good:#3ccf8e; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#05070d; --room:#0a0f1c; --ink:#eef2fb; --muted:#93a0bb; --line:#1c2640;
+  --blue:#4d7dff; --cyan:#45c6ff; --blue-soft:rgba(77,125,255,.12); --wall:#2a3a66; --glow:rgba(77,125,255,.22); --good:#3ccf8e; color-scheme:dark}
+
+[hidden]{display:none!important}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;overflow:hidden}
+*{box-sizing:border-box}
+a{color:var(--blue)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0}
+
+/* Barra superior */
+.bar{position:fixed;inset:0 0 auto;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding-top:calc(12px + env(safe-area-inset-top,0px));padding-bottom:12px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  background:linear-gradient(var(--bg) 55%,transparent);pointer-events:none}
+.bar>*{pointer-events:auto}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink)}
+.mono{width:32px;height:32px;border:1.5px solid var(--ink);display:grid;place-items:center;font:600 12px/1 var(--f-display);letter-spacing:.04em}
+.brand b{font:600 14px/1.1 var(--f-display)}
+.brand small{display:block;font:500 10.5px/1.2 var(--f-mono);color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.bar-actions{display:flex;gap:8px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--room);color:var(--ink);
+  font:600 13px/1 var(--f-body);padding:10px 14px;border-radius:999px;cursor:pointer;white-space:nowrap;text-decoration:none;transition:border-color .2s,transform .2s,background .2s}
+.btn:hover{border-color:var(--blue);transform:translateY(-1px)}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary:hover{filter:brightness(1.08)}
+
+/* Casa */
+.viewport{position:fixed;inset:0;overflow:hidden;perspective:1600px}
+.house{position:absolute;left:0;top:0;width:300vw;height:300%;display:grid;grid-template-columns:repeat(3,100vw);grid-template-rows:repeat(3,1fr);transform-origin:0 0;will-change:transform}
+.room{position:relative;overflow:hidden;background:var(--room);outline:1px solid var(--line)}
+.room::before{content:"";position:absolute;inset:0;pointer-events:none;border:10px solid transparent;transition:border-color .5s}
+.house.zoomed .room::before{border-color:var(--wall)}
+.house.zoomed .room.active::before{border-color:var(--blue)}
+.doorway{position:absolute;background:var(--room);z-index:1;opacity:0;transition:opacity .4s}
+.house.zoomed .doorway{opacity:1}
+.door-r{right:-6px;top:42%;width:12px;height:16%}
+.door-b{bottom:-6px;left:42%;height:12px;width:16%}
+.scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;
+  padding-top:calc(88px + env(safe-area-inset-top,0px));padding-bottom:calc(120px + env(safe-area-inset-bottom,0px));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.inner{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+.room-tag{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;font:600 clamp(28px,6vw,64px)/1 var(--f-display);color:var(--ink);opacity:0;transition:opacity .35s;pointer-events:none;text-align:center}
+.room-tag small{display:block;font:500 14px/1.4 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:12px}
+.house.zoomed .room-tag{opacity:1}
+.house.zoomed .scroll{opacity:.08;filter:blur(2px)}
+.scroll{transition:opacity .35s,filter .35s}
+
+.eyebrow{font:500 11.5px/1.3 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--blue);display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:22px;height:1px;background:currentColor}
+.lead{font-size:clamp(16px,1.6vw,18px);color:var(--muted);max-width:62ch}
+.h-xl{font-size:clamp(34px,5.4vw,64px);line-height:1.04;font-weight:700}
+.h-l{font-size:clamp(28px,3.6vw,42px);line-height:1.1;font-weight:700}
+.h-m{font-size:20px;line-height:1.25;font-weight:600}
+.accent{color:var(--blue)}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
+.panel{border:1px solid var(--line);border-radius:14px;padding:22px;background:var(--room);min-width:0;position:relative;transition:border-color .25s,transform .25s}
+.panel.link{cursor:pointer}
+.panel.link:hover{border-color:var(--blue);transform:translateY(-3px)}
+.panel .go{font:500 12px/1 var(--f-mono);color:var(--blue);margin-top:14px;display:inline-block;letter-spacing:.06em}
+.note{font:400 12px/1.5 var(--f-mono);color:var(--muted)}
+ul.clean{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+ul.clean li{display:flex;gap:10px}
+ul.clean li::before{content:"";flex:none;width:6px;height:6px;margin-top:.62em;background:var(--blue)}
+
+/* Recibidor */
+.hero{position:relative;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:center}
+.hero .spot{position:absolute;inset:-80px;pointer-events:none;background:radial-gradient(420px circle at var(--mx,70%) var(--my,30%),var(--glow),transparent 70%);z-index:0}
+.hero>*{position:relative;z-index:1}
+.aura{position:absolute;width:520px;height:520px;right:-120px;top:-160px;border-radius:50%;background:radial-gradient(circle,var(--glow),transparent 65%);filter:blur(10px);animation:drift 14s ease-in-out infinite alternate;pointer-events:none}
+@keyframes drift{to{transform:translate(-80px,60px) scale(1.15)}}
+.portrait .big{animation:breathe 6s ease-in-out infinite alternate}
+@keyframes breathe{to{opacity:.9;letter-spacing:.04em}}
+.portrait{aspect-ratio:4/5;max-width:100%;border:1px solid var(--line);border-radius:4px;position:relative;overflow:hidden;
+  background:linear-gradient(160deg,var(--blue-soft),transparent 60%),var(--room);display:grid;place-items:center}
+.portrait .ph{font:500 11.5px/1.5 var(--f-mono);color:var(--muted);text-align:center;padding:16px}
+.portrait .big{font:700 clamp(80px,12vw,150px)/1 var(--f-display);color:transparent;-webkit-text-stroke:1.5px var(--blue);opacity:.55}
+.creds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.creds div{padding:16px 12px 16px 0}
+.creds b{display:block;font:700 26px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.creds span{font-size:12.5px;color:var(--muted)}
+
+/* Método */
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border-top:2px solid var(--line);position:relative}
+.steps .progress{position:absolute;top:-2px;left:0;height:2px;background:var(--blue);transition:width .6s var(--ease)}
+.step{padding:18px 14px 0 0;cursor:pointer;background:none;border:0;text-align:left;color:var(--ink);font:inherit}
+.step .wk{font:500 11.5px/1 var(--f-mono);color:var(--muted);letter-spacing:.06em}
+.step b{display:block;font:600 15px/1.3 var(--f-display);margin-top:8px}
+.step[aria-selected="true"] .wk{color:var(--blue)}
+.step-detail{border:1px solid var(--line);border-radius:14px;padding:24px;min-height:150px}
+
+/* Herramienta */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+label{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted)}
+input,select,textarea{font:500 15px/1.4 var(--f-body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px;width:100%;min-width:0}
+input:focus,select:focus{border-color:var(--blue);outline:none}
+.formula{font:500 13px/1.6 var(--f-mono);background:var(--blue-soft);border-radius:10px;padding:12px 14px;color:var(--ink);overflow-x:auto}
+.result{font:700 clamp(30px,4vw,44px)/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.bars{display:flex;flex-direction:column;gap:10px}
+.bar-row{display:grid;grid-template-columns:56px minmax(0,1fr) 120px;gap:10px;align-items:center;font:500 12.5px/1 var(--f-mono)}
+.bar-row .track{height:10px;background:var(--line);border-radius:6px;overflow:hidden}
+.bar-row .fill{height:100%;background:var(--blue);border-radius:6px;transition:width .6s var(--ease)}
+.bar-row span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tabs button{border:1px solid var(--line);background:none;color:var(--ink);border-radius:999px;padding:9px 14px;font:600 13px/1 var(--f-body);cursor:pointer;transition:all .2s}
+.tabs button:hover{border-color:var(--blue)}
+.tabs button[aria-selected="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+.tool{animation:rise .45s var(--ease)}
+@keyframes rise{from{transform:translateY(10px);opacity:.4}to{transform:none;opacity:1}}
+.meter{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr) 52px;gap:10px;align-items:center;font-size:13px}
+.meter .track{height:10px;background:var(--line);border-radius:6px;overflow:hidden}
+.meter .fill{height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:6px;transition:width .7s var(--ease)}
+.meter b{font:600 13px/1 var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.funnel{display:flex;flex-direction:column;align-items:center;gap:4px}
+.funnel .lvl{height:44px;background:linear-gradient(90deg,var(--blue),var(--cyan));border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font:600 13px/1 var(--f-body);transition:width .7s var(--ease);min-width:92px;white-space:nowrap;padding:0 8px}
+.funnel .rate{font:500 11.5px/1 var(--f-mono);color:var(--muted)}
+
+/* Programa */
+.quiz{display:flex;flex-direction:column;gap:10px}
+.q{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.q p{flex:1 1 260px}
+.yn{display:flex;gap:6px}
+.yn button{border:1px solid var(--line);background:none;color:var(--ink);border-radius:999px;padding:7px 14px;font:600 12.5px/1 var(--f-body);cursor:pointer}
+.yn button[aria-pressed="true"]{background:var(--ink);color:var(--room);border-color:var(--ink)}
+.verdict{border-radius:12px;padding:18px;border:1px dashed var(--line)}
+.verdict.ok{border:1px solid var(--good)}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{font:500 11.5px/1.2 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+td.num{font-variant-numeric:tabular-nums;text-align:right}
+
+/* Casos */
+.case{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:end}
+.case .kpi{font:700 52px/1 var(--f-display);color:var(--blue);font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font:500 11px/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:999px;padding:6px 10px;color:var(--muted)}
+.empty{border-style:dashed}
+
+/* Form */
+form .grid{gap:14px}
+.check{flex-direction:row;align-items:flex-start;gap:10px;color:var(--ink)}
+.check input{width:auto;margin-top:4px}
+.ok-msg{border:1px solid var(--good);border-radius:12px;padding:16px;color:var(--ink)}
+
+/* Plano */
+.plan-btn{position:fixed;z-index:25;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px))}
+.plan{position:fixed;z-index:24;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(70px + env(safe-area-inset-bottom,0px));
+  width:min(340px,calc(100vw - 32px));background:var(--room);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 20px 50px rgba(0,0,0,.25)}
+.plan h3{font:500 11px/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.plan-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:2px solid var(--wall)}
+.plan-grid button{aspect-ratio:1.25;border:1px solid var(--line);background:none;color:var(--ink);font:600 11.5px/1.25 var(--f-display);cursor:pointer;padding:6px;transition:background .2s}
+.plan-grid button small{display:block;font:400 10px/1.2 var(--f-mono);color:var(--muted);margin-top:3px}
+.plan-grid button:hover{background:var(--blue-soft)}
+.plan-grid button[aria-current="true"]{background:var(--blue);color:#fff}
+.plan-grid button[aria-current="true"] small{color:rgba(255,255,255,.8)}
+.plan .annex{margin-top:10px;width:100%;justify-content:center}
+
+/* Puertas laterales */
+.doors{position:fixed;z-index:15;left:0;right:0;bottom:calc(16px + env(safe-area-inset-bottom,0px));display:flex;justify-content:center;pointer-events:none;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:calc(140px + env(safe-area-inset-right,0px))}
+.doors .row{pointer-events:auto;background:var(--room);border:1px solid var(--line);border-radius:999px;padding:5px;gap:4px}
+.doors button{border:0;background:none;color:var(--ink);font:500 12.5px/1 var(--f-body);padding:9px 12px;border-radius:999px;cursor:pointer;white-space:nowrap}
+.doors button:hover{background:var(--blue-soft)}
+.doors button:disabled{opacity:.3;cursor:default;background:none}
+
+/* Anexo banca */
+.annex-dlg{position:fixed;inset:0;z-index:40;display:grid;place-items:center;background:rgba(5,7,13,.6);padding:16px}
+.annex-card{max-width:560px;width:100%;background:var(--room);border:1px solid var(--line);border-radius:16px;padding:26px;display:flex;flex-direction:column;gap:16px;max-height:90vh;overflow:auto}
+.disclaimer{font-size:13px;color:var(--muted);border-left:2px solid var(--line);padding-left:12px}
+
+.proto{font:500 10.5px/1.2 var(--f-mono);color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+
+@media (max-width:820px){
+  .hero,.calc{grid-template-columns:minmax(0,1fr)}
+  .portrait{max-height:300px;aspect-ratio:auto;height:240px}
+  .steps{grid-template-columns:minmax(0,1fr)}
+  .step{padding:12px 0;border-bottom:1px solid var(--line)}
+  .steps .progress{display:none}
+  .brand small{display:none}
+  .brand>span:last-child{display:none}
+  .bar .btn{padding:9px 12px}
+  .bar .hide-sm{display:none}
+  .doors{padding-right:calc(120px + env(safe-area-inset-right,0px));justify-content:flex-start}
+  .doors .lbl{display:none}
+  .case{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a class="brand" href="#inicio" data-go="inicio" aria-label="Ir al recibidor">
+    <span class="mono">DA</span>
+    <span><b>David Arteaga®</b><small>Vender más y producir mejor</small></span>
+  </a>
+  <div class="bar-actions">
+    <button class="btn" id="snd" aria-pressed="false" title="Activar o desactivar sonidos">Sonido: no</button>
+    <a class="btn primary" href="#asesoria" data-go="asesoria">Asesoría gratuita</a>
+  </div>
+</header>
+
+<div class="viewport">
+<div class="house" id="house">
+
+  <!-- Fila 1 -->
+  <section class="room" data-room="quien-soy" aria-label="Despacho: quién soy">
+    <div class="room-tag"><small>Despacho</small>Quién soy</div>
+    <div class="scroll"><div class="inner">
+      <div class="eyebrow">Despacho · Quién soy</div>
+      <div class="grid g2" style="align-items:start">
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <h2 class="h-l">Leo tu empresa como la lee un banco. La enseño como un docente.</h2>
+          <p class="lead">Llevo más de 16 años en el sector financiero, en Banco Agrario, Itaú y AV Villas. Desde 2013 estoy en el Banco Agrario, donde hoy cumplo funciones de gerencia bancaria. He acompañado más de 500 casos de gestión bancaria.</p>
+          <p class="lead">Desde 2023 soy docente en el ITM. Allí aprendí que un indicador solo sirve si el equipo lo entiende y lo usa. Esa es la forma en que trabajo con las empresas.</p>
+        </div>
+        <div class="panel">
+          <h3 class="h-m" style="margin-bottom:14px">Formación</h3>
+          <ul class="clean">
+            <li>Ingeniero Administrador, Universidad Nacional de Colombia</li>
+            <li>Especialista en Alta Gerencia, Universidad de Medellín</li>
+            <li>MBA en Administración</li>
+            <li>Agilidad, IA aplicada a los negocios, pedagogía y gestión consultiva financiera agropecuaria</li>
+          </ul>
+        </div>
+      </div>
+      <div class="grid g3">
+        <div class="panel"><h3 class="h-m">Primero los datos</h3><p class="lead" style="font-size:14.5px;margin-top:8px">Después las opiniones. Cada decisión parte de una línea base.</p></div>
+        <div class="panel"><h3 class="h-m">Un indicador, un responsable</h3><p class="lead" style="font-size:14.5px;margin-top:8px">Ninguna recomendación queda sin dueño ni fecha.</p></div>
+        <div class="panel"><h3 class="h-m">Que se sostenga sin mí</h3><p class="lead" style="font-size:14.5px;margin-top:8px">Si el resultado depende del consultor, el trabajo no está terminado.</p></div>
+      </div>
+    </div></div>
+    <div class="doorway door-r"></div><div class="doorway door-b"></div>
+  </section>
+
+  <section class="room" data-room="inicio" aria-label="Recibidor: inicio">
+    <div class="room-tag"><small>Recibidor</small>Inicio</div>
+    <div class="scroll"><div class="inner">
+      <div class="hero" id="hero">
+        <div class="spot" aria-hidden="true"></div><div class="aura" aria-hidden="true"></div>
+        <div style="display:flex;flex-direction:column;gap:22px">
+          <div class="eyebrow">Extensionista · Gestión Comercial y Productividad Laboral</div>
+          <h1 class="h-xl">Tu empresa puede vender más y producir mejor. <span class="accent">Te muestro cómo, con números.</span></h1>
+          <p class="lead">Soy David Arteaga. Llevo más de 16 años en la banca analizando empresas y desde 2023 enseño en el ITM. Acompaño pymes de Antioquia a mejorar sus ventas y la productividad de sus equipos con método, indicadores y ejecución.</p>
+          <div class="row">
+            <a class="btn primary" href="#asesoria" data-go="asesoria">Solicita tu asesoría gratuita</a>
+            <a class="btn" href="#programa" data-go="programa">¿Tu empresa puede entrar al programa?</a>
+          </div>
+          <p class="note">Sábados presenciales en Medellín, Valle de Aburrá y Bajo Cauca · Sesiones virtuales entre semana</p>
+        </div>
+        <div class="portrait" aria-label="Espacio para fotografía profesional">
+          <span class="big">DA</span>
+          <span class="ph" style="position:absolute;bottom:10px">Fotografía profesional</span>
+        </div>
+      </div>
+      <div class="creds">
+        <div><b>16+</b><span>años en el sector financiero</span></div>
+        <div><b>500+</b><span>casos de gestión bancaria</span></div>
+        <div><b>2023</b><span>docente en el ITM</span></div>
+      </div>
+      <div>
+        <div class="eyebrow" style="margin-bottom:16px">Recorre la casa</div>
+        <div class="grid g3">
+          <div class="panel link" data-go="gestion-comercial" tabindex="0" role="link"><h3 class="h-m">Gestión Comercial</h3><p class="lead" style="font-size:14.5px;margin-top:8px">Segmentación, embudo, ticket promedio, conversión y cartera.</p><span class="go">Entrar a la sala →</span></div>
+          <div class="panel link" data-go="productividad-laboral" tabindex="0" role="link"><h3 class="h-m">Productividad Laboral</h3><p class="lead" style="font-size:14.5px;margin-top:8px">Roles, cargas de trabajo, tiempos y actividades sin valor.</p><span class="go">Entrar al taller →</span></div>
+          <div class="panel link" data-go="metodo" tabindex="0" role="link"><h3 class="h-m">Método en 12 semanas</h3><p class="lead" style="font-size:14.5px;margin-top:8px">Del diagnóstico a resultados medibles y sostenibles.</p><span class="go">Ir al patio central →</span></div>
+        </div>
+      </div>
+    </div></div>
+    <div class="doorway door-r"></div><div class="doorway door-b"></div>
+  </section>
+
+  <section class="room" data-room="herramientas" aria-label="Biblioteca: herramientas">
+    <div class="room-tag"><small>Biblioteca</small>Herramientas</div>
+    <div class="scroll"><div class="inner">
+      <div class="eyebrow">Biblioteca · Herramientas</div>
+      <h2 class="h-l">Mide tu empresa antes de decidir. Seis herramientas, sin registrarte.</h2>
+      <div class="tabs" role="tablist" aria-label="Herramientas" id="tool-tabs"></div>
+      <div id="tool-panels">
+
+        <div class="tool" data-tool="chequeo">
+          <div class="calc">
+            <div class="panel" style="display:flex;flex-direction:column;gap:12px">
+              <span class="proto">Chequeo rápido · 8 preguntas</span>
+              <div class="quiz" id="check-q"></div>
+            </div>
+            <div class="panel" style="display:flex;flex-direction:column;gap:16px">
+              <span class="proto">Resultado orientativo</span>
+              <div class="meter"><span>Gestión Comercial</span><div class="track"><div class="fill" id="m-gc"></div></div><b id="m-gc-v">0%</b></div>
+              <div class="meter"><span>Productividad Laboral</span><div class="track"><div class="fill" id="m-pl"></div></div><b id="m-pl-v">0%</b></div>
+              <p id="check-read" style="font-size:14px">Responde las preguntas para ver qué línea le conviene más a tu empresa.</p>
+              <a class="btn primary" href="#asesoria" data-go="asesoria" style="align-self:flex-start">Revisarlo en la asesoría gratuita</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool" data-tool="tpv" hidden>
+          <div class="calc">
+            <div class="panel" style="display:flex;flex-direction:column;gap:14px">
+              <div class="formula">TPV = Total de ventas del período / Número de clientes atendidos en el período</div>
+              <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px" id="calc-inputs"></div>
+              <p class="note">Valores de ejemplo. Cámbialos por los de tu empresa.</p>
+            </div>
+            <div class="panel" style="display:flex;flex-direction:column;gap:16px">
+              <span class="proto">TPV del último mes</span>
+              <div class="result" id="tpv-out">$0</div>
+              <div class="bars" id="tpv-bars"></div>
+              <p id="tpv-read" style="font-size:14px"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool" data-tool="embudo" hidden>
+          <div class="calc">
+            <div class="panel" style="display:flex;flex-direction:column;gap:14px">
+              <div class="formula">Conversión de cada etapa = clientes que pasan / clientes que entran a la etapa × 100</div>
+              <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+                <label for="e0">Prospectos contactados<input id="e0" inputmode="numeric" value="400"></label>
+                <label for="e1">Interesados<input id="e1" inputmode="numeric" value="180"></label>
+                <label for="e2">Cotizaciones enviadas<input id="e2" inputmode="numeric" value="90"></label>
+                <label for="e3">Ventas cerradas<input id="e3" inputmode="numeric" value="27"></label>
+              </div>
+              <p class="note">Valores de ejemplo. Definición de referencia: en una intervención se usa la ficha técnica del programa.</p>
+            </div>
+            <div class="panel" style="display:flex;flex-direction:column;gap:12px">
+              <span class="proto">Tu embudo comercial</span>
+              <div id="funnel" class="funnel"></div>
+              <p id="funnel-read" style="font-size:14px"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool" data-tool="pl" hidden>
+          <div class="calc">
+            <div class="panel" style="display:flex;flex-direction:column;gap:14px">
+              <div class="formula">Productividad por trabajador = Ventas (o producción) del período / Trabajadores del período</div>
+              <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+                <label for="p0">Ventas línea base ($)<input id="p0" inputmode="numeric" value="180000000"></label>
+                <label for="p1">Trabajadores línea base<input id="p1" inputmode="numeric" value="12"></label>
+                <label for="p2">Ventas período actual ($)<input id="p2" inputmode="numeric" value="198000000"></label>
+                <label for="p3">Trabajadores período actual<input id="p3" inputmode="numeric" value="12"></label>
+              </div>
+              <p class="note">Definición de referencia. El indicador PL del programa se calcula según su ficha técnica: población, período e inclusiones definidas.</p>
+            </div>
+            <div class="panel" style="display:flex;flex-direction:column;gap:16px">
+              <span class="proto">Variación de productividad</span>
+              <div class="result" id="pl-out">0%</div>
+              <div class="bars" id="pl-bars"></div>
+              <p id="pl-read" style="font-size:14px"></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool" data-tool="canac" hidden>
+          <div class="calc">
+            <div class="panel" style="display:flex;flex-direction:column;gap:14px">
+              <div class="formula">Costo mensual = Horas semanales en actividades que no corresponden al cargo × 4,33 × Costo por hora</div>
+              <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+                <label for="k0">Personas en el cargo<input id="k0" inputmode="numeric" value="3"></label>
+                <label for="k1">Horas semanales por persona fuera del cargo<input id="k1" inputmode="numeric" value="8"></label>
+                <label for="k2">Salario mensual con prestaciones ($)<input id="k2" inputmode="numeric" value="2600000"></label>
+                <label for="k3">Horas laborales al mes<input id="k3" inputmode="numeric" value="190"></label>
+              </div>
+              <p class="note">Ejercicio de referencia. CANAC y PANAC se miden en la intervención con la metodología del programa.</p>
+            </div>
+            <div class="panel" style="display:flex;flex-direction:column;gap:16px">
+              <span class="proto">Lo que cuesta al mes</span>
+              <div class="result" id="k-out">$0</div>
+              <p id="k-read" style="font-size:14px"></p>
+              <div class="meter"><span>Tiempo fuera del cargo</span><div class="track"><div class="fill" id="k-bar"></div></div><b id="k-pct">0%</b></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tool" data-tool="cartera" hidden>
+          <div class="calc">
+            <div class="panel" style="display:flex;flex-direction:column;gap:14px">
+              <div class="formula">Días de cartera = Cartera por cobrar / Ventas a crédito del período × Días del período</div>
+              <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+                <label for="r0">Cartera por cobrar hoy ($)<input id="r0" inputmode="numeric" value="85000000"></label>
+                <label for="r1">Ventas a crédito del período ($)<input id="r1" inputmode="numeric" value="120000000"></label>
+                <label for="r2">Días del período<input id="r2" inputmode="numeric" value="90"></label>
+                <label for="r3">Plazo que otorgas (días)<input id="r3" inputmode="numeric" value="45"></label>
+              </div>
+              <p class="note">Valores de ejemplo. Herramienta de referencia del criterio bancario.</p>
+            </div>
+            <div class="panel" style="display:flex;flex-direction:column;gap:16px">
+              <span class="proto">Días que tardas en cobrar</span>
+              <div class="result" id="r-out">0</div>
+              <p id="r-read" style="font-size:14px"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="note">Más calculadoras (amortización, tasas, presupuesto personal, simulador hipotecario e indicadores): <a href="/finanzas">abrir herramientas financieras</a>.</p>
+    </div></div>
+    <div class="doorway door-b"></div>
+  </section>
+
+  <!-- Fila 2 -->
+  <section class="room" data-room="gestion-comercial" aria-label="Sala comercial">
+    <div class="room-tag"><small>Sala comercial</small>Gestión Comercial</div>
+    <div class="scroll"><div class="inner">
+      <div class="eyebrow">Sala comercial · Gestión Comercial</div>
+      <h2 class="h-l">Vender mucho no es lo mismo que ganar dinero.</h2>
+      <p class="lead">Ordenamos cómo vende tu empresa para que crezcan las ventas y sepas qué cliente, qué producto y qué canal te dejan rentabilidad.</p>
+      <div class="grid g2">
+        <div class="panel"><h3 class="h-m" style="margin-bottom:14px">Lo que trabajamos</h3>
+          <ul class="clean"><li>Caracterización y segmentación de clientes</li><li>Propuesta de valor y portafolio</li><li>Embudo comercial y tasa de conversión</li><li>Ticket promedio, frecuencia y recurrencia</li><li>Prospección, negociación y fidelización</li><li>Cartera y presupuesto comercial</li></ul></div>
+        <div class="panel"><h3 class="h-m" style="margin-bottom:14px">Lo que recibes</h3>
+          <ul class="clean"><li>Diagnóstico comercial con datos de tu empresa</li><li>Plan de trabajo con responsables y fechas</li><li>Cinco indicadores medidos al inicio y al cierre: dos fijos del programa y tres acordados contigo</li><li>Rutinas comerciales que tu equipo puede sostener</li><li>Informe de cierre con línea base y resultado</li></ul></div>
+      </div>
+      <div class="row"><a class="btn primary" href="#asesoria" data-go="asesoria">Hablemos de tus ventas</a><a class="btn" href="#casos" data-go="casos">Ver casos</a></div>
+    </div></div>
+    <div class="doorway door-r"></div><div class="doorway door-b"></div>
+  </section>
+
+  <section class="room" data-room="metodo" aria-label="Patio central: método">
+    <div class="room-tag"><small>Patio central</small>Método</div>
+    <div class="scroll"><div class="inner">
+      <div class="eyebrow">Patio central · Método</div>
+      <h2 class="h-l">Doce semanas, sesenta horas, un resultado que se puede medir.</h2>
+      <p class="lead">Es el recorrido del programa Fábricas de Productividad: hasta 60 horas, con visitas presenciales y trabajo con tu equipo. La meta es mejorar al menos 8% uno de los indicadores fijos de la línea.</p>
+      <div class="steps" role="tablist" aria-label="Etapas del método" id="steps"><div class="progress" id="steps-progress"></div></div>
+      <div class="step-detail" id="step-detail" role="tabpanel"></div>
+    </div></div>
+    <div class="doorway door-r"></div><div class="doorway door-b"></div>
+  </section>
+
+  <section class="room" data-room="productividad-laboral" aria-label="Taller de productividad">
+    <div class="room-tag"><small>Taller</small>Productividad Laboral</div>
+    <div class="scroll"><div class="inner">
+      <div class="eyebrow">Taller · Productividad Laboral</div>
+      <h2 class="h-l">Tener al equipo ocupado no significa ser productivo.</h2>
+      <p class="lead">Medimos cuánto produce tu equipo, dónde se va el tiempo y qué actividades no le corresponden a cada cargo. Después rediseñamos para producir más con el mismo esfuerzo.</p>
+      <div class="grid g2">
+        <div class="panel"><h3 class="h-m" style="margin-bottom:14px">Lo que trabajamos</h3>
+          <ul class="clean"><li>Roles, funciones y cargas laborales</li><li>Productividad por trabajador y línea base</li><li>Actividades no asociadas al cargo y su costo</li><li>Tiempos, procesos y estandarización</li><li>Liderazgo, seguimiento y clima</li></ul></div>
+        <div class="panel"><h3 class="h-m" style="margin-bottom:14px">Indicadores habituales</h3>
+          <ul class="clean"><li>PL · productividad laboral</li><li>PANAC · actividades no asociadas al cargo</li><li>CANAC · costo de esas actividades</li></ul>
+          <p class="note" style="margin-top:14px">En esta línea se miden hasta seis indicadores: tres fijos del programa y tres acordados con la empresa, según la ficha técnica vigente.</p></div>
+      </div>
+      <div class="row"><a class="btn primary" href="#asesoria" data-go="asesoria">Hablemos de tu equipo</a><a class="btn" href="#herramientas" data-go="herramientas">Probar una herramienta</a></div>
+    </div></div>
+    <div class="doorway door-b"></div>
+  </section>
+
+  <!-- Fila 3 -->
+  <section class="room" data-room="casos" aria-label="Archivo: casos">
+    <div class="room-tag"><small>Archivo</small>Casos</div>
+    <div class="scroll"><div class="inner">
+      <div class="eyebrow">Archivo · Casos documentados</div>
+      <h2 class="h-l">Resultados con período, indicador y fuente.</h2>
+      <div class="panel case">
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="row"><span class="tag">Gestión Comercial</span><span class="tag">Ciclo 7</span></div>
+          <h3 class="h-m">Vimar Vidrios Medellín S.A.S.</h3>
+          <p class="lead" style="font-size:14.5px">Comercialización, transformación e instalación de vidrios. Crecimiento de ventas bajo la medición del programa.</p>
+          <p class="note">Resultado medido en la intervención del programa, ciclo 7.</p>
+        </div>
+        <div class="kpi">+32%</div>
+      </div>
+      <div class="grid g2">
+        <div class="panel empty"><span class="tag">Por documentar</span><p class="lead" style="font-size:14.5px;margin-top:10px">Empresa, línea, ciclo, indicador antes y después.</p></div>
+        <div class="panel empty"><span class="tag">Por documentar</span><p class="lead" style="font-size:14.5px;margin-top:10px">Empresa, línea, ciclo, indicador antes y después.</p></div>
+      </div>
+    </div></div>
+    <div class="doorway door-r"></div>
+  </section>
+
+  <section class="room" data-room="programa" aria-label="Puerta del programa">
+    <div class="room-tag"><small>Puerta</small>Programa Fábricas</div>
+    <div class="scroll"><div class="inner">
+      <div class="eyebrow">Puerta · Fábricas de Productividad y Sostenibilidad</div>
+      <h2 class="h-l">Inscribe tu empresa y paga solo una parte del costo.</h2>
+      <p class="lead">Es un programa del Ministerio de Comercio, Industria y Turismo, con Colombia Productiva e iNNpulsa, que en Antioquia opera con la Cámara de Comercio de Medellín para Antioquia. Hasta 60 horas de asistencia técnica especializada en una de nueve líneas, con la meta de mejorar tu productividad en al menos 8%.</p>
+      <div class="grid g2" style="align-items:start">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <h3 class="h-m">¿Tu empresa cumple? <span class="note" id="quiz-count">0 / 5</span></h3>
+          <div class="quiz" id="quiz"></div>
+          <div class="verdict" id="verdict"><p class="note">Responde las cinco preguntas.</p></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <h3 class="h-m">Aporte máximo de tu empresa</h3>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Tamaño</th><th>%</th><th style="text-align:right">Aporte</th></tr></thead>
+            <tbody><tr><td>Micro</td><td>10%</td><td class="num">$1.410.000</td></tr><tr><td>Pequeña</td><td>20%</td><td class="num">$2.820.000</td></tr><tr><td>Mediana</td><td>30%</td><td class="num">$4.230.000</td></tr><tr><td>Grande</td><td>100%</td><td class="num">$14.100.000</td></tr></tbody>
+          </table></div>
+          <p class="note">Aportes máximos por 60 horas según los Términos y Condiciones del programa, actualizados el 18 de noviembre de 2026. La Cámara puede fijar requisitos adicionales.</p>
+          <div class="panel" style="padding:16px"><b>Tú eliges a tu extensionista.</b> Después del diagnóstico, el Gestor de la Cámara te presenta la Base Nacional de Extensionistas para que tu empresa preseleccione. Luego pide mínimo tres ofertas y tu representante legal o su delegado elige.</div>
+        </div>
+      </div>
+    </div></div>
+    <div class="doorway door-r"></div>
+  </section>
+
+  <section class="room" data-room="asesoria" aria-label="Sala de reuniones: asesoría gratuita">
+    <div class="room-tag"><small>Sala de reuniones</small>Asesoría gratuita</div>
+    <div class="scroll"><div class="inner" style="max-width:820px">
+      <div class="eyebrow">Sala de reuniones · Asesoría gratuita</div>
+      <h2 class="h-l">30 minutos para entender dónde está la oportunidad de tu empresa.</h2>
+      <p class="lead">Revisamos cómo vendes, cómo trabaja tu equipo y qué indicadores tienes hoy. Al final te digo qué mejoraría primero y si el programa te sirve. Sin costo y sin compromiso.</p>
+      <form id="lead-form" class="panel" novalidate>
+        <div class="grid g2">
+          <label for="f-nombre">Nombre completo<input id="f-nombre" required autocomplete="name"></label>
+          <label for="f-empresa">Empresa<input id="f-empresa" required autocomplete="organization"></label>
+          <label for="f-municipio">Municipio<select id="f-municipio"><option>Medellín</option><option>Valle de Aburrá</option><option>Caucasia</option><option>Otro municipio de Antioquia</option><option>Fuera de Antioquia</option></select></label>
+          <label for="f-tamano">Tamaño<select id="f-tamano"><option>Micro</option><option>Pequeña</option><option>Mediana</option><option>Grande</option></select></label>
+          <label for="f-interes">¿Qué quieres mejorar?<select id="f-interes"><option>Ventas</option><option>Productividad del equipo</option><option>Ambas</option><option>No sé todavía</option></select></label>
+          <label for="f-horario">Horario preferido<select id="f-horario"><option>Sábado presencial</option><option>Virtual entre semana</option></select></label>
+          <label for="f-contacto">WhatsApp o correo<input id="f-contacto" required></label>
+          <label for="f-origen">¿Cómo me conociste?<select id="f-origen"><option>Instagram</option><option>LinkedIn</option><option>Cámara de Comercio</option><option>ITM</option><option>Referido</option><option>Otro</option></select></label>
+        </div>
+        <label class="check" for="f-datos" style="margin-top:14px"><input type="checkbox" id="f-datos" required> Autorizo el tratamiento de mis datos personales según la <a href="/politica-de-datos.html" target="_blank">política de datos</a> (Ley 1581 de 2012).</label>
+        <div class="row" style="margin-top:16px"><button class="btn primary" type="submit">Solicitar asesoría</button><span class="note" id="form-err"></span></div>
+      </form>
+      <div class="ok-msg" id="form-ok" hidden>Gracias. Se abrió WhatsApp con tu solicitud lista para enviar. Si no se abrió, escríbeme a contacto@davidarteaga.co o al WhatsApp +57 322 534 7242.</div>
+      <p class="note">contacto@davidarteaga.co · WhatsApp +57 322 534 7242 · <a href="https://www.instagram.com/david.arteagaoficial" target="_blank" rel="noopener">Instagram</a> · <a href="https://www.linkedin.com/in/david-alejandro-arteaga-taborda-59115a249" target="_blank" rel="noopener">LinkedIn</a></p>
+      <p class="note">La asesoría gratuita es independiente del programa Fábricas de Productividad y Sostenibilidad. Si tu empresa se inscribe, preselecciona y elige libremente a su extensionista en la Base Nacional de Extensionistas, con el acompañamiento del Gestor de la Cámara.</p>
+    </div></div>
+  </section>
+
+</div>
+</div>
+
+<nav class="doors" aria-label="Puertas">
+  <div class="row" id="doors"></div>
+</nav>
+
+<button class="btn plan-btn" id="plan-btn" aria-expanded="false" aria-controls="plan">Plano de la casa</button>
+<div class="plan" id="plan" hidden>
+  <h3>Plano · elige una habitación</h3>
+  <div class="plan-grid" id="plan-grid"></div>
+  <button class="btn annex" id="annex-open">Anexo · Banca</button>
+</div>
+
+<div class="annex-dlg" id="annex" hidden role="dialog" aria-modal="true" aria-labelledby="annex-title">
+  <div class="annex-card">
+    <span class="eyebrow">Anexo · Banca</span>
+    <h2 class="h-l" id="annex-title" style="font-size:28px">Solicita tu crédito con el Banco Agrario</h2>
+    <p>Si necesitas financiación para tu empresa o tu proyecto, puedes iniciar la solicitud en el canal digital del Banco Agrario de Colombia.</p>
+    <a class="btn primary" href="https://digital.bancoagrario.gov.co/api/campaigns/referral/becccfce-e436-49ed-a6e1-1389fb0f59ee" target="_blank" rel="noopener">Iniciar solicitud en el Banco Agrario</a>
+    <p class="disclaimer">Este enlace lleva al canal digital oficial del Banco Agrario de Colombia, entidad en la que trabajo. La aprobación, las condiciones y las tasas las define exclusivamente el Banco según sus políticas. Este servicio es independiente de mi labor como extensionista del programa Fábricas de Productividad y Sostenibilidad y de la asesoría en gestión comercial y productividad.</p>
+    <button class="btn" id="annex-close">Volver a la casa</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  const ROOMS=[
+    ['quien-soy','Despacho','Quién soy'],['inicio','Recibidor','Inicio'],['herramientas','Biblioteca','Herramientas'],
+    ['gestion-comercial','Sala comercial','Gestión Comercial'],['metodo','Patio central','Método'],['productividad-laboral','Taller','Productividad'],
+    ['casos','Archivo','Casos'],['programa','Puerta','Programa'],['asesoria','Sala de reuniones','Asesoría']
+  ];
+  const idx=Object.fromEntries(ROOMS.map((r,i)=>[r[0],i]));
+  const house=document.getElementById('house');
+  const rooms=[...house.querySelectorAll('.room')];
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let current=-1, anim=null;
+
+  // Sonido: apagado por defecto, sintetizado (sin archivos ni música con derechos)
+  let soundOn=false,ac=null;
+  try{soundOn=localStorage.getItem('da-sound')==='1'}catch(e){}
+  const sndBtn=document.getElementById('snd');
+  function paintSnd(){sndBtn.textContent='Sonido: '+(soundOn?'sí':'no');sndBtn.setAttribute('aria-pressed',String(soundOn))}
+  paintSnd();
+  sndBtn.addEventListener('click',()=>{soundOn=!soundOn;try{localStorage.setItem('da-sound',soundOn?'1':'0')}catch(e){}paintSnd();if(soundOn)sfx('chime')});
+  function sfx(kind){
+    if(!soundOn)return;
+    try{
+      ac=ac||new (window.AudioContext||window.webkitAudioContext)();
+      if(ac.state==='suspended')ac.resume();
+      const t=ac.currentTime,g=ac.createGain();g.connect(ac.destination);
+      if(kind==='door'){ // soplo suave de aire al cruzar una puerta
+        const len=ac.sampleRate*1.1,buf=ac.createBuffer(1,len,ac.sampleRate),d=buf.getChannelData(0);
+        for(let i=0;i<len;i++)d[i]=(Math.random()*2-1);
+        const src=ac.createBufferSource(),f=ac.createBiquadFilter();src.buffer=buf;f.type='bandpass';f.Q.value=1.2;
+        f.frequency.setValueAtTime(300,t);f.frequency.exponentialRampToValueAtTime(1400,t+.55);f.frequency.exponentialRampToValueAtTime(380,t+1.05);
+        g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.07,t+.4);g.gain.linearRampToValueAtTime(0,t+1.05);
+        src.connect(f);f.connect(g);src.start(t);src.stop(t+1.1);
+      }else{
+        const notes=kind==='chime'?[659.25,987.77]:[1320];
+        notes.forEach((fq,k)=>{const o=ac.createOscillator(),gg=ac.createGain();o.type='sine';o.frequency.value=fq;o.connect(gg);gg.connect(ac.destination);
+          const s=t+k*.09,v=kind==='chime'?.06:.025,dur=kind==='chime'?.7:.08;
+          gg.gain.setValueAtTime(0,s);gg.gain.linearRampToValueAtTime(v,s+.01);gg.gain.exponentialRampToValueAtTime(.0001,s+dur);o.start(s);o.stop(s+dur+.02)});
+      }
+    }catch(e){}
+  }
+
+  function pos(i){return {x:-(i%3)*100, y:-Math.floor(i/3)*(100/3)}}
+  function tf(i,s){const p=pos(i);return `translate(${p.x}vw, ${p.y}%) scale(${s})`}
+  // translateY en % del alto de la casa (300% del viewport) => 1/3 por fila
+  function tfMid(a,b){
+    const pa=pos(a),pb=pos(b),s=.42;
+    // centrar el punto medio entre ambas habitaciones con la casa reducida
+    const cx=((a%3)+(b%3))/2+.5, cy=(Math.floor(a/3)+Math.floor(b/3))/2+.5;
+    const tx=50 - cx*100*s, ty=50 - cy*100*s; // en vw y vh
+    return `translate(${tx}vw, ${ty/3}%) scale(${s})`;
+  }
+
+  function go(name,push){
+    const i=idx[name]; if(i===undefined||i===current) return;
+    const from=current; current=i;
+    rooms.forEach((r,k)=>r.classList.toggle('active',k===i));
+    rooms.forEach((r,k)=>{r.inert=k!==i});
+    if(from<0||reduce){house.style.transform=tf(i,1)}
+    else{
+      if(anim) anim.cancel();
+      sfx('door');
+      house.classList.add('zoomed');
+      anim=house.animate([{transform:tf(from,1)},{transform:tfMid(from,i),offset:.5},{transform:tf(i,1)}],{duration:1500,easing:'cubic-bezier(.65,0,.25,1)'});
+      setTimeout(()=>house.classList.remove('zoomed'),1050);
+      anim.onfinish=()=>{house.style.transform=tf(i,1)};
+      house.style.transform=tf(i,1);
+    }
+    if(push!==false && location.hash.slice(1)!==name){history.replaceState(null,'','#'+name)}
+    renderNav(); closePlan();
+    const sc=rooms[i].querySelector('.scroll'); if(sc) sc.scrollTop=0;
+  }
+
+  // Plano y puertas
+  const pg=document.getElementById('plan-grid');
+  ROOMS.forEach(([id,place,label])=>{const b=document.createElement('button');b.dataset.go=id;b.innerHTML=label+'<small>'+place+'</small>';pg.appendChild(b)});
+  const doors=document.getElementById('doors');
+  function renderNav(){
+    pg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-current',String(idx[b.dataset.go]===current)));
+    const c=current%3,r=Math.floor(current/3);
+    const dir=[['←','Oeste',c>0?current-1:null],['↑','Norte',r>0?current-3:null],['↓','Sur',r<2?current+3:null],['→','Este',c<2?current+1:null]];
+    doors.innerHTML='';
+    dir.forEach(([ar,_,t])=>{const b=document.createElement('button');b.disabled=t===null;
+      b.innerHTML=t===null?ar:`${ar} <span class="lbl">${ROOMS[t][2]}</span>`;
+      b.setAttribute('aria-label',t===null?'Sin puerta':'Ir a '+ROOMS[t][2]);
+      if(t!==null) b.dataset.go=ROOMS[t][0]; doors.appendChild(b)});
+  }
+  const plan=document.getElementById('plan'),planBtn=document.getElementById('plan-btn');
+  function closePlan(){plan.hidden=true;planBtn.setAttribute('aria-expanded','false')}
+  planBtn.addEventListener('click',()=>{plan.hidden=!plan.hidden;planBtn.setAttribute('aria-expanded',String(!plan.hidden))});
+
+  document.addEventListener('click',e=>{const t=e.target.closest('[data-go]');if(!t)return;e.preventDefault();go(t.dataset.go)});
+  document.addEventListener('keydown',e=>{
+    if(e.key==='Enter'&&e.target.matches('.panel.link')){go(e.target.dataset.go);return}
+    if(e.target.matches('input,select,textarea'))return;
+    const c=current%3,r=Math.floor(current/3);
+    const m={ArrowLeft:c>0?-1:0,ArrowRight:c<2?1:0,ArrowUp:r>0?-3:0,ArrowDown:r<2?3:0}[e.key];
+    if(m){e.preventDefault();go(ROOMS[current+m][0])}
+    if(e.key==='Escape'){closePlan();annex.hidden=true}
+  });
+  addEventListener('hashchange',()=>go(location.hash.slice(1)||'inicio',false));
+  addEventListener('resize',()=>{house.style.transform=tf(current,1)});
+
+  // Anexo
+  const annex=document.getElementById('annex');
+  document.getElementById('annex-open').onclick=()=>{closePlan();annex.hidden=false};
+  document.getElementById('annex-close').onclick=()=>{annex.hidden=true};
+  annex.addEventListener('click',e=>{if(e.target===annex)annex.hidden=true});
+
+  // Luz que sigue al cursor en el recibidor
+  const hero=document.getElementById('hero');
+  hero.addEventListener('pointermove',e=>{const r=hero.getBoundingClientRect();hero.style.setProperty('--mx',(e.clientX-r.left+80)+'px');hero.style.setProperty('--my',(e.clientY-r.top+80)+'px')});
+
+  // Método
+  const STEPS=[
+    ['Semanas 1-2','Caracterización y diagnóstico','Entendemos cómo vende y cómo trabaja tu empresa. Levantamos la línea base con tus datos.'],
+    ['Semanas 3-4','Hallazgos y prioridades','Qué te está costando dinero, por qué, y qué se arregla primero según impacto y esfuerzo.'],
+    ['Semana 4','Plan de trabajo','Actividades, responsables, fechas e indicadores acordados con la gerencia.'],
+    ['Semanas 5-10','Implementación','Trabajamos con tu equipo, no solo con la gerencia. Seguimiento mensual con el Gestor de la Cámara.'],
+    ['Semanas 11-12','Medición y cierre','Comparamos contra la línea base y dejamos rutinas para sostener el resultado.']
+  ];
+  const stepsEl=document.getElementById('steps'),detail=document.getElementById('step-detail'),prog=document.getElementById('steps-progress');
+  STEPS.forEach((s,i)=>{const b=document.createElement('button');b.className='step';b.setAttribute('role','tab');b.id='step-'+i;
+    b.innerHTML=`<span class="wk">${s[0]}</span><b>${s[1]}</b>`;b.onclick=()=>pick(i);stepsEl.appendChild(b)});
+  function pick(i){stepsEl.querySelectorAll('.step').forEach((b,k)=>b.setAttribute('aria-selected',String(k===i)));
+    prog.style.width=((i+1)/STEPS.length*100)+'%';
+    detail.innerHTML=`<span class="eyebrow">${STEPS[i][0]}</span><h3 class="h-m" style="margin:10px 0 8px">${STEPS[i][1]}</h3><p class="lead">${STEPS[i][2]}</p>`}
+  pick(0);
+  // Las semanas son una guía de referencia para 12 semanas; el plan real se define con cada empresa.
+
+  // Calculadora TPV
+  const months=[{m:'Mes 1',v:48000000,c:320},{m:'Mes 2',v:51500000,c:330},{m:'Mes 3',v:55200000,c:336}];
+  const ci=document.getElementById('calc-inputs');
+  months.forEach((d,i)=>{ci.insertAdjacentHTML('beforeend',
+    `<label for="v${i}">${d.m} · ventas ($)<input id="v${i}" inputmode="numeric" value="${d.v}"></label><label for="c${i}">${d.m} · clientes<input id="c${i}" inputmode="numeric" value="${d.c}"></label>`)});
+  const fmt=n=>'$'+Math.round(n).toLocaleString('es-CO');
+  function calc(){
+    const t=months.map((d,i)=>{const v=+document.getElementById('v'+i).value.replace(/\D/g,'')||0,c=+document.getElementById('c'+i).value.replace(/\D/g,'')||0;return {m:d.m,tpv:c?v/c:0}});
+    const max=Math.max(...t.map(x=>x.tpv),1);
+    document.getElementById('tpv-out').textContent=fmt(t[2].tpv);
+    document.getElementById('tpv-bars').innerHTML=t.map(x=>`<div class="bar-row"><span>${x.m}</span><div class="track"><div class="fill" style="width:${x.tpv/max*100}%"></div></div><span>${fmt(x.tpv)}</span></div>`).join('');
+    const ch=t[0].tpv?((t[2].tpv/t[0].tpv-1)*100):0;
+    document.getElementById('tpv-read').textContent=t[0].tpv?`Entre el mes 1 y el mes 3 el ticket promedio ${ch>=0?'subió':'bajó'} ${Math.abs(ch).toFixed(1).replace('.',',')}%.`:'Ingresa ventas y clientes para ver la variación.';
+  }
+  ci.addEventListener('input',calc); calc();
+
+  // Cuestionario
+  const QS=['¿Tu empresa tiene al menos dos años de constituida y dos años seguidos de operación?','¿Tiene mínimo cuatro personas vinculadas, con cualquier tipo de contrato?','¿Su actividad es de manufactura, agroindustria (no agricultura) o servicios?','¿Tiene el registro mercantil renovado y no está en disolución ni liquidación?','¿Ha participado en el programa menos de tres veces?'];
+  const ans=Array(QS.length).fill(null),quiz=document.getElementById('quiz');
+  QS.forEach((q,i)=>{const d=document.createElement('div');d.className='q';d.innerHTML=`<p>${q}</p><div class="yn"><button type="button" aria-pressed="false" data-a="1">Sí</button><button type="button" aria-pressed="false" data-a="0">No</button></div>`;
+    d.querySelectorAll('button').forEach(b=>b.onclick=()=>{ans[i]=b.dataset.a==='1';d.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));verdict()});quiz.appendChild(d)});
+  function verdict(){const n=ans.filter(a=>a!==null).length,v=document.getElementById('verdict');document.getElementById('quiz-count').textContent=n+' / 5';
+    if(n<5){v.className='verdict';v.innerHTML='<p class="note">Responde las cinco preguntas.</p>';return}
+    if(ans.every(Boolean)){v.className='verdict ok';v.innerHTML='<p style="margin-bottom:12px"><b>Tu empresa cumple los requisitos básicos.</b> Al inscribirte harás un autodiagnóstico en el que debes obtener al menos 49,5 puntos.</p><a class="btn primary" target="_blank" rel="noopener" href="https://colombiaproductiva.my.site.com/fabricasdeproductividad/s/registroempresa">Inscribirme en el programa</a>'}
+    else{v.className='verdict';v.innerHTML='<p style="margin-bottom:12px">Hoy tu empresa no cumple uno de los requisitos. Agenda una asesoría gratuita y revisamos alternativas.</p><a class="btn" href="#asesoria" data-go="asesoria">Agendar asesoría</a>'}}
+
+  // Formulario (prototipo)
+  document.getElementById('lead-form').addEventListener('submit',e=>{e.preventDefault();
+    const req=['f-nombre','f-empresa','f-contacto'].every(id=>document.getElementById(id).value.trim());
+    const ok=req&&document.getElementById('f-datos').checked;
+    document.getElementById('form-err').textContent=ok?'':'Completa nombre, empresa, contacto y la autorización de datos.';
+    if(ok){const v=id=>document.getElementById(id).value.trim();
+      const msg=`Hola David, quiero solicitar la asesoría gratuita.%0A%0ANombre: ${v('f-nombre')}%0AEmpresa: ${v('f-empresa')}%0AMunicipio: ${v('f-municipio')}%0ATamaño: ${v('f-tamano')}%0AQuiero mejorar: ${v('f-interes')}%0AHorario: ${v('f-horario')}%0AContacto: ${v('f-contacto')}%0AMe conoció por: ${v('f-origen')}`;
+      e.target.hidden=true;document.getElementById('form-ok').hidden=false;sfx('chime');
+      window.open('https://wa.me/573225347242?text='+msg.replace(/ /g,'%20'),'_blank','noopener');}});
+
+  // Biblioteca: pestañas de herramientas
+  const TOOLS=[['chequeo','Chequeo rápido'],['tpv','Ticket promedio'],['embudo','Embudo y conversión'],['pl','Productividad por trabajador'],['canac','Costo de tareas fuera del cargo'],['cartera','Días de cartera']];
+  const tabs=document.getElementById('tool-tabs');
+  TOOLS.forEach(([id,l],i)=>{const b=document.createElement('button');b.setAttribute('role','tab');b.textContent=l;b.dataset.tool=id;b.setAttribute('aria-selected',String(i===0));
+    b.onclick=()=>{tabs.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected',String(x===b)));
+      document.querySelectorAll('.tool').forEach(t=>t.hidden=t.dataset.tool!==id);sfx('tick')};tabs.appendChild(b)});
+  const num=id=>+(document.getElementById(id).value||'').replace(/[^\d]/g,'')||0;
+  const pct=n=>n.toFixed(1).replace('.',',')+'%';
+
+  // Chequeo
+  const CQ=[['gc','¿Sabes qué clientes te dejan más rentabilidad?'],['gc','¿Mides cuántos prospectos terminan comprando?'],['gc','¿Tienes metas de venta por vendedor o canal?'],['gc','¿Tu cartera se cobra dentro del plazo que otorgas?'],
+    ['pl','¿Cada cargo tiene funciones escritas y claras?'],['pl','¿Sabes cuánto produce o vende cada trabajador?'],['pl','¿Tu equipo dedica poco tiempo a tareas que no le corresponden?'],['pl','¿Hay seguimiento semanal de resultados con el equipo?']];
+  const ca=Array(CQ.length).fill(null),cq=document.getElementById('check-q');
+  CQ.forEach(([k,q],i)=>{const d=document.createElement('div');d.className='q';d.innerHTML=`<p>${q}</p><div class="yn"><button type="button" aria-pressed="false" data-a="1">Sí</button><button type="button" aria-pressed="false" data-a="0">No</button></div>`;
+    d.querySelectorAll('button').forEach(b=>b.onclick=()=>{ca[i]=b.dataset.a==='1';d.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));sfx('tick');check()});cq.appendChild(d)});
+  function check(){
+    const gap=k=>{const it=CQ.map((c,i)=>[c[0],ca[i]]).filter(x=>x[0]===k&&x[1]!==null);return it.length?it.filter(x=>!x[1]).length/4*100:0};
+    const g=gap('gc'),p=gap('pl');
+    document.getElementById('m-gc').style.width=g+'%';document.getElementById('m-gc-v').textContent=Math.round(g)+'%';
+    document.getElementById('m-pl').style.width=p+'%';document.getElementById('m-pl-v').textContent=Math.round(p)+'%';
+    const n=ca.filter(x=>x!==null).length,r=document.getElementById('check-read');
+    if(n<8){r.textContent=`Llevas ${n} de 8. La barra muestra cuánto espacio de mejora hay en cada línea.`;return}
+    sfx('chime');
+    r.innerHTML=g===0&&p===0?'Tu empresa tiene buenas prácticas en ambas líneas. El reto es medir y sostener.':
+      `<b>Mayor oportunidad: ${g>=p?'Gestión Comercial':'Productividad Laboral'}.</b> Es un resultado orientativo, no un diagnóstico.`}
+
+  // Embudo
+  const FN=['Prospectos','Interesados','Cotizaciones','Ventas'];
+  function funnel(){const v=[0,1,2,3].map(i=>num('e'+i)),f=document.getElementById('funnel');
+    f.innerHTML=v.map((x,i)=>`${i?`<span class="rate">${v[i-1]?pct(x/v[i-1]*100):'—'} pasan</span>`:''}<div class="lvl" style="width:${v[0]?Math.max(x/v[0]*100,24):24}%">${FN[i]} · ${x.toLocaleString('es-CO')}</div>`).join('');
+    const rates=[1,2,3].map(i=>v[i-1]?v[i]/v[i-1]:1),w=rates.indexOf(Math.min(...rates));
+    document.getElementById('funnel-read').innerHTML=v[0]?`Conversión total: <b>${pct(v[3]/v[0]*100)}</b>. La etapa que más clientes pierde es <b>${FN[w]} → ${FN[w+1]}</b>; ahí está la primera mejora.`:'Ingresa tus datos.'}
+  ['e0','e1','e2','e3'].forEach(id=>document.getElementById(id).addEventListener('input',funnel));funnel();
+
+  // Productividad por trabajador
+  function pl(){const b=num('p1')?num('p0')/num('p1'):0,a=num('p3')?num('p2')/num('p3'):0,ch=b?(a/b-1)*100:0,max=Math.max(a,b,1);
+    document.getElementById('pl-out').textContent=(ch>=0?'+':'')+pct(ch);
+    document.getElementById('pl-bars').innerHTML=[['Base',b],['Actual',a]].map(x=>`<div class="bar-row"><span>${x[0]}</span><div class="track"><div class="fill" style="width:${x[1]/max*100}%"></div></div><span>${fmt(x[1])}</span></div>`).join('');
+    document.getElementById('pl-read').textContent=b?`Cada trabajador pasó de ${fmt(b)} a ${fmt(a)} en el período. Compara siempre períodos equivalentes y la misma población.`:'Ingresa tus datos.'}
+  ['p0','p1','p2','p3'].forEach(id=>document.getElementById(id).addEventListener('input',pl));pl();
+
+  // Costo de tareas fuera del cargo
+  function canac(){const per=num('k0'),h=num('k1'),sal=num('k2'),hm=num('k3');const ch=hm?sal/hm:0,cost=per*h*4.33*ch,share=hm?Math.min(h*4.33/hm*100,100):0;
+    document.getElementById('k-out').textContent=fmt(cost);
+    document.getElementById('k-read').textContent=`Equivale a ${fmt(cost*12)} al año pagados por trabajo que no corresponde a ese cargo.`;
+    document.getElementById('k-bar').style.width=share+'%';document.getElementById('k-pct').textContent=Math.round(share)+'%'}
+  ['k0','k1','k2','k3'].forEach(id=>document.getElementById(id).addEventListener('input',canac));canac();
+
+  // Cartera
+  function cart(){const d=num('r1')?num('r0')/num('r1')*num('r2'):0,pl=num('r3');
+    document.getElementById('r-out').textContent=Math.round(d)+' días';
+    document.getElementById('r-read').innerHTML=!num('r1')?'Ingresa tus datos.':d>pl?`Cobras <b>${Math.round(d-pl)} días después</b> del plazo que otorgas. Ese dinero lo está financiando tu empresa.`:'Cobras dentro del plazo que otorgas.'}
+  ['r0','r1','r2','r3'].forEach(id=>document.getElementById(id).addEventListener('input',cart));cart();
+
+  go(idx[location.hash.slice(1)]!==undefined?location.hash.slice(1):'inicio',false);
+})();
+</script>
+</body>
+</html>
