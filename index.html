@@ -777,6 +777,22 @@ html.da-cur-on.da-cur-hide #da-cur{opacity:0}
 html.da-cur-on.da-cur-link #da-cur{opacity:.62}
 #da-dot{transition:opacity .2s}
 html.da-cur-on.da-cur-still #da-dot{opacity:0}
+/* Indicadores oficiales y calculadoras */
+.ind-grid .kind{font:500 10.5px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:#9fb0d2;font-style:normal}
+.ind-grid .kind.fx{color:#8fb0ff}
+.face:not(.dark-face) .sec:not(.dark) .ind-grid .kind{color:var(--muted)}
+.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.pair fieldset,.crow{border:1px solid var(--line);border-radius:14px;padding:12px;margin:0;display:grid;gap:10px;min-width:0}
+.pair legend,.crow legend{font:500 11px/1 var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--blue);padding:0 6px}
+.canac-rows{display:grid;gap:12px}
+.crow{grid-template-columns:repeat(2,minmax(0,1fr))}
+.crow legend input{font:600 13px/1.2 var(--f-body);border:0;border-bottom:1px dashed var(--line);background:none;color:var(--ink);padding:2px 0;width:min(240px,60vw);text-transform:none;letter-spacing:0}
+.result.is-good,.t-good{color:#14935a}
+.result.is-bad,.t-bad{color:#c2412d}
+.tech{font:400 12px/1.6 var(--f-mono);color:var(--muted);margin:0}
+@media (max-width:520px){.pair,.crow{grid-template-columns:minmax(0,1fr)}}
+@media (min-width:600px){.ind-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ind-grid div:last-child:nth-child(odd){grid-column:span 2}}
+@media (min-width:1000px){.ind-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.ind-grid div:last-child:nth-child(4n+3){grid-column:span 2}.ind-grid div:last-child:nth-child(odd):not(:nth-child(4n+3)){grid-column:auto}}
 
 </style>
 <script type="importmap">{"imports":{"three":"/vendor/three-0.160.0.module.min.js"}}</script>
@@ -1064,15 +1080,19 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
     </div>
     <h3 class="h-m" style="margin:34px 0 14px;color:#fff">Los indicadores con los que trabajo</h3>
     <div class="ind-grid" data-r>
-     <div><b>TPV</b><span>Ticket promedio de venta: total de ventas del período / clientes atendidos.</span></div>
-     <div><b>CV</b><span>Cumplimiento de ventas frente a la meta del período.</span></div>
-     <div><b>CA</b><span>Clientes activos y su variación por tipo de cliente.</span></div>
-     <div><b>TCC</b><span>Tasa de conversión de prospectos en clientes, por fuente.</span></div>
-     <div><b>TAC</b><span>Tasa de abandono de compra: dónde y por qué no se cierra.</span></div>
-     <div><b>Valor vitalicio</b><span>Lo que un cliente aporta en toda la relación, frente a su costo de adquisición.</span></div>
-     <div><b>Clientes rentables</b><span>Porcentaje de clientes que de verdad aportan a tus metas financieras.</span></div>
+     <div><em class="kind fx">Fijo</em><b>V</b><span>Ventas: suma de las ventas registradas del mes, en pesos. Línea base: último mes completo antes de iniciar.</span></div>
+     <div><em class="kind fx">Fijo, opción 1</em><b>CR</b><span>Clientes rentables / total de clientes del período × 100, con el criterio de rentabilidad explícito.</span></div>
+     <div><em class="kind fx">Fijo, opción 2</em><b>TCC</b><span>Tasa de conversión comercial: clientes o conversiones / prospectos o cotizaciones × 100.</span></div>
+     <div><em class="kind">Variable</em><b>TPC</b><span>Ticket promedio de compra: total de ventas / clientes atendidos en el período.</span></div>
+     <div><em class="kind">Variable</em><b>CV</b><span>Cumplimiento de ventas: ventas / proyección de ventas × 100.</span></div>
+     <div><em class="kind">Variable</em><b>CA</b><span>Clientes activos: los que compraron una o más veces en el período, no los prospectos.</span></div>
+     <div><em class="kind">Variable</em><b>IRCD</b><span>Rotación de cartera en días: saldo en cartera / ventas a crédito × 30 días.</span></div>
+     <div><em class="kind">Variable</em><b>TVC</b><span>Venta cruzada: transacciones con venta cruzada / total de transacciones × 100.</span></div>
+     <div><em class="kind">Variable</em><b>DPCV</b><span>Duración promedio del ciclo de ventas: días totales / número de ventas.</span></div>
+     <div><em class="kind">Variable</em><b>TR</b><span>Tasa de recompra: clientes que compraron dos o más veces / total de clientes × 100.</span></div>
+     <div><em class="kind">Variable</em><b>NCP · TAC · ER</b><span>Clientes potenciales, abandono de compra y engagement en redes, cuando el canal lo justifica.</span></div>
     </div>
-    <p class="note" style="margin-top:12px;color:var(--on-night-muted)">En cada intervención se aplican las fichas técnicas vigentes del programa: dos indicadores fijos y tres acordados con la empresa.</p>
+    <p class="note" style="margin-top:12px;color:var(--on-night-muted)">Así lo pide la metodología del programa (marzo de 2026): Ventas siempre, más Clientes Rentables o Tasa de Conversión Comercial según la empresa, y variables acordados con ella. Línea base y salida con el último mes completo, sin promedios ni línea base en cero.</p>
     <div class="svc" style="margin-top:22px">
      <article class="svc-card" id="gestion-comercial" data-tilt data-r style="--d:1">
       <span class="num">Gestión Comercial · Lo que revisamos</span>
@@ -1152,11 +1172,16 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
     </div>
     <h3 class="h-m" style="margin:34px 0 14px;color:#fff">Los indicadores con los que trabajo</h3>
     <div class="ind-grid" data-r>
-     <div><b>PL</b><span>Productividad laboral: productos, servicios o actividades ejecutadas por trabajador.</span></div>
-     <div><b>PANAC</b><span>Proporción media ponderada de actividades no asociadas al cargo.</span></div>
-     <div><b>CANAC</b><span>Costo de ejecutar tareas fuera del marco de funciones del cargo.</span></div>
+     <div><em class="kind fx">Fijo, siempre</em><b>PL</b><span>Productos, servicios o actividades / número de trabajadores, sobre los cargos priorizados.</span></div>
+     <div><em class="kind fx">Fijo, preferente</em><b>CANAC</b><span>Σ salario de cada cargo × tasa ANAC (horas en actividades no asociadas al cargo / horas trabajadas en el mes).</span></div>
+     <div><em class="kind fx">Fijo, alternativa</em><b>PANAC</b><span>Σ (actividades no asociadas / total de actividades del cargo) × ponderación del cargo.</span></div>
+     <div><em class="kind fx">Fijo, alternativa</em><b>TEANAC</b><span>Suma de los minutos que cada trabajador dedica a actividades no asociadas a su cargo.</span></div>
+     <div><em class="kind">Variable</em><b>VAT</b><span>Valor agregado por trabajador: (ventas − costos sin mano de obra) / trabajadores.</span></div>
+     <div><em class="kind">Variable</em><b>AUS · RP</b><span>Ausentismo: horas de ausencia / horas del período. Rotación: retiros / promedio de empleados.</span></div>
+     <div><em class="kind">Variable</em><b>PC · PRC</b><span>Personal capacitado en temas del cargo y cargos con perfil, responsabilidades y competencias definidos.</span></div>
+     <div><em class="kind">Variable</em><b>CLAB · PIM</b><span>Clima laboral según el instrumento elegido e ideas de mejora por trabajador.</span></div>
     </div>
-    <p class="note" style="margin:12px 0 22px;color:var(--on-night-muted)">Población, período, inclusiones y exclusiones se definen con la ficha técnica del programa para que la comparación sea válida.</p>
+    <p class="note" style="margin:12px 0 22px;color:var(--on-night-muted)">La metodología exige PL en toda intervención y uno de CANAC, PANAC o TEANAC, con prioridad para CANAC porque muestra el resultado en pesos. Se mide sobre procesos misionales, sin línea base en cero y con la misma población y período al inicio y al cierre.</p>
     <div class="svc">
      <article class="svc-card" data-tilt data-r style="--d:1">
       <span class="num">Productividad Laboral · Lo que revisamos</span>
@@ -1184,7 +1209,7 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
       <div class="room-label" data-r><i></i>Cara 4 · Biblioteca</div>
       <h2 class="h-xl split" id="t-herr">Haz tus cuentas antes de que te las haga el banco.</h2>
      </div>
-     <p class="lead" data-r style="--d:2">Seis calculadoras gratuitas para mirar tu empresa con otros ojos. No te pido registro y lo que escribes no sale de tu navegador.</p>
+     <p class="lead" data-r style="--d:2">Siete calculadoras gratuitas para mirar tu empresa con otros ojos. No te pido registro y lo que escribes no sale de tu navegador.</p>
     </div>
     <div class="tabs" role="tablist" aria-label="Herramientas" id="tool-tabs" data-r></div>
     <div id="tool-panels" data-r style="--d:1">
@@ -1200,53 +1225,49 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
        </div>
       </div>
      </div>
-     <div class="tool" data-tool="tpv" hidden>
+     <div class="tool" data-tool="ventas" hidden>
       <div class="calc">
-       <div class="card stack" style="gap:14px"><div class="formula">TPV = Total de ventas del período / Número de clientes atendidos en el período</div><div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px" id="calc-inputs"></div><p class="note">Valores de ejemplo. Cámbialos por los de tu empresa.</p></div>
-       <div class="card stack"><span class="proto">Ticket promedio del último mes</span><div class="result" id="tpv-out">$0</div><div class="bars" id="tpv-bars"></div><p id="tpv-read" style="font-size:15px"></p></div>
+       <div class="card stack" style="gap:14px"><div class="formula">V = Σ ventas registradas del mes &nbsp;·&nbsp; Var% = (Vf − Vi) / Vi × 100<br>CV = Ventas / Proyección de ventas × 100</div><div class="pair"><fieldset><legend>Línea base</legend><label for="vtb0">Ventas del mes ($)<input id="vtb0" inputmode="numeric" value="58000000"></label><label for="vtb1">Proyección de ventas del mes ($)<input id="vtb1" inputmode="numeric" value="60000000"></label></fieldset><fieldset><legend>Medición de salida</legend><label for="vtf0">Ventas del mes ($)<input id="vtf0" inputmode="numeric" value="66500000"></label><label for="vtf1">Proyección de ventas del mes ($)<input id="vtf1" inputmode="numeric" value="70000000"></label></fieldset></div><p class="note">Valores de ejemplo. Línea base: último mes completo antes de iniciar. Salida: último mes completo antes de cerrar. Ventas en pesos; si hay divisas, se convierten con la tasa del día del pago.</p></div>
+       <div class="card stack"><span class="proto">Variación de ventas</span><div class="result" id="ventas-out">0</div><div class="bars" id="ventas-bars"></div><p id="ventas-read" style="font-size:15px"></p><p class="tech" id="ventas-tech"></p></div>
+      </div>
+     </div>
+     <div class="tool" data-tool="tpc" hidden>
+      <div class="calc">
+       <div class="card stack" style="gap:14px"><div class="formula">TPC = Total de ventas del período / Número de clientes atendidos en el período</div><div class="pair"><fieldset><legend>Línea base</legend><label for="tpb0">Ventas del mes ($)<input id="tpb0" inputmode="numeric" value="62400000"></label><label for="tpb1">Clientes atendidos<input id="tpb1" inputmode="numeric" value="410"></label></fieldset><fieldset><legend>Medición de salida</legend><label for="tpf0">Ventas del mes ($)<input id="tpf0" inputmode="numeric" value="68900000"></label><label for="tpf1">Clientes atendidos<input id="tpf1" inputmode="numeric" value="428"></label></fieldset></div><p class="note">Valores de ejemplo. Cuenta clientes, no facturas: si solo tienes facturas, el indicador correcto es otro. Con un solo cliente el TPC no aporta, porque es igual a las ventas.</p></div>
+       <div class="card stack"><span class="proto">Ticket promedio de compra</span><div class="result" id="tpc-out">0</div><div class="bars" id="tpc-bars"></div><p id="tpc-read" style="font-size:15px"></p><p class="tech" id="tpc-tech"></p></div>
       </div>
      </div>
      <div class="tool" data-tool="embudo" hidden>
       <div class="calc">
-       <div class="card stack" style="gap:14px"><div class="formula">Conversión de cada etapa = clientes que pasan / clientes que entran a la etapa × 100</div>
+       <div class="card stack" style="gap:14px"><div class="formula">TCC = Clientes o conversiones / Total de prospectos o cotizaciones × 100</div>
         <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
          <label for="e0">Prospectos contactados<input id="e0" inputmode="numeric" value="400"></label><label for="e1">Interesados<input id="e1" inputmode="numeric" value="180"></label>
          <label for="e2">Cotizaciones enviadas<input id="e2" inputmode="numeric" value="90"></label><label for="e3">Ventas cerradas<input id="e3" inputmode="numeric" value="27"></label>
-        </div><p class="note">Valores de ejemplo. En una intervención se usa la ficha técnica del programa.</p></div>
+        </div><p class="note">Valores de ejemplo. La TCC se puede medir sobre prospectos o sobre cotizaciones: se elige una base y se mantiene igual al inicio y al cierre.</p></div>
        <div class="card stack" style="gap:12px"><span class="proto">Tu embudo comercial</span><div id="funnel" class="funnel"></div><p id="funnel-read" style="font-size:15px"></p></div>
       </div>
      </div>
      <div class="tool" data-tool="pl" hidden>
       <div class="calc">
-       <div class="card stack" style="gap:14px"><div class="formula">Productividad por trabajador = Ventas (o producción) del período / Trabajadores del período</div>
-        <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
-         <label for="p0">Ventas línea base ($)<input id="p0" inputmode="numeric" value="180000000"></label><label for="p1">Trabajadores línea base<input id="p1" inputmode="numeric" value="12"></label>
-         <label for="p2">Ventas período actual ($)<input id="p2" inputmode="numeric" value="198000000"></label><label for="p3">Trabajadores período actual<input id="p3" inputmode="numeric" value="12"></label>
-        </div><p class="note">Definición de referencia. El indicador PL del programa se calcula según su ficha técnica: población, período e inclusiones definidas.</p></div>
-       <div class="card stack"><span class="proto">Variación de productividad</span><div class="result" id="pl-out">0%</div><div class="bars" id="pl-bars"></div><p id="pl-read" style="font-size:15px"></p></div>
+       <div class="card stack" style="gap:14px"><div class="formula">PL = No. productos, servicios o actividades / No. trabajadores &nbsp;·&nbsp; Var% = (PLf − PLi) / PLi × 100</div><div class="pair"><fieldset><legend>Línea base</legend><label for="plb0">Productos, servicios o actividades<input id="plb0" inputmode="numeric" value="2150"></label><label for="plb1">Trabajadores medidos<input id="plb1" inputmode="numeric" value="14"></label></fieldset><fieldset><legend>Medición de salida</legend><label for="plf0">Productos, servicios o actividades<input id="plf0" inputmode="numeric" value="2480"></label><label for="plf1">Trabajadores medidos<input id="plf1" inputmode="numeric" value="14"></label></fieldset></div><p class="note">Valores de ejemplo. Se mide la misma unidad y los mismos cargos en ambos momentos. No se admite línea base en cero. Si un trabajador entra o sale, se documenta y se explica.</p></div>
+       <div class="card stack"><span class="proto">Productividad laboral</span><div class="result" id="pl-out">0</div><div class="bars" id="pl-bars"></div><p id="pl-read" style="font-size:15px"></p><p class="tech" id="pl-tech"></p></div>
       </div>
      </div>
      <div class="tool" data-tool="canac" hidden>
       <div class="calc">
-       <div class="card stack" style="gap:14px"><div class="formula">Costo mensual = Horas semanales en tareas que no corresponden al cargo × 4,33 × Costo por hora</div>
-        <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
-         <label for="k0">Personas en el cargo<input id="k0" inputmode="numeric" value="3"></label><label for="k1">Horas semanales por persona fuera del cargo<input id="k1" inputmode="numeric" value="8"></label>
-         <label for="k2">Salario mensual con prestaciones ($)<input id="k2" inputmode="numeric" value="2600000"></label><label for="k3">Horas laborales al mes<input id="k3" inputmode="numeric" value="190"></label>
-        </div><p class="note">Ejercicio de referencia. CANAC y PANAC se miden en la intervención con la metodología del programa.</p></div>
-       <div class="card stack"><span class="proto">Lo que cuesta al mes</span><div class="result" id="k-out">$0</div><p id="k-read" style="font-size:15px"></p><div class="meter"><span>Tiempo fuera del cargo</span><div class="track"><div class="fill" id="k-bar"></div></div><b id="k-pct">0%</b></div></div>
+       <div class="card stack" style="gap:14px"><div class="formula">CANAC = Σ Salario del cargo × Tasa ANAC<br>Tasa ANAC = Horas en actividades no asociadas al cargo en el mes / Horas trabajadas en el mes</div>
+        <div id="canac-rows" class="canac-rows"></div>
+        <button type="button" class="btn" id="canac-add" style="align-self:flex-start">Agregar cargo</button>
+        <p class="note">Valores de ejemplo. Las horas fuera del cargo salen de entrevistas y del mapeo de actividades del último mes. Se usa el salario de cada cargo analizado; no se admite línea base en cero.</p></div>
+       <div class="card stack"><span class="proto">Costo mensual de actividades no asociadas al cargo</span><div class="result" id="canac-out">$0</div><div class="bars" id="canac-bars"></div><p id="canac-read" style="font-size:15px"></p><p class="tech" id="canac-tech"></p></div>
       </div>
      </div>
-     <div class="tool" data-tool="cartera" hidden>
+     <div class="tool" data-tool="ircd" hidden>
       <div class="calc">
-       <div class="card stack" style="gap:14px"><div class="formula">Días de cartera = Cartera por cobrar / Ventas a crédito del período × Días del período</div>
-        <div class="grid" style="grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
-         <label for="r0">Cartera por cobrar hoy ($)<input id="r0" inputmode="numeric" value="85000000"></label><label for="r1">Ventas a crédito del período ($)<input id="r1" inputmode="numeric" value="120000000"></label>
-         <label for="r2">Días del período<input id="r2" inputmode="numeric" value="90"></label><label for="r3">Plazo que otorgas (días)<input id="r3" inputmode="numeric" value="45"></label>
-        </div><p class="note">Valores de ejemplo. Herramienta de referencia con criterio bancario.</p></div>
-       <div class="card stack"><span class="proto">Días que tardas en cobrar</span><div class="result" id="r-out">0</div><p id="r-read" style="font-size:15px"></p></div>
+       <div class="card stack" style="gap:14px"><div class="formula">IRCD = (Saldo en cartera / Ventas a crédito del mes) × 30 días</div><div class="pair"><fieldset><legend>Línea base</legend><label for="irb0">Saldo en cartera ($)<input id="irb0" inputmode="numeric" value="96000000"></label><label for="irb1">Ventas a crédito del mes ($)<input id="irb1" inputmode="numeric" value="140000000"></label></fieldset><fieldset><legend>Medición de salida</legend><label for="irf0">Saldo en cartera ($)<input id="irf0" inputmode="numeric" value="82000000"></label><label for="irf1">Ventas a crédito del mes ($)<input id="irf1" inputmode="numeric" value="151000000"></label></fieldset></div><label for="ir-plazo" style="max-width:260px">Plazo que otorgas a tus clientes (días)<input id="ir-plazo" inputmode="numeric" value="30"></label><p class="note">Valores de ejemplo con período mensual, como en la ficha. Si mides por trimestre o año, cambia también los días del multiplicador.</p></div>
+       <div class="card stack"><span class="proto">Días que tardas en cobrar</span><div class="result" id="ircd-out">0</div><div class="bars" id="ircd-bars"></div><p id="ircd-read" style="font-size:15px"></p><p class="tech" id="ircd-tech"></p></div>
       </div>
      </div>
-    </div>
     <div class="apps-head"><h3 class="h-l">Quince aplicaciones más, listas para usar.</h3><p class="lead">Mi suite de herramientas financieras: indicadores comerciales, productividad del equipo y finanzas personales.</p></div>
     <div id="apps"></div>
     <div class="next-face"><span><span class="face-num">Siguiente sala · 5 de 6</span><br><b>Programa Fábricas</b></span><button class="btn primary" data-go="5">Girar el cubo <span class="arr">→</span></button></div>
@@ -1657,7 +1678,7 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
 
   /* ================= Mapa del cubo ================= */
   const map=$('#map'),bc=$('#bc'),bcw=$('#bcw'),ml=$('#map-list');
-  const DESC=['Quién soy y por qué confiar','Clientes, embudo, cartera','Equipos, tiempos, procesos','Seis calculadoras','Requisitos, aportes, método','Asesoría gratuita'];
+  const DESC=['Quién soy y por qué confiar','Clientes, embudo, cartera','Equipos, tiempos, procesos','Siete calculadoras','Requisitos, aportes, método','Asesoría gratuita'];
   const PLACE=['translateZ(var(--h))','rotateY(90deg) translateZ(var(--h))','rotateY(180deg) translateZ(var(--h))','rotateY(-90deg) translateZ(var(--h))','rotateX(90deg) translateZ(var(--h))','rotateX(-90deg) translateZ(var(--h))'];
   faces.forEach((f,i)=>{
     bc.insertAdjacentHTML('beforeend',`<button data-go="${i+1}" style="transform:${PLACE[i]}"><span class="lg">${LOGO}</span><i>CARA ${i+1}</i>${f.dataset.title}<small>${DESC[i]}</small></button>`);
@@ -1731,7 +1752,7 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
   annex.addEventListener('click',e=>{if(e.target===annex)annex.hidden=true});
 
   /* ================= Herramientas ================= */
-  const TOOLS=[['chequeo','Chequeo rápido'],['tpv','Ticket promedio'],['embudo','Embudo y conversión'],['pl','Productividad por trabajador'],['canac','Tareas fuera del cargo'],['cartera','Días de cartera']];
+  const TOOLS=[['chequeo','Chequeo rápido'],['ventas','Ventas y cumplimiento'],['tpc','Ticket promedio'],['embudo','Embudo y conversión'],['pl','Productividad laboral'],['canac','Costo fuera del cargo'],['ircd','Días de cartera']];
   const tabs=$('#tool-tabs');
   TOOLS.forEach(([id,l],i)=>{const b=document.createElement('button');b.setAttribute('role','tab');b.textContent=l;b.dataset.tool=id;b.setAttribute('aria-selected',String(i===0));
     b.onclick=()=>{tabs.querySelectorAll('button').forEach(x=>x.setAttribute('aria-selected',String(x===b)));$$('.tool').forEach(t=>t.hidden=t.dataset.tool!==id);sfx('tick')};tabs.appendChild(b)});
@@ -1754,38 +1775,73 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
     sfx('chime');
     r.innerHTML=g===0&&p===0?'Tu empresa tiene buenas prácticas en ambas líneas. El reto ahora es medir y sostener.':`<b>Tu mayor oportunidad está en ${g>=p?'Gestión Comercial':'Productividad Laboral'}.</b> Es un resultado orientativo, no un diagnóstico.`}
 
-  const months=[{m:'Mes 1',v:48000000,c:320},{m:'Mes 2',v:51500000,c:330},{m:'Mes 3',v:55200000,c:336}];
-  const ci=$('#calc-inputs');
-  months.forEach((d,i)=>ci.insertAdjacentHTML('beforeend',`<label for="v${i}">${d.m} · ventas ($)<input id="v${i}" inputmode="numeric" value="${d.v}"></label><label for="c${i}">${d.m} · clientes<input id="c${i}" inputmode="numeric" value="${d.c}"></label>`));
-  function tpv(){const t=months.map((d,i)=>{const v=num('v'+i),c=num('c'+i);return {m:d.m,tpv:c?v/c:0}}),max=Math.max(...t.map(x=>x.tpv),1);
-    $('#tpv-out').textContent=fmt(t[2].tpv);
-    $('#tpv-bars').innerHTML=t.map(x=>`<div class="bar-row"><span>${x.m}</span><div class="track"><div class="fill" style="width:${x.tpv/max*100}%"></div></div><span>${fmt(x.tpv)}</span></div>`).join('');
-    const ch=t[0].tpv?((t[2].tpv/t[0].tpv-1)*100):0;
-    $('#tpv-read').textContent=t[0].tpv?`Entre el mes 1 y el mes 3 tu ticket promedio ${ch>=0?'subió':'bajó'} ${pct(Math.abs(ch))}.`:'Escribe ventas y clientes para ver la variación.'}
-  ci.addEventListener('input',tpv);tpv();
+  /* Calculadoras con las fórmulas de las fichas técnicas (metodología FPS, marzo de 2026) */
+  const dec=(n,d=2)=>n.toLocaleString('es-CO',{minimumFractionDigits:d,maximumFractionDigits:d});
+  const vr=(i,f)=>i?(f-i)/i*100:null;
+  const vsgn=n=>(n>0?'+':n<0?'−':'')+pct(Math.abs(n));
+  // nat: 1 = Aumentar, -1 = Disminuir
+  function compare(id,bi,bf,show,nat,unit){
+    const max=Math.max(bi,bf,1e-9),v=vr(bi,bf),out=$('#'+id+'-out');
+    $('#'+id+'-bars').innerHTML=[['Base',bi],['Salida',bf]].map(x=>`<div class="bar-row"><span>${x[0]}</span><div class="track"><div class="fill" style="width:${x[1]/max*100}%"></div></div><span>${show(x[1])}</span></div>`).join('');
+    if(v===null){out.textContent='—';out.className='result';return null}
+    out.textContent=vsgn(v);const good=v*nat>0,flat=Math.abs(v)<0.05;
+    out.className='result '+(flat?'':good?'is-good':'is-bad');
+    $('#'+id+'-tech').textContent=`Var% = (${unit}f − ${unit}i) / ${unit}i × 100 · Naturaleza: ${nat>0?'aumentar':'disminuir'}`;
+    return {v,good,flat}}
+  const watch=(ids,fn)=>{ids.forEach(id=>document.getElementById(id).addEventListener('input',fn));fn()};
+
+  function ventas(){const vi=num('vtb0'),vf=num('vtf0'),pi=num('vtb1'),pf=num('vtf1');
+    const r=compare('ventas',vi,vf,fmt,1,'V'),cvi=pi?vi/pi*100:0,cvf=pf?vf/pf*100:0,rd=$('#ventas-read');
+    if(!r){rd.textContent='Escribe las ventas de la línea base. La ficha no admite línea base en cero.';return}
+    rd.innerHTML=`Las ventas ${r.v>=0?'crecieron':'cayeron'} <b>${pct(Math.abs(r.v))}</b>. Cumplimiento de ventas: <b>${pct(cvi)}</b> en la base y <b>${pct(cvf)}</b> en la salida${cvf<100&&pf?`; faltaron ${fmt(pf-vf)} para la meta`:''}.`}
+  watch(['vtb0','vtf0','vtb1','vtf1'],ventas);
+
+  function tpc(){const vi=num('tpb0'),ci=num('tpb1'),vf=num('tpf0'),cf=num('tpf1'),ti=ci?vi/ci:0,tf=cf?vf/cf:0;
+    const r=compare('tpc',ti,tf,fmt,1,'TPC'),rd=$('#tpc-read');
+    if(!r){rd.textContent='Escribe ventas y clientes atendidos de la línea base.';return}
+    rd.innerHTML=`Cada cliente compró en promedio <b>${fmt(ti)}</b> en la base y <b>${fmt(tf)}</b> en la salida.`+(ci===1||cf===1?' Con un solo cliente este indicador no aporta: es igual a las ventas.':'')}
+  watch(['tpb0','tpb1','tpf0','tpf1'],tpc);
 
   const FN=['Prospectos','Interesados','Cotizaciones','Ventas'];
   function funnel(){const v=[0,1,2,3].map(i=>num('e'+i)),f=$('#funnel');
     f.innerHTML=v.map((x,i)=>`${i?`<span class="rate">${v[i-1]?pct(x/v[i-1]*100):'—'} pasan</span>`:''}<div class="lvl" style="width:${v[0]?Math.max(x/v[0]*100,24):24}%">${FN[i]} · ${x.toLocaleString('es-CO')}</div>`).join('');
     const rates=[1,2,3].map(i=>v[i-1]?v[i]/v[i-1]:1),w=rates.indexOf(Math.min(...rates));
-    $('#funnel-read').innerHTML=v[0]?`Conversión total: <b>${pct(v[3]/v[0]*100)}</b>. Donde más clientes se pierden es entre <b>${FN[w]} y ${FN[w+1]}</b>: ahí está la primera mejora.`:'Escribe tus datos.'}
-  ['e0','e1','e2','e3'].forEach(id=>document.getElementById(id).addEventListener('input',funnel));funnel();
+    $('#funnel-read').innerHTML=v[0]?`TCC sobre prospectos: <b>${pct(v[3]/v[0]*100)}</b>. TCC sobre cotizaciones: <b>${v[2]?pct(v[3]/v[2]*100):'—'}</b>. Donde más clientes se pierden es entre <b>${FN[w]} y ${FN[w+1]}</b>: ahí está la primera mejora.`:'Escribe tus datos.'}
+  watch(['e0','e1','e2','e3'],funnel);
 
-  function pl(){const b=num('p1')?num('p0')/num('p1'):0,a=num('p3')?num('p2')/num('p3'):0,ch=b?(a/b-1)*100:0,max=Math.max(a,b,1);
-    $('#pl-out').textContent=(ch>=0?'+':'')+pct(ch);
-    $('#pl-bars').innerHTML=[['Base',b],['Actual',a]].map(x=>`<div class="bar-row"><span>${x[0]}</span><div class="track"><div class="fill" style="width:${x[1]/max*100}%"></div></div><span>${fmt(x[1])}</span></div>`).join('');
-    $('#pl-read').textContent=b?`Cada trabajador pasó de ${fmt(b)} a ${fmt(a)} en el período. Compara siempre períodos equivalentes y la misma población.`:'Escribe tus datos.'}
-  ['p0','p1','p2','p3'].forEach(id=>document.getElementById(id).addEventListener('input',pl));pl();
+  function plc(){const ni=num('plb0'),ti=num('plb1'),nf=num('plf0'),tf=num('plf1'),a=ti?ni/ti:0,b=tf?nf/tf:0;
+    const r=compare('pl',a,b,x=>dec(x),1,'PL'),rd=$('#pl-read');
+    if(!r){rd.textContent='Escribe la producción y los trabajadores de la línea base. No se admite línea base en cero.';return}
+    rd.innerHTML=`Cada trabajador pasó de <b>${dec(a)}</b> a <b>${dec(b)}</b> unidades, servicios o actividades.`+(ti!==tf?' Cambió el número de trabajadores: documenta ingresos, retiros e inducciones para que la comparación sea válida.':'')}
+  watch(['plb0','plb1','plf0','plf1'],plc);
 
-  function canac(){const per=num('k0'),h=num('k1'),sal=num('k2'),hm=num('k3');const ch=hm?sal/hm:0,cost=per*h*4.33*ch,share=hm?Math.min(h*4.33/hm*100,100):0;
-    $('#k-out').textContent=fmt(cost);$('#k-read').textContent=`Son ${fmt(cost*12)} al año pagados por trabajo que no le corresponde a ese cargo.`;
-    $('#k-bar').style.width=share+'%';$('#k-pct').textContent=Math.round(share)+'%'}
-  ['k0','k1','k2','k3'].forEach(id=>document.getElementById(id).addEventListener('input',canac));canac();
+  const CROWS=[['Asesor comercial',2200000,192,28,16],['Auxiliar administrativo',1750000,192,34,18],['Coordinador de operaciones',3400000,192,22,12]];
+  const rowsEl=$('#canac-rows');
+  function addRow(c=['Cargo '+(rowsEl.children.length+1),0,192,0,0]){const k=rowsEl.children.length;if(k>=6)return;
+    rowsEl.insertAdjacentHTML('beforeend',`<fieldset class="crow"><legend><input aria-label="Nombre del cargo" class="cname" value="${c[0]}"></legend>
+     <label>Salario mensual ($)<input class="cn" inputmode="numeric" value="${c[1]}"></label><label>Horas trabajadas en el mes<input class="cn" inputmode="numeric" value="${c[2]}"></label>
+     <label>Horas fuera del cargo · base<input class="cn" inputmode="numeric" value="${c[3]}"></label><label>Horas fuera del cargo · salida<input class="cn" inputmode="numeric" value="${c[4]}"></label></fieldset>`);
+    if(rowsEl.children.length>=6)$('#canac-add').hidden=true}
+  CROWS.forEach(addRow);
+  $('#canac-add').onclick=()=>{addRow();canac();sfx('tick')};
+  rowsEl.addEventListener('input',canac);
+  function canac(){const nv=v=>+(v||'').replace(/[^\d]/g,'')||0;let bi=0,bf=0;const det=[];
+    [...rowsEl.children].forEach(fs=>{const [sal,ht,hb,hs]=[...fs.querySelectorAll('.cn')].map(x=>nv(x.value));if(!ht)return;
+      const ti=hb/ht,tf=hs/ht;bi+=sal*ti;bf+=sal*tf;det.push(`${fs.querySelector('.cname').value}: tasa ANAC ${pct(ti*100)} → ${pct(tf*100)}`)});
+    const r=compare('canac',bi,bf,fmt,-1,'CANAC'),rd=$('#canac-read');
+    $('#canac-out').textContent=fmt(bf);
+    if(!r){rd.textContent='Escribe salarios y horas fuera del cargo de la línea base. No se admite línea base en cero.';return}
+    $('#canac-out').className='result';
+    rd.innerHTML=`El costo mensual pasa de <b>${fmt(bi)}</b> a <b>${fmt(bf)}</b>: variación <b class="${r.good?'t-good':'t-bad'}">${vsgn(r.v)}</b>. ${r.good?`Son ${fmt((bi-bf)*12)} al año que vuelven a trabajo propio del cargo.`:''}`;
+    $('#canac-tech').innerHTML=det.join('<br>')+'<br>Var% = (CANACf − CANACi) / CANACi × 100 · Naturaleza: disminuir'}
+  canac();
 
-  function cart(){const d=num('r1')?num('r0')/num('r1')*num('r2'):0,plz=num('r3');
-    $('#r-out').textContent=Math.round(d)+' días';
-    $('#r-read').innerHTML=!num('r1')?'Escribe tus datos.':d>plz?`Cobras <b>${Math.round(d-plz)} días después</b> del plazo que otorgas. Ese dinero lo está financiando tu empresa.`:'Cobras dentro del plazo que otorgas. Muy bien.'}
-  ['r0','r1','r2','r3'].forEach(id=>document.getElementById(id).addEventListener('input',cart));cart();
+  function ircd(){const si=num('irb0'),vi=num('irb1'),sf=num('irf0'),vf=num('irf1'),plz=num('ir-plazo'),a=vi?si/vi*30:0,b=vf?sf/vf*30:0;
+    const r=compare('ircd',a,b,x=>dec(x,1)+' días',-1,'IRCD'),rd=$('#ircd-read');
+    if(!r){rd.textContent='Escribe saldo en cartera y ventas a crédito de la línea base.';return}
+    $('#ircd-out').textContent=dec(b,1)+' días';$('#ircd-out').className='result';
+    rd.innerHTML=`Pasas de cobrar en <b>${dec(a,1)}</b> a <b>${dec(b,1)} días</b> (${vsgn(r.v)}). `+(plz?(b>plz?`Todavía cobras <b>${dec(b-plz,1)} días después</b> del plazo que otorgas: ese dinero lo financia tu empresa.`:'Ya cobras dentro del plazo que otorgas.'):'')}
+  watch(['irb0','irb1','irf0','irf1','ir-plazo'],ircd);
 
   const QS=['¿Tu empresa tiene al menos dos años de constituida y dos años seguidos de operación?','¿Tiene mínimo cuatro personas vinculadas, con cualquier tipo de contrato?','¿Su actividad es de manufactura, agroindustria (no agricultura) o servicios?','¿Tiene el registro mercantil renovado y no está en disolución ni liquidación?','¿Ha participado en el programa menos de tres veces?'];
   const ans=Array(QS.length).fill(null);
