@@ -761,6 +761,22 @@ body.in-intro #face-progress{display:none}
 .dice-shadow{width:calc(min(42vmin,330px) * 1.2)!important;margin-left:calc(min(42vmin,330px) * -.6)!important;height:70px!important;
   background:radial-gradient(ellipse at center,rgba(0,0,0,.85),rgba(0,0,0,.4) 40%,transparent 70%)!important;filter:blur(10px)!important}
 .cases3 .tag{align-self:flex-start}
+/* Cursor esférico DA (solo escritorio) */
+#da-cur,#da-dot{position:fixed;left:0;top:0;pointer-events:none;z-index:2147483000;opacity:0;transition:opacity .25s}
+#da-cur{width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;display:grid;place-items:center;
+ background:radial-gradient(circle at 32% 28%,#ffffff 0,#cfd6e4 9%,#3a4252 34%,#0b0e15 68%,#000 100%);
+ box-shadow:inset -3px -4px 8px rgba(47,123,255,.55),inset 2px 2px 4px rgba(255,255,255,.18),0 6px 14px rgba(0,0,0,.35);
+ font:700 11.5px/1 var(--f-display);letter-spacing:-.02em;color:#fff;will-change:transform}
+#da-cur span{transform:translate(1px,1px);text-shadow:0 1px 2px rgba(0,0,0,.6);transition:transform .3s}
+#da-dot{width:5px;height:5px;margin:-2.5px 0 0 -2.5px;border-radius:50%;background:#2f7bff;box-shadow:0 0 0 1.5px #fff}
+html.da-cur-on #da-cur,html.da-cur-on #da-dot{opacity:1}
+html.da-cur-on.da-cur-out #da-cur,html.da-cur-on.da-cur-out #da-dot{opacity:0}
+html.da-cur-on.da-cur-hide #da-cur{opacity:0}
+@media (hover:hover) and (pointer:fine){html.da-cur-on,html.da-cur-on *{cursor:none!important}
+ html.da-cur-on input,html.da-cur-on textarea,html.da-cur-on select,html.da-cur-on [contenteditable]{cursor:text!important}}
+html.da-cur-on.da-cur-link #da-cur{opacity:.62}
+#da-dot{transition:opacity .2s}
+html.da-cur-on.da-cur-still #da-dot{opacity:0}
 
 </style>
 <script type="importmap">{"imports":{"three":"/vendor/three-0.160.0.module.min.js"}}</script>
@@ -938,8 +954,8 @@ body.in-intro #face-progress{display:none}
     </div>
     <div class="cases3">
      <article class="card" data-r style="--d:1"><div class="duo"><figure class="ph-card case-ph "><picture><source srcset="/media/puntomovil-local.webp" type="image/webp"><img src="/media/puntomovil-local.jpg" alt="Fachada del local 059 de Punto Móvil en el Centro Comercial Monterrey" width="600" height="800" loading="lazy"></picture></figure><figure class="ph-card case-ph "><picture><source srcset="/media/puntomovil-equipo.webp" type="image/webp"><img src="/media/puntomovil-equipo.jpg" alt="David Arteaga con el equipo de Punto Móvil durante la asesoría" width="1000" height="750" loading="lazy"></picture></figure></div><span class="tag">2024</span><h3>Punto Móvil Monterrey S.A.S.</h3><p class="metric">De <b>82</b> a <b>101</b> productos o servicios</p><dl class="val"><div><dt>Actividad</dt><dd>Comercialización de celulares, accesorios y equipos de tecnología</dd></div><div><dt>Ubicación</dt><dd>Local 059, Centro Comercial Monterrey, Medellín</dd></div><div><dt>Verifica</dt><dd><a href="https://www.puntomovilcol.com" target="_blank" rel="noopener">puntomovilcol.com</a></dd></div></dl></article>
-     <article class="card" data-r style="--d:2"><figure class="ph-card case-ph "><picture><source srcset="/media/unoauno-equipo.webp" type="image/webp"><img src="/media/unoauno-equipo.jpg" alt="David Arteaga con el equipo de Uno a Uno Mobiliario" width="600" height="800" loading="lazy"></picture></figure><span class="tag">2025</span><h3>Uno a Uno Mobiliario S.A.S.</h3><p class="metric"><b>Incremento</b> en ventas</p><dl class="val"><div><dt>Actividad</dt><dd>Diseño y fabricación de mobiliario de madera personalizado</dd></div><div><dt>Verifica</dt><dd><a href="https://www.instagram.com/unoaunomobiliario/" target="_blank" rel="noopener">@unoaunomobiliario</a></dd></div></dl></article>
-     <article class="card" data-r style="--d:3"><figure class="ph-card case-ph "><picture><source srcset="/media/vimar-capacitacion.webp" type="image/webp"><img src="/media/vimar-capacitacion.jpg" alt="Sesión de trabajo con el equipo de Vimar Vidrios en sus instalaciones" width="900" height="1144" loading="lazy"></picture></figure><span class="tag">2026</span><h3>Vimar Vidrios Medellín S.A.S.</h3><p class="metric"><b>+32%</b> en ventas mensuales</p><dl class="val"><div><dt>Actividad</dt><dd>Comercialización, transformación e instalación de vidrios</dd></div><div><dt>Ubicación</dt><dd>Medellín</dd></div><div><dt>Verifica</dt><dd><a href="https://vidriosvimar.com.co/" target="_blank" rel="noopener">vidriosvimar.com.co</a></dd></div></dl></article>
+     <article class="card" data-r style="--d:2"><figure class="ph-card case-ph "><picture><source srcset="/media/unoauno-equipo.webp" type="image/webp"><img src="/media/unoauno-equipo.jpg" alt="David Arteaga con el equipo de Uno a Uno Mobiliario" width="600" height="800" loading="lazy"></picture></figure><span class="tag">2025</span><h3>Uno a Uno Mobiliario S.A.S.</h3><p class="metric"><b>Incremento</b> en ventas</p><dl class="val"><div><dt>Actividad</dt><dd>Diseño y fabricación de mobiliario de madera personalizado</dd></div><div><dt>Verifica</dt><dd><a href="https://www.instagram.com/unoaunomobiliario" target="_blank" rel="noopener">@unoaunomobiliario</a></dd></div></dl></article>
+     <article class="card" data-r style="--d:3"><figure class="ph-card case-ph "><picture><source srcset="/media/vimar-capacitacion.webp" type="image/webp"><img src="/media/vimar-capacitacion.jpg" alt="Sesión de trabajo con el equipo de Vimar Vidrios en sus instalaciones" width="900" height="1144" loading="lazy"></picture></figure><span class="tag">2026</span><h3>Vimar Vidrios Medellín S.A.S.</h3><p class="metric"><b>+32%</b> en ventas mensuales</p><dl class="val"><div><dt>Actividad</dt><dd>Comercialización, transformación e instalación de vidrios</dd></div><div><dt>Ubicación</dt><dd>Calle 30 # 54A-43, Zona Industrial de Belén, Medellín</dd></div><div><dt>Verifica</dt><dd><a href="https://vidriosvimar.com.co/" target="_blank" rel="noopener">vidriosvimar.com.co</a></dd></div></dl></article>
     </div>
     <p class="note" style="margin-top:14px;color:var(--on-night-muted)">Casos publicados con autorización de cada empresa.</p>
    </div>
@@ -1096,7 +1112,7 @@ body.in-intro #face-progress{display:none}
        <li><b>Rentabilidad por cliente y segmento.</b> Frecuencia, recurrencia y aporte de cada grupo al ingreso del corresponsal.</li>
        <li><b>Cupo operativo y continuidad.</b> Equilibrio entre depósitos y retiros para no quedarse sin cupo ni sin efectivo en las horas de mayor demanda.</li>
       </ul>
-      <dl class="val"><div><dt>Actividad</dt><dd>Corresponsal bancario de Bancolombia: depósitos, retiros, pagos y recaudos</dd></div><div><dt>Ubicación</dt><dd>Caucasia, Antioquia</dd></div></dl><p class="note">Las oportunidades identificadas y negociadas no se presentan aquí como resultados. El aprendizaje: en un negocio de transacciones, crecer exige cuidar la caja tanto como al cliente.</p></article>
+      <dl class="val"><div><dt>Actividad</dt><dd>Corresponsal bancario de Bancolombia: depósitos, retiros, pagos y recaudos</dd></div><div><dt>Ubicación</dt><dd>Calle 20 # 10-51, Caucasia, Antioquia</dd></div><div><dt>Verifica</dt><dd><a href="https://cempi.co/" target="_blank" rel="noopener">cempi.co</a></dd></div></dl><p class="note">Las oportunidades identificadas y negociadas no se presentan aquí como resultados. El aprendizaje: en un negocio de transacciones, crecer exige cuidar la caja tanto como al cliente.</p></article>
     </div>
     <div class="next-face"><span><span class="face-num">Siguiente sala · 3 de 6</span><br><b>Producir mejor</b></span><button class="btn primary" data-go="3">Girar el cubo <span class="arr">→</span></button></div>
    </div>
@@ -1849,6 +1865,31 @@ body.in-intro #face-progress{display:none}
       document.querySelectorAll('.ph-vid video,.cred-vid video').forEach(v=>{v.addEventListener('volumechange',()=>{if(!v.muted)v.dataset.user=1});vio.observe(v)});
     }
   })();
+})();
+
+/* Cursor esférico con el logo DA: sigue al mouse con inercia, crece sobre lo clicable */
+(()=>{if(!matchMedia('(hover:hover) and (pointer:fine)').matches)return;
+ const H=document.documentElement,c=document.createElement('div'),d=document.createElement('div');
+ c.id='da-cur';c.setAttribute('aria-hidden','true');c.innerHTML='<span>DA</span>';d.id='da-dot';d.setAttribute('aria-hidden','true');
+ document.body.append(c,d);
+ const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ let x=innerWidth/2,y=innerHeight/2,cx=x,cy=y,s=1,ts=1,rot=0,raf=0,on=false;
+ const SEL='a,button,summary,label,[role="button"],[data-go],.orb-btn,.big-cube-wrap,input[type="range"]';
+ function loop(){const k=calm?1:.2;cx+=(x-cx)*k;cy+=(y-cy)*k;s+=(ts-s)*(calm?1:.22);
+  const v=Math.max(-25,Math.min(25,(x-cx)*.8));rot+=(v-rot)*.15;
+  c.style.transform=`translate3d(${cx}px,${cy}px,0) rotate(${rot}deg) scale(${s})`;
+  d.style.transform=`translate3d(${x}px,${y}px,0)`;
+  H.classList.toggle('da-cur-still',Math.hypot(x-cx,y-cy)<14);
+  raf=(Math.abs(x-cx)+Math.abs(y-cy)+Math.abs(ts-s)>.1)?requestAnimationFrame(loop):0}
+ const kick=()=>{if(!raf)raf=requestAnimationFrame(loop)};
+ addEventListener('pointermove',e=>{if(e.pointerType!=='mouse')return;x=e.clientX;y=e.clientY;
+  if(!on){on=true;cx=x;cy=y;H.classList.add('da-cur-on')}H.classList.remove('da-cur-out');
+  const t=e.target.closest?e.target:null,txt=t&&t.closest('input:not([type="range"]),textarea,select');
+  H.classList.toggle('da-cur-hide',!!txt);const lk=!!(t&&t.closest(SEL));H.classList.toggle('da-cur-link',lk);ts=lk?1.55:1;kick()},{passive:true});
+ addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'){ts*=.78;kick()}});
+ addEventListener('pointerup',e=>{if(e.pointerType==='mouse'){const t=document.elementFromPoint(x,y);ts=t&&t.closest(SEL)?1.55:1;kick()}});
+ document.addEventListener('mouseleave',()=>H.classList.add('da-cur-out'));
+ document.addEventListener('mouseenter',()=>H.classList.remove('da-cur-out'));
 })();
 
 </script>
