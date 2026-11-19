@@ -52,7 +52,8 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
-<style>:root{
+<style>
+:root{
   --bg:#ffffff; --bg2:#f3f6fb; --card:#ffffff; --ink:#0a1020; --muted:#536079; --line:#dde3ee;
   --blue:#1546d6; --blue2:#2f7bff; --cyan:#38b6ff; --soft:rgba(21,70,214,.08); --glow:rgba(47,123,255,.22);
   --night:#04070f; --night2:#0a1226; --on-night:#eef3ff; --on-night-muted:#9aa8c7; --night-line:rgba(255,255,255,.12);
@@ -424,6 +425,7 @@ input,select,textarea{border-color:var(--hair);box-shadow:0 1px 2px rgba(10,20,5
   [data-r],.split .w>span{opacity:1!important;transform:none!important}
 }
 
+
 /* ---------- El cubo: seis caras ---------- */
 .world{position:fixed;inset:0;overflow:hidden;perspective:1300px;perspective-origin:50% 50%;
   background:radial-gradient(ellipse 70% 55% at 50% 58%,#10214a 0%,#060b1a 55%,#02040a 100%)}
@@ -594,6 +596,14 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
 .bank-list h4{margin:0 0 6px;font:500 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
 .bank-list ul{margin:0;padding-left:16px;font-size:13.5px;color:var(--muted)}
 @media (max-width:560px){.bank-list{grid-template-columns:minmax(0,1fr)}}
+
+.cases2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:28px}
+@media (max-width:900px){.cases2{grid-template-columns:minmax(0,1fr)}}
+.cases2 .card{display:flex;flex-direction:column;gap:10px}
+.cases2 .card>.tag{align-self:flex-start;display:inline-block}
+.cases2 h3{font-size:20px;margin-top:4px}
+.cases2 .note{margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+
 </style>
 <script type="importmap">{"imports":{"three":"/vendor/three-0.160.0.module.min.js"}}</script>
 </head>
@@ -819,7 +829,7 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
    <div class="wrap">
     <div class="case">
      <div class="stack">
-      <div class="room-label" data-r><i></i>Un caso real</div>
+      <div class="room-label" data-r><i></i>Casos reales</div>
       <h2 class="h-l split" id="t-casos">Así se ve cuando el método se aplica.</h2>
       <p class="lead" data-r style="--d:2"><b style="color:var(--ink)">Vimar Vidrios Medellín S.A.S.</b> comercializa, transforma e instala vidrios. Trabajamos juntos la línea de Gestión Comercial en el ciclo 7 del programa Fábricas de Productividad y Sostenibilidad: ordenamos la información de ventas, definimos indicadores y acordamos rutinas con el equipo.</p>
       <div class="row" data-r style="--d:3"><span class="tag">Gestión Comercial</span><span class="tag">Ciclo 7</span><span class="tag">Medellín</span></div>
@@ -830,6 +840,10 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
       <div class="n"><span data-count="32" data-prefix="+" data-suffix="%">+32%</span></div>
       <p class="l">de crecimiento en ventas durante la intervención, según la medición del programa.</p>
      </div>
+    </div>
+    <div class="cases2">
+     <article class="card" data-r style="--d:1"><div class="row"><span class="tag">Gestión Comercial</span><span class="tag">Productividad Laboral</span></div><h3>Vimar Vidrios Medellín S.A.S.</h3><p class="muted">Comercialización, transformación e instalación de vidrios en Medellín.</p><p>Acompañé a la empresa en las dos líneas del programa. En Gestión Comercial trabajamos la información de ventas, los indicadores comerciales y las rutinas de seguimiento del equipo. En Productividad Laboral medimos la productividad por trabajador con una línea base, y definimos con claridad qué colaboradores entran en la medición y por qué, para comparar períodos equivalentes.</p><p class="note">Publicado con autorización de la empresa.</p></article>
+     <article class="card" data-r style="--d:2"><div class="row"><span class="tag">Gestión Comercial</span><span class="tag">Caucasia, Antioquia</span></div><h3>CEMPI · Centro Empresarial Informático S.A.S.</h3><p class="muted">Corresponsal bancario en Caucasia, Antioquia: depósitos, retiros y pagos.</p><p>Construimos una estrategia comercial a la medida de un corresponsal: segmentamos a los clientes entre depositantes, retirantes y mixtos, identificamos comerciantes, compradores de oro, mineros, pymes y empresas como prospectos, y analizamos frecuencia, recurrencia y rentabilidad por segmento, cuidando siempre el cupo operativo que permite atender a todos.</p><p class="note">El acompañamiento también llega a las subregiones de Antioquia.</p></article>
     </div>
     <div class="next-face"><span><span class="face-num">Siguiente sala · 3 de 6</span><br><b>Producir mejor</b></span><button class="btn primary" data-go="3">Girar el cubo <span class="arr">→</span></button></div>
    </div>
@@ -1410,7 +1424,7 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
   // ids únicos para el degradado de Instagram en cada copia
   $$('.social').forEach((el,k)=>{const g=el.querySelector('radialGradient');if(g){g.id='ig'+k;el.querySelector('rect[fill="url(#ig)"]').setAttribute('fill',`url(#ig${k})`)}});
 
-  const CLIENTS=['Punto Móvil','Uno a Uno','Vimar Vidrios','VC Proyectos y Construcciones','Corporación Ayuda Humanitaria','Diagonal','Surtiminas','Rodando','Dinámica Tecnológica','Pragma','BTS Consultores','Software Shop','Proplag','Macrodescuentos','Seltic','Comercializadora de Cárnicos JA','Urabanet','Axiatech','Grupo Dafer','Kasalab','Soluciones Automatizadas','Netux','AQA Group','Cámara de Comercio','ITM'];
+  const CLIENTS=['Punto Móvil','Uno a Uno','Vimar Vidrios','CEMPI','VC Proyectos y Construcciones','Corporación Ayuda Humanitaria','Diagonal','Surtiminas','Rodando','Dinámica Tecnológica','Pragma','BTS Consultores','Software Shop','Proplag','Macrodescuentos','Seltic','Comercializadora de Cárnicos JA','Urabanet','Axiatech','Grupo Dafer','Kasalab','Soluciones Automatizadas','Netux','AQA Group','Cámara de Comercio','ITM'];
   $('#logos-track').innerHTML=[...CLIENTS,...CLIENTS].map(c=>`<span>${c}</span>`).join('');
 
   const APPS=[
@@ -1503,8 +1517,8 @@ body.on-dark .dock{background:rgba(10,16,32,.78);border-color:rgba(255,255,255,.
   if(reduce||ALIAS[h]){finishIntro(true)}else{requestAnimationFrame(t=>{last=t;introLoop(t)})}
   addEventListener('resize',()=>{if(map&&!map.hidden)paintBig()});
 })();
-</script>
 
+</script>
 <script type="module">
 /* Escena 3D de la entrada: oficina cubo con puertas gigantes en un paisaje campestre.
    Se dibuja en tiempo real, así que se ve nítida en cualquier resolución de pantalla. */
