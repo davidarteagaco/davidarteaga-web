@@ -1,18 +1,35 @@
 {
   "cleanUrls": true,
   "redirects": [
-    { "source": "/quien-soy", "destination": "/#quien-soy", "permanent": true },
-    { "source": "/testimonios", "destination": "/#casos", "permanent": true },
-    { "source": "/catalogo", "destination": "/#inicio", "permanent": true }
-  ],
-  "rewrites": [
-    { "source": "/finanzas", "destination": "https://app-financiera-david.vercel.app/finanzas" },
-    { "source": "/finanzas/:path*", "destination": "https://app-financiera-david.vercel.app/finanzas/:path*" }
+    {
+      "source": "/quien-soy",
+      "destination": "/#quien-soy",
+      "permanent": true
+    },
+    {
+      "source": "/testimonios",
+      "destination": "/#casos",
+      "permanent": true
+    },
+    {
+      "source": "/catalogo",
+      "destination": "/#inicio",
+      "permanent": true
+    }
   ],
   "headers": [
-    { "source": "/(.*)", "headers": [
-      { "key": "X-Content-Type-Options", "value": "nosniff" },
-      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" }
-    ]}
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
   ]
 }
