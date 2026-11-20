@@ -15,6 +15,16 @@
       "source": "/catalogo",
       "destination": "/#inicio",
       "permanent": true
+    },
+    {
+      "source": "/finanzas/productividad-laboral",
+      "destination": "/finanzas/productividad-laboral-pl/",
+      "permanent": true
+    },
+    {
+      "source": "/fabricas",
+      "destination": "/fabricas-de-productividad/",
+      "permanent": true
     }
   ],
   "headers": [
