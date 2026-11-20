@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://www.davidarteaga.co/</loc><changefreq>monthly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://www.davidarteaga.co/fabricas-de-productividad/</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
   <url><loc>https://www.davidarteaga.co/politica-de-datos.html</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/ventas/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/clientes-rentables/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/tasa-conversion-clientes/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/ticket-promedio-compra/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/cumplimiento-ventas/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/clientes-activos/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/tasa-abandono-compra/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/valor-vitalicio-cliente/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/productividad-laboral-pl/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/canac-costo-actividades/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/panac/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/conversor-tasas/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/tabla-amortizacion/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/simulador-hipotecario/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.davidarteaga.co/finanzas/presupuesto/</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
 </urlset>
