@@ -885,6 +885,12 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
 .dice{-webkit-transform-style:preserve-3d}
 .dice .df::before{border-radius:5%!important}
 
+/* Botón de sonido: icono siempre visible, texto solo en pantallas anchas */
+.snd{gap:7px}.snd .snd-i{flex:none}.snd .x{display:none}.snd.off .w{display:none}.snd.off .x{display:block}
+@media (max-width:560px){.snd .snd-l{display:none}.bar .snd{padding:9px 11px}}
+.where span{white-space:nowrap}
+@media (max-width:560px){.where{gap:6px;letter-spacing:.04em;min-width:0}.where b{font-size:13px;line-height:1.15}}
+
 </style>
 <script type="importmap">{"imports":{"three":"/vendor/three-0.160.0.module.min.js"}}</script>
 </head>
@@ -897,7 +903,7 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
   </a>
   <div class="where" aria-live="polite"><span id="where-n">1 / 6</span><b id="where-t">Bienvenida</b></div>
   <div class="bar-actions">
-    <button class="btn ghost sm hide-xs" id="snd" aria-pressed="false" title="Activar o desactivar el sonido">Sonido: no</button>
+    <button class="btn ghost sm snd" id="snd" aria-pressed="true" title="Activar o desactivar el sonido" aria-label="Sonido"><svg class="snd-i" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path class="w" d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path class="x" d="M16.5 9.5l5 5m0-5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><span class="snd-l">Sonido: sí</span></button>
     <a class="btn primary sm" href="#asesoria">Asesoría gratuita</a>
   </div>
 </header>
@@ -1532,13 +1538,34 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
   window.DA={progress:0,reduce,introDone:false};
 
   /* ================= Sonido (sintetizado, apagado por defecto) ================= */
-  let soundOn=false,ac=null,amb=null,birdT=null;
-  try{soundOn=localStorage.getItem('da-sound')==='1'}catch(e){}
-  const sndBtn=$('#snd');
-  function paintSnd(){sndBtn.textContent='Sonido: '+(soundOn?'sí':'no');sndBtn.setAttribute('aria-pressed',String(soundOn))}
-  function setSound(on){soundOn=on;try{localStorage.setItem('da-sound',on?'1':'0')}catch(e){}paintSnd();if(on&&!DA.introDone)startAmbient();if(!on)stopAmbient()}
+  // Encendido por defecto; solo se apaga si la persona eligió silencio.
+  let soundOn=true,ac=null,amb=null,birdT=null,unlocked=false,pending=null;
+  try{soundOn=localStorage.getItem('da-sound-v2')!=='0'}catch(e){}
+  const sndBtn=$('#snd'),sndLab=sndBtn.querySelector('.snd-l')||sndBtn;
+  function paintSnd(){sndLab.textContent='Sonido: '+(soundOn?'sí':'no');sndBtn.setAttribute('aria-pressed',String(soundOn));sndBtn.classList.toggle('off',!soundOn)}
+  function setSound(on){soundOn=on;try{localStorage.setItem('da-sound-v2',on?'1':'0')}catch(e){}paintSnd();if(on){unlock();if(!DA.introDone)startAmbient()}else stopAmbient()}
   paintSnd();
-  function ctx(){ac=ac||new (window.AudioContext||window.webkitAudioContext)();if(ac.state==='suspended')ac.resume();return ac}
+  function ctx(){ac=ac||new (window.AudioContext||window.webkitAudioContext)();if(ac.state!=='running')ac.resume().catch(()=>{});return ac}
+  // iPhone: el interruptor de silencio apaga Web Audio salvo que la sesión sea de reproducción.
+  // Un <audio> mudo en bucle, iniciado con un toque, abre ese canal en versiones anteriores de iOS.
+  let mute=null;
+  function silentWav(){const n=800,b=new ArrayBuffer(44+n*2),v=new DataView(b),w=(o,t)=>{for(let i=0;i<t.length;i++)v.setUint8(o+i,t.charCodeAt(i))};
+    w(0,'RIFF');v.setUint32(4,36+n*2,true);w(8,'WAVE');w(12,'fmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,8000,true);v.setUint32(28,16000,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,n*2,true);
+    return URL.createObjectURL(new Blob([b],{type:'audio/wav'}))}
+  function unlock(){
+    if(!soundOn)return;
+    try{if(navigator.audioSession)navigator.audioSession.type='playback'}catch(e){}
+    try{const a=ctx(),src=a.createBufferSource();src.buffer=a.createBuffer(1,1,22050);src.connect(a.destination);src.start(0)}catch(e){}
+    try{if(!mute){mute=new Audio(silentWav());mute.loop=true;mute.setAttribute('playsinline','');mute.volume=0.01}
+      if(mute.paused)mute.play().catch(()=>{})}catch(e){}
+    if(!unlocked&&ac){unlocked=true;
+      ac.addEventListener&&ac.addEventListener('statechange',()=>{if(ac.state==='running'&&pending){const p=pending;pending=null;if(performance.now()-p[2]<4000)sfx(p[0],p[1])}});
+      if(!DA.introDone)startAmbient()}
+    if(ac&&ac.state==='running'&&pending){const p=pending;pending=null;if(performance.now()-p[2]<4000)sfx(p[0],p[1])}
+  }
+  // Los navegadores solo dejan sonar audio después de un gesto real: se habilita en el primer toque, clic o tecla.
+  ['pointerdown','touchend','click','keydown'].forEach(ev=>addEventListener(ev,unlock,{capture:true,passive:true}));
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){if(mute)mute.pause()}else if(soundOn&&unlocked){try{ctx()}catch(e){}if(mute)mute.play().catch(()=>{})}});
   function noiseBuf(sec){const a=ctx(),len=a.sampleRate*sec,b=a.createBuffer(1,len,a.sampleRate),d=b.getChannelData(0);let last=0;for(let i=0;i<len;i++){const w=Math.random()*2-1;last=(last+.02*w)/1.02;d[i]=last*3.5}return b}
   function startAmbient(){
     if(amb||!soundOn||DA.introDone)return;try{
@@ -1562,7 +1589,10 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
   const NOTES=[523.25,587.33,659.25,783.99,880,1046.5];
   function sfx(kind,arg){
     if(!soundOn)return;
-    try{const a=ctx(),t=a.currentTime;
+    try{const a=ctx();
+      // Si el audio aún no está habilitado, se guarda el sonido y se reproduce con el primer toque.
+      if(a.state!=='running'&&kind!=='tick'){pending=[kind,arg,performance.now()];return}
+      const t=a.currentTime+.02;
       if(kind==='door'){whoosh(t,2.5,140,900,.16);const o=a.createOscillator(),og=a.createGain();o.frequency.setValueAtTime(55,t);o.frequency.linearRampToValueAtTime(42,t+1.8);og.gain.setValueAtTime(0,t);og.gain.linearRampToValueAtTime(.09,t+.3);og.gain.exponentialRampToValueAtTime(.0001,t+2);o.connect(og);og.connect(a.destination);o.start(t);o.stop(t+2.1)}
       else if(kind==='turn'){whoosh(t,.55,260,700,.07);whoosh(t+.5,.75,300,1500,.09);tone(t+.02,110,.06,.5);const n=NOTES[(arg||1)-1];tone(t+1.25,n,.05,1.4);tone(t+1.33,n*1.5,.03,1.2);tone(t+1.42,n*2,.015,1)}
       else if(kind==='roll'){whoosh(t,.45,260,700,.05);
@@ -1585,7 +1615,7 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
     }catch(e){}
   }
   window.DA.sfx=sfx;
-  sndBtn.addEventListener('click',()=>{setSound(!soundOn);if(soundOn)sfx('chime')});
+  sndBtn.addEventListener('click',()=>{setSound(!soundOn);if(soundOn)setTimeout(()=>sfx('chime'),30)});
 
   /* ================= Entrada a la casa ================= */
   const intro=$('#intro'),stage=$('#stage'),cap1=$('#cap1'),cap2=$('#cap2'),flash=$('#flash'),prFill=$('#pr-fill'),prLabel=$('#pr-label'),ctl=$('#intro-ctl');
