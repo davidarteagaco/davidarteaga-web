@@ -989,6 +989,68 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
 .where span{white-space:nowrap}
 @media (max-width:560px){.where{gap:6px;letter-spacing:.04em;min-width:0}.where b{font-size:13px;line-height:1.15}}
 
+/* ============ La pregunta: el dado después de la casa ============ */
+.ask{position:fixed;inset:0;z-index:40;overflow-y:auto;overscroll-behavior:contain;color:#fff;
+  background:radial-gradient(1200px 700px at 50% 38%,#0f2462 0%,#060b1c 55%,#020409 100%);opacity:0;transition:opacity .7s var(--ease,ease)}
+.ask.in{opacity:1}.ask.out{opacity:0;pointer-events:none}
+.ask::before{content:"";position:absolute;inset:auto 0 0 0;height:42%;pointer-events:none;
+  background:linear-gradient(rgba(107,147,255,.10) 1px,transparent 1px) 0 0/100% 46px,linear-gradient(90deg,rgba(107,147,255,.10) 1px,transparent 1px) 0 0/46px 100%;
+  -webkit-mask:linear-gradient(transparent,#000 70%);mask:linear-gradient(transparent,#000 70%);transform:perspective(500px) rotateX(58deg);transform-origin:bottom}
+.ask-in{position:relative;min-height:100%;width:min(1120px,100% - 32px);margin-inline:auto;padding:clamp(28px,7vh,72px) 0 40px;
+  display:grid;grid-template-columns:minmax(0,1fr);justify-items:center;align-content:center;gap:clamp(18px,3.4vh,34px);text-align:center}
+.ask-k{font:500 11.5px/1 var(--f-mono);letter-spacing:.22em;text-transform:uppercase;color:#8fb0ff}
+.ask h2{font:600 clamp(26px,4.4vw,52px)/1.08 var(--f-display);letter-spacing:-.025em;max-width:880px;margin-top:14px;outline:none;text-wrap:balance}
+.ask h2 span{display:block;color:#9fb4e6;font-weight:400}
+.ask-stage{display:grid;place-items:center}
+.ask-dice-btn{all:unset;cursor:pointer;display:grid;place-items:center;position:relative;border-radius:12px}
+.ask-dice-btn:focus-visible{outline:2px solid #8fb0ff;outline-offset:10px}
+.ask-persp{perspective:1100px}
+.ask .ask-dice{--s:min(30vmin,240px)}
+.ask-shadow{width:min(30vmin,240px);height:40px;margin-top:calc(min(30vmin,240px) * .22);background:radial-gradient(ellipse at center,rgba(0,0,0,.85),rgba(0,0,0,.3) 45%,transparent 72%);filter:blur(8px)}
+.ask-act{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.ask-act .btn.ghost,.ask-prev .btn.ghost{color:#fff;border-color:rgba(255,255,255,.35);background:transparent}
+.ask-act .btn{font-size:15px;padding:14px 20px}
+.ask-skip{all:unset;cursor:pointer;font:500 11px/1 var(--f-mono);letter-spacing:.16em;text-transform:uppercase;color:#8a97b8;padding:8px}
+.ask-skip:hover,.ask-skip:focus-visible{color:#fff}
+.ask-pick{width:100%;display:grid;gap:14px;justify-items:center}
+.ask-reply{font-size:clamp(15px,1.6vw,18px);color:#c9d5f2;max-width:640px}
+.ask-grid{width:100%;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.ask-chip{all:unset;box-sizing:border-box;cursor:pointer;display:grid;gap:4px;text-align:left;padding:12px 12px 13px;border-radius:14px;border:1px solid rgba(143,176,255,.22);background:rgba(255,255,255,.03);transition:border-color .2s,background .2s,transform .2s}
+.ask-chip:hover{border-color:rgba(143,176,255,.6);transform:translateY(-2px)}
+.ask-chip:focus-visible{outline:2px solid #8fb0ff;outline-offset:2px}
+.ask-chip i{font:500 11px/1 var(--f-mono);color:#8fb0ff;font-style:normal;letter-spacing:.1em}
+.ask-chip b{font:600 15px/1.2 var(--f-display)}
+.ask-chip small{font-size:12px;line-height:1.35;color:#9fadcc}
+.ask-chip[aria-pressed="true"]{background:#fff;color:#0a1020;border-color:#fff}
+.ask-chip[aria-pressed="true"] small{color:#536079}.ask-chip[aria-pressed="true"] i{color:#1546d6}
+.ask-prev{width:100%;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(14px,2.4vw,28px);align-items:center;text-align:left;
+  border:1px solid rgba(143,176,255,.2);border-radius:20px;padding:clamp(12px,1.6vw,16px);background:rgba(6,12,30,.6)}
+.ask-media{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#0a1020}
+.ask-media img,.ask-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:askKb 14s ease-out both}
+.ask-media.is-vid video{animation:none}
+@keyframes askKb{from{transform:scale(1.08)}to{transform:scale(1)}}
+.ask-txt{display:grid;gap:8px;justify-items:start}
+.ask-txt i{font:500 11px/1 var(--f-mono);letter-spacing:.2em;text-transform:uppercase;color:#8fb0ff;font-style:normal}
+.ask-txt b{font:600 clamp(22px,2.6vw,32px)/1.1 var(--f-display);letter-spacing:-.02em}
+.ask-txt p{color:#c3cde6;font-size:15px;line-height:1.55;margin-bottom:6px}
+/* Al elegir: dado a la izquierda y opciones a la derecha en pantallas anchas */
+@media (min-width:980px){
+  .ask.picking .ask-in{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);text-align:left;align-items:center;column-gap:48px}
+  .ask.picking .ask-q{grid-column:1/-1;text-align:center;justify-self:center}
+  .ask.picking .ask-stage{grid-column:1;grid-row:2}
+  .ask.picking .ask-pick{grid-column:2;grid-row:2;justify-items:start}
+  .ask.picking .ask-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ask.picking .ask-skip{grid-column:1/-1}
+  .ask.picking .ask-dice{--s:min(30vmin,280px)}
+  .ask.picking .ask-shadow{width:min(30vmin,280px)}
+  .ask.picking h2{font-size:clamp(24px,2.6vw,34px)}
+}
+@media (max-width:979px){.ask-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.ask.picking .ask-dice{--s:min(26vmin,170px)}.ask.picking .ask-shadow{width:min(26vmin,170px)}.ask.picking h2{font-size:clamp(20px,5vw,28px)}}
+@media (max-width:640px){.ask-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ask-chip small{display:none}.ask-prev{grid-template-columns:minmax(0,1fr)}
+  .ask-act{flex-direction:column;width:100%}.ask-act .btn{justify-content:center}.ask-media{aspect-ratio:16/10}}
+body.asking .bar,body.asking .dock{opacity:0;pointer-events:none}
+@media (prefers-reduced-motion:reduce){.ask,.ask-media img{transition:none;animation:none}}
+
 </style>
 <script type="importmap">{"imports":{"three":"/vendor/three-0.160.0.module.min.js"}}</script>
 </head>
@@ -1586,6 +1648,29 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
 
 </div>
 </div>
+<section class="ask" id="ask" hidden aria-labelledby="ask-t">
+  <div class="ask-in">
+    <div class="ask-q">
+      <p class="ask-k">Antes de entrar</p>
+      <h2 id="ask-t" tabindex="-1">¿Quieres vender más y producir mejor, <span>o con lo que tienes es suficiente?</span></h2>
+    </div>
+    <div class="ask-stage"><button class="ask-dice-btn" id="ask-dice-btn" aria-label="Entrar a la dimensión elegida"><div class="ask-persp"><div class="dice ask-dice" id="ask-dice"></div></div><div class="ask-shadow" aria-hidden="true"></div></button></div>
+    <div class="ask-act" id="ask-act">
+      <button class="btn primary" id="ask-yes">Quiero vender más y producir mejor</button>
+      <button class="btn ghost" id="ask-no">Con lo que tengo es suficiente</button>
+    </div>
+    <div class="ask-pick" id="ask-pick" hidden>
+      <p class="ask-reply" id="ask-reply" hidden>Respeto tu respuesta. Solo una idea: lo suficiente de hoy suele ser el techo de mañana.</p>
+      <p class="ask-k">Elige una de las seis dimensiones</p>
+      <div class="ask-grid" id="ask-grid"></div>
+      <div class="ask-prev" id="ask-prev" aria-live="polite">
+        <div class="ask-media" id="ask-media"></div>
+        <div class="ask-txt"><i id="ask-n">Cara 1</i><b id="ask-title">Bienvenida</b><p id="ask-desc"></p><button class="btn primary" id="ask-go">Entrar <span class="arr">→</span></button></div>
+      </div>
+    </div>
+    <button class="ask-skip" id="ask-skip">Ir directo al sitio</button>
+  </div>
+</section>
 <div class="dice-stage" id="dice-stage" aria-hidden="true"><div class="dice" id="dice"></div><div class="dice-shadow" id="dice-shadow"></div></div>
 <div class="sweep" id="sweep" aria-hidden="true"></div>
 
@@ -1807,9 +1892,65 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
   const orient=(n,y=0,ex=0,ey=0,ez=0)=>`translateY(${y}px) rotateX(-17deg) rotateY(24deg) rotateX(${ROT[n-1][0]+ex}deg) rotateY(${ROT[n-1][1]+ey}deg) rotateZ(${ez}deg)`;
   const rnd=(a,b)=>a+Math.random()*(b-a), sgn=()=>Math.random()<.5?-1:1;
 
+  /* ================= La pregunta: el dado después de la casa ================= */
+  const ASKD=['Quién soy y por qué confiar','Clientes, embudo, cartera','Equipos, tiempos, procesos','Siete calculadoras','Requisitos, aportes, método','Asesoría gratuita'];
+  const ask=$('#ask'),askDice=$('#ask-dice'),askGrid=$('#ask-grid');
+  const DIMS=[
+    {d:'Más de 16 años en el sector financiero, consultoría empresarial y docencia universitaria. Quién soy y por qué confiar.',v:'/media/video-credito.mp4',p:'/media/video-credito.jpg'},
+    {d:'Clientes, segmentos, embudo, cartera y rentabilidad: dónde se está quedando la venta de tu empresa.',p:'/media/cempi-reunion.webp'},
+    {d:'Productividad por trabajador, tiempos y procesos: hacer más con el equipo que ya tienes.',p:'/media/vimar-capacitacion.webp'},
+    {d:'Siete calculadoras con las fórmulas oficiales del programa para medir tu empresa hoy.',p:'/media/itm-evento.webp'},
+    {d:'Fábricas de Productividad y Sostenibilidad: requisitos, aportes y método de trabajo.',p:'/media/cempi-equipo.webp'},
+    {d:'Agenda una asesoría gratuita: sábados presenciales o videollamada entre semana.',p:'/media/david-escritorio.webp'}];
+  faces.forEach((f,i)=>askDice.insertAdjacentHTML('beforeend',`<div class="df" data-i="${i}">${LOGO}<i>Cara ${i+1}</i><b>${f.dataset.title}</b></div>`));
+  faces.forEach((f,i)=>askGrid.insertAdjacentHTML('beforeend',`<button class="ask-chip" data-pick="${i+1}" aria-pressed="false"><i>${i+1}</i><b>${f.dataset.title}</b><small>${ASKD[i]}</small></button>`));
+  let askSel=1,askRaf=0,askSpin=true,askAng=0,askAnim=null,askOpen=false;
+  const askSize=()=>askDice.offsetWidth||200;
+  function askPlace(){const h=askSize()/2;askDice.querySelectorAll('.df').forEach((d,i)=>d.style.transform=`${DPLACE[i]}translateZ(${h}px)`)}
+  function askLight(){const tf=getComputedStyle(askDice).transform;const M=tf&&tf!=='none'?new DOMMatrix(tf):new DOMMatrix();
+    askDice.querySelectorAll('.df').forEach((d,i)=>{const [x,y,z]=NORM[i];const w=M.transformPoint(new DOMPoint(x,y,z,0));const len=Math.hypot(w.x,w.y,w.z)||1;
+      const dif=Math.max(0,(w.x*LIGHT[0]+w.y*LIGHT[1]+w.z*LIGHT[2])/len);d.style.setProperty('--sh',Math.max(0,.58-.68*dif).toFixed(3));d.style.setProperty('--spec',Math.pow(dif,12).toFixed(3))})}
+  let askLast=0;
+  function askLoop(now){if(!askOpen)return;const dt=Math.min((now-(askLast||now))/1000,.05);askLast=now;
+    if(askSpin&&!reduce){askAng+=dt*16;askDice.style.transform=`rotateX(-17deg) rotateY(${24+askAng}deg) rotateX(${8*Math.sin(askAng/40)}deg)`}
+    askLight();askRaf=requestAnimationFrame(askLoop)}
+  function askMedia(n){const m=$('#ask-media'),D=DIMS[n-1];m.innerHTML='';
+    if(D.v){const v=document.createElement('video');v.src=D.v;v.poster=D.p;v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute('playsinline','');v.autoplay=true;v.preload='metadata';m.appendChild(v);v.play().catch(()=>{});m.classList.add('is-vid')}
+    else{const im=new Image();im.src=D.p;im.alt='';im.decoding='async';m.appendChild(im);m.classList.remove('is-vid')}}
+  function askPick(n,roll){askSel=n;askSpin=false;
+    askGrid.querySelectorAll('.ask-chip').forEach(b=>b.setAttribute('aria-pressed',String(+b.dataset.pick===n)));
+    $('#ask-n').textContent='Cara '+n;$('#ask-title').textContent=faces[n-1].dataset.title;$('#ask-desc').textContent=DIMS[n-1].d;
+    $('#ask-go').innerHTML=`Entrar a ${faces[n-1].dataset.title} <span class="arr">→</span>`;askMedia(n);
+    const to=orient(n);if(askAnim)askAnim.cancel();
+    if(reduce||!roll){askDice.style.transform=to;return}
+    const from=getComputedStyle(askDice).transform,S=askSize();
+    askAnim=askDice.animate([{transform:from==='none'?orient(1):from},
+      {transform:orient(n,-S*.35,-sgn()*200+rnd(-40,40),-sgn()*220+rnd(-40,40),sgn()*90),offset:.35},
+      {transform:orient(n,-S*.05,rnd(-12,12),rnd(-12,12),0),offset:.8},{transform:to}],{duration:1050,easing:'cubic-bezier(.25,.6,.3,1)'});
+    askDice.style.transform=to;sfx('roll',n)}
+  function askShow(){askOpen=true;ask.hidden=false;document.body.classList.add('asking');askPlace();askLast=0;cancelAnimationFrame(askRaf);askRaf=requestAnimationFrame(askLoop);
+    requestAnimationFrame(()=>ask.classList.add('in'));setTimeout(()=>$('#ask-t').focus({preventScroll:true}),400)}
+  function askAnswer(yes){$('#ask-act').hidden=true;$('#ask-reply').hidden=yes;$('#ask-pick').hidden=false;ask.classList.add('picking');askPlace();askPick(yes?2:1,true);
+    sfx('chime');setTimeout(()=>{const c=askGrid.querySelector('[aria-pressed="true"]');if(c)c.focus({preventScroll:true})},300)}
+  function askClose(n){if(!askOpen)return;askOpen=false;cancelAnimationFrame(askRaf);
+    ask.querySelectorAll('video').forEach(v=>{try{v.pause()}catch(_){}});
+    ask.classList.remove('in');ask.classList.add('out');document.body.classList.remove('asking');
+    setTimeout(()=>{ask.hidden=true;ask.classList.remove('out')},reduce?0:650);
+    arrive(n||1)}
+  $('#ask-yes').onclick=()=>askAnswer(true);$('#ask-no').onclick=()=>askAnswer(false);
+  askGrid.addEventListener('click',e=>{const b=e.target.closest('[data-pick]');if(!b)return;askPick(+b.dataset.pick,true);
+    if(matchMedia('(max-width:979px)').matches)setTimeout(()=>$('#ask-prev').scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'}),120)});
+  $('#ask-go').onclick=()=>askClose(askSel);
+  $('#ask-dice-btn').onclick=()=>{if(ask.classList.contains('picking'))askClose(askSel);else askAnswer(true)};
+  $('#ask-skip').onclick=()=>askClose(1);
+  addEventListener('keydown',e=>{if(!askOpen)return;if(e.key==='Escape')askClose(askSel);
+    if(ask.classList.contains('picking')&&/^[1-6]$/.test(e.key)&&!e.target.closest('input,select,textarea')){e.stopImmediatePropagation();askPick(+e.key,true)}},true);
+  addEventListener('resize',()=>{if(askOpen)askPlace()});
+
   async function go(n,scrollTarget){document.querySelectorAll('video').forEach(v=>{try{v.pause()}catch(_){}});
     n=((n-1+6)%6)+1;
     if(!DA.introDone){finishIntro(true,n,scrollTarget);return}
+    if(askOpen||!cur){askOpen?askClose(n):arrive(n,scrollTarget);return}
     if(n===cur){if(scrollTarget)jumpInside(faces[n-1],scrollTarget);else faces[n-1].scrollTo({top:0,behavior:reduce?'auto':'smooth'});return}
     if(busy){queued=n;return}
     const from=faces[cur-1],to=faces[n-1];
@@ -1867,6 +2008,7 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
     intro.classList.add('gone');document.body.classList.remove('in-intro','cine');
     setTimeout(()=>{intro.hidden=true},1100);
     const h=location.hash.slice(1);
+    if(!n&&!ALIAS[h]&&!scrollTarget){askShow();return}
     arrive(n||ALIAS[h]||1,scrollTarget||(ALIAS[h]?h:null));
   }
 
@@ -1899,7 +2041,7 @@ html.da-cur-on.da-cur-still #da-dot{opacity:0}
   const DESC=['Quién soy y por qué confiar','Clientes, embudo, cartera','Equipos, tiempos, procesos','Siete calculadoras','Requisitos, aportes, método','Asesoría gratuita'];
   const PLACE=['translateZ(var(--h))','rotateY(90deg) translateZ(var(--h))','rotateY(180deg) translateZ(var(--h))','rotateY(-90deg) translateZ(var(--h))','rotateX(90deg) translateZ(var(--h))','rotateX(-90deg) translateZ(var(--h))'];
   faces.forEach((f,i)=>{
-    bc.insertAdjacentHTML('beforeend',`<button data-go="${i+1}" style="transform:${PLACE[i]}"><span class="lg">${LOGO}</span><i>CARA ${i+1}</i>${f.dataset.title}<small>${DESC[i]}</small></button>`);
+    bc.insertAdjacentHTML('beforeend',`<button data-go="${i+1}" style="transform:${PLACE[i]}"><span class="lg">${LOGO}</span><i>CARA ${i+1}</i>${f.dataset.title}<small>${ASKD[i]}</small></button>`);
     ml.insertAdjacentHTML('beforeend',`<button data-go="${i+1}"><i>${i+1}</i>${f.dataset.title}</button>`)});
   let rx=-18,ry=28,drag=null,spin=null,moved=false;
   const paintBig=()=>{bc.style.setProperty('--h',(bcw.clientWidth/2)+'px');bc.style.transform=`rotateX(${rx}deg) rotateY(${ry}deg)`};
